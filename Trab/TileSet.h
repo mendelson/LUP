@@ -17,7 +17,7 @@ using std::endl;
 class TileSet{
 public:
 	TileSet(int aux_tileWidth,int aux_tileHeight,string file);
-	void Render(unsigned int index,float x, float y);
+	void Render(unsigned int index,float x, float y,float rotation = 0);
 	int GetTileWidth();
 	int GetTileHeight();
 private:

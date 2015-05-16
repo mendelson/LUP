@@ -44,4 +44,13 @@ void Camera::Update(float dt){
 		pos.setX((Game::GetInstance().getWidth()/2)-focus->box.getCenterX());
 		pos.setY((Game::GetInstance().getHeight()/2)-focus->box.getCenterY());
 	}
+	cout << pos.getX() << endl;
+
+
+	if(pos.getX() >= -324){
+		pos.setX(-1920);
+	}
+	if(pos.getX() <= -3523){
+		pos.setX(-1920);
+	}
 }
