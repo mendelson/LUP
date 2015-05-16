@@ -1,0 +1,46 @@
+/*
+ * Point.h
+ *
+ *  Created on: 25/03/2015
+ *      Author: Vitor
+ */
+
+#ifndef TRAB_POINT_H_
+#define TRAB_POINT_H_
+
+#include<math.h>
+
+class Point{
+public:
+	float x;
+	float y;
+
+	Point();
+	Point(float aux_x, float aux_y);
+	void setX(float aux_x);
+	void setY(float aux_y);
+	float getX();
+	float getY();
+	float getDist(Point ponto);
+	void somaPonto(Point ponto);
+	float getInclinationFromTop();
+	float getInclinationFromBottom();
+	void vetMultEscalar(float esc);
+	void rotateVector(float angle);
+	void rotateVectorFromBottom(float angle);
+	void negateVector();
+	float magVector();
+
+	 Point operator+(const Point& rhs) const {
+	    return Point(x + rhs.x, y + rhs.y);
+	 }
+
+	 Point operator-(const Point& rhs) const {
+	    return Point(x - rhs.x, y - rhs.y);
+	 }
+
+
+};
+
+
+#endif /* TRAB_POINT_H_ */
