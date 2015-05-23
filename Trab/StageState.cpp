@@ -14,7 +14,7 @@
 StageState::StageState() : bg("img/ocean.jpg") ,tileSet(64,64,"img/tileset.png"), tileMap("map/tileMap.txt",&tileSet),music("audio/stageState.ogg"){
 	quitRequested = false;
 	srand( (unsigned int)time(NULL));
-	GameObject* penguin = new Penguins(249,100);
+	GameObject* penguin = new Penguins(1920,100);
 	objectArray.emplace_back(penguin);
 	Camera::Follow(penguin);
 	//GameObject* alien = new Alien(512,300,5,(rand()%5) + 3);

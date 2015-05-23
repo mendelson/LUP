@@ -59,6 +59,13 @@ void Penguins::Update(float dt){
 		}
 	}
 
+	if(box.getX() <= 324){
+		box.setX(1920);
+	}
+	if(box.getX() >= 3523){
+		box.setX(1920);
+	}
+
 	/*Point* pspeed = new Point(box.getCenterX() - posX,box.getCenterY() - posY);
 	speed = *pspeed;
 	cannonAngle = atan(speed.getY()/speed.getX());
