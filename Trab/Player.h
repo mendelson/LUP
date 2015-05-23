@@ -1,12 +1,12 @@
 /*
- * Penguins.h
+ * Player.h
  *
- *  Created on: 24/04/2015
+ *  Created on: 22/05/2015
  *      Author: Vitor
  */
 
-#ifndef TRAB_PENGUINS_H_
-#define TRAB_PENGUINS_H_
+#ifndef TRAB_PLAYER_H_
+#define TRAB_PLAYER_H_
 #include "GameObject.h"
 #include "Timer.h"
 #include "StillAnimation.h"
@@ -14,28 +14,26 @@
 #include "EndState.h"
 #include "StateData.h"
 
-class Penguins : public GameObject{
+class Player : public GameObject{
 public:
-	Penguins(float x,float y);
-	~Penguins();
+	Player(float x,float y);
+	~Player();
 	void Update(float dt);
 	void Render();
 	bool IsDead();
-	void Shoot();
 	Sprite getSprite();
-	static Penguins* player;
+	static Player* player;
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
 private:
 	Sprite bodySp;
-	Sprite cannonSp;
+	Sprite weaponSp;
 	Point speed;
 	float linearSpeed;
 	float cannonAngle;
 	int hp;
 	Timer timer;
-	bool pulando;
 };
 
 
-#endif /* TRAB_PENGUINS_H_ */
+#endif /* TRAB_PLAYER_H_ */

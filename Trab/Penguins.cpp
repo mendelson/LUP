@@ -24,6 +24,7 @@ Penguins::Penguins(float x,float y): bodySp("img/penguin.png"),cannonSp("img/cub
 	cannonAngle = 0;
 	hp = 30;
 	player = this;
+	pulando = false;
 }
 
 Penguins::~Penguins(){
@@ -32,31 +33,33 @@ Penguins::~Penguins(){
 
 void Penguins::Update(float dt){
 	timer.Update(dt);
+	float speedWalk = 20;
+	float gravity = 500;
 	float posX = InputManager::GetInstance().GetMouseX() - Camera::pos.getX();
 	float posY = InputManager::GetInstance().GetMouseY() - Camera::pos.getY();
 	if(InputManager::GetInstance().IsKeyDown(SDLK_w)){
-		if(linearSpeed < 300){
-			linearSpeed+=20;
-		}
-	}else if(InputManager::GetInstance().IsKeyDown(SDLK_s)){
-		if(linearSpeed > -300){
-			linearSpeed-=20;
-		}
-	}else{
-		if(linearSpeed > 20){
-			linearSpeed -= 20;
-		}else if(linearSpeed < -20){
-			linearSpeed += 20;
-		}
+		pulando = true;
 	}
 	if(InputManager::GetInstance().IsKeyDown(SDLK_a)){
-		rotation+=0.3141592653;
+		box.setX(box.getX() - speedWalk);
 	}
 	if(InputManager::GetInstance().IsKeyDown(SDLK_d)){
-		rotation-=0.3141592653;
+		box.setX(box.getX() + speedWalk);
 	}
 
-	Point* pspeed = new Point(box.getCenterX() - posX,box.getCenterY() - posY);
+	if(pulando == true){
+		if(box.getY() > 100){
+			box.setY(box.getY() - 2*gravity*dt);
+		}else{
+			pulando = false;
+		}
+	}else{
+		if(box.getY() < 250){
+			box.setY(box.getY() + gravity*dt);
+		}
+	}
+
+	/*Point* pspeed = new Point(box.getCenterX() - posX,box.getCenterY() - posY);
 	speed = *pspeed;
 	cannonAngle = atan(speed.getY()/speed.getX());
 	if(speed.getX() > 0){
@@ -83,7 +86,7 @@ void Penguins::Update(float dt){
 		box.setY(0);
 	}else if(box.getY() > 1280){
 		box.setY(1280);
-	}
+	}*/
 
 }
 

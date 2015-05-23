@@ -44,7 +44,7 @@ void TileMap::RenderLayer(int layer, int cameraX = 0, int cameraY = 0){
 		for(int j=0;j<mapWidth;j++){
 			int aux = At(j,i,layer);
 			if(aux >= 0){
-				tileSet->Render(aux,j*tileSet->GetTileWidth() + cameraX*(layer+1) ,i*tileSet->GetTileHeight() + cameraY*(layer+1) );
+				tileSet->Render(aux,j*tileSet->GetTileWidth() + cameraX*(layer+1) ,i*tileSet->GetTileHeight() + cameraY*(layer+1) + 250);
 			}
 		}
 	}
