@@ -60,3 +60,7 @@ void StageState::Pause(){
 void StageState::Resume(){
 	music.Play(-1);
 }
+
+float StageState::getTileMapHeight(int x){
+	return tileMap.GetFloorHeight(x);
+}

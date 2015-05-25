@@ -31,6 +31,7 @@ public:
 	void Render();
 	void Pause();
 	void Resume();
+	float getTileMapHeight(int x);
 private:
 	TileSet tileSet;
 	TileMap tileMap;

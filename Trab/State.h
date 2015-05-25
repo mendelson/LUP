@@ -26,6 +26,7 @@ public:
 	bool PopRequested();
 	void SetPopRequested(bool pop);
 	bool QuitRequested();
+	virtual float getTileMapHeight(int x){ return 0;};
 protected:
 	virtual void UpdateArray(float dt);
 	virtual void RenderArray();

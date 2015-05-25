@@ -29,6 +29,10 @@ Text::~Text(){
 }
 
 void Text::Render(int cameraX,int cameraY){
+	if(texture == NULL){
+		cout << "ERRO ao renderizar o texto!" << endl;
+		exit(1);
+	}
 	SDL_Rect cliprect;
 	cliprect.x = 0;
 	cliprect.y = 0;

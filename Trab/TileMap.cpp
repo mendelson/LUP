@@ -68,3 +68,21 @@ int TileMap::GetHeight(){
 int TileMap::GetDepth(){
 	return mapDepth;
 }
+
+float TileMap::GetFloorHeight(int x){
+	int tileX = x/tileSet->GetTileWidth();
+	while(tileX > 25){
+		tileX -= 25;
+	}
+
+	for(int j=0;j<mapHeight;j++){
+		for(int i=mapDepth-1;i>=0;i--){
+			int aux = At(tileX,j,i);
+			if(aux > 0){
+				//250 é a altura inicial dos Tiles
+				return j*tileSet->GetTileHeight() + 250;
+			}
+		}
+	}
+	return 0;
+}

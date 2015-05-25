@@ -35,6 +35,7 @@ private:
 	int hp;
 	Timer timer;
 	bool pulando;
+	float posInicial;
 };
 
 

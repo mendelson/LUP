@@ -26,6 +26,7 @@ public:
 	int GetWidth();
 	int GetHeight();
 	int GetDepth();
+	float GetFloorHeight(int x);
 private:
 	std::vector<int> tileMatrix;
 	TileSet* tileSet;
