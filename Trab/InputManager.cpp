@@ -10,6 +10,7 @@
 InputManager& InputManager::GetInstance(){
 	static InputManager inputManager;
 	return inputManager;
+
 }
 
 InputManager::~InputManager(){
@@ -34,7 +35,9 @@ InputManager::InputManager(){
 void InputManager::Update(){
 	SDL_Event event;
 	 SDL_GetMouseState(&mouseX, &mouseY);
-	 quitRequested = false;
+	 if(SDL_QuitRequested()){
+	 	quitRequested = true;
+	 }
 	 updateCounter++;
 	while (SDL_PollEvent(&event)){
 		if(!event.key.repeat == 1){
