@@ -7,7 +7,7 @@
 
 #ifndef TRAB_SPRITE_H_
 #define TRAB_SPRITE_H_
-#include "SDL.h"
+#include "SDL.h" // should be working!
 #include <iostream>
 #include <stdlib.h>
 using std::string;

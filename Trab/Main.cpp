@@ -14,7 +14,7 @@ using std::string;
 using std::endl;
 
 int main (int argc, char** argv) {
-	Game* game = new Game("Vitor Quaresma-110143566",1024,600);
+	Game* game = new Game("Lup",1024,600);
 	game->Run();
     return 0;
 }
