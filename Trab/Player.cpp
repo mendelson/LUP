@@ -11,8 +11,8 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y): sp("img/penguin.png"),speed(),timer(){
-	int novox = x - (sp.GetWidth()/2);
+Player::Player(float x, float y): sp("img/player.png",8,0.3),speed(),timer(){
+	int novox = x - (sp.GetFrameWidth()/2);
 	int novoy = y - (sp.GetHeight()/2);
 	box.setX(novox);
 	box.setY(novoy);
@@ -20,7 +20,11 @@ Player::Player(float x, float y): sp("img/penguin.png"),speed(),timer(){
 	box.setW(sp.GetWidth());
 	hp = 30;
 	speed.x = 15;
-	speed.y = 10;
+	speed.y = 25;
+	jumpState = STAND;
+	orientation = RIGHT;
+	jumped = 0;
+
 }
 
 Player::~Player(){
@@ -36,11 +40,12 @@ void Player::Update(float dt){
 		if (jumpState == STAND)
 		{
 			jumpState = JUMP;
+			jumpY = box.getY();
 		}
 		else if (jumpState == JUMP)
 		{
 			jumpState = DJUMP;
-			timer.Restart();
+			jumped = 0;
 		}
 	}
 
@@ -61,24 +66,24 @@ void Player::Update(float dt){
 	else
 	{
 		sp.SetFrame(0);
+		sp.Update(0);
 	}
 
 	if (jumpState == JUMP || jumpState == DJUMP)
 	{
-		timer.Update(dt);
-
-		if (timer.Get() <= 0.6)
+		if (jumped <= 250)
 		{
+			jumped += speed.y;
 			box.setY(box.getY() - speed.y);
 		}
-		else if (box.getY() < 200)
+		else if (box.getY() < jumpY)
 		{
 			box.setY(box.getY() + speed.y);
 		}
 		else
 		{
 			jumpState = STAND;
-			timer.Restart();
+			jumped = 0;
 		}
 	}
 
@@ -93,7 +98,19 @@ void Player::Update(float dt){
 }
 
 void Player::Render(){
-	sp.Render(box.getX() +  Camera::pos.getX(),box.getY() +  Camera::pos.getY());
+	int c;
+	if (orientation == RIGHT)
+		c = -80;
+	else
+		c = 80;
+
+	sp.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
+
+	if(InputManager::GetInstance().IsKeyDown(SDLK_q))
+	{
+		std::cout << box.getX() +  Camera::pos.getX() << std::endl;
+		std::cout << box.getY() +  Camera::pos.getY() << std::endl;
+	}
 }
 
 

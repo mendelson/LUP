@@ -41,7 +41,8 @@ void Camera::Update(float dt){
 		speed.vetMultEscalar(500);
 		pos.somaPonto(speed);
 	}else{
-		pos.setX((Game::GetInstance().getWidth()/2)-focus->box.getCenterX());
-		pos.setY((Game::GetInstance().getHeight()/2)-focus->box.getCenterY());
+
+		pos.setX((Game::GetInstance().getWidth()/2) - focus->box.getCenterX());
+		pos.setY((Game::GetInstance().getHeight()/2) - focus->box.getCenterY());
 	}
 }

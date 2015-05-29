@@ -33,9 +33,10 @@ private:
 	Point speed;
 	int hp;
 	Timer timer;
-	Facing orientation;
 	Jumping jumpState;
-
+	Facing orientation;
+	int jumpY;
+	int jumped;
 };
 
 

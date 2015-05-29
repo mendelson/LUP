@@ -39,6 +39,13 @@ void StageState::Update(float dt){
 //	if(SDL_QuitRequested()){
 //		quitRequested = true;
 //	}
+
+	if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
+	{
+		std::cout << InputManager::GetInstance().GetMouseX() - Camera::pos.getX() << std::endl;
+		std::cout << InputManager::GetInstance().GetMouseY() - Camera::pos.getY() << std::endl;
+	}
+
 	 Camera::Update(dt);
 	 quitRequested = InputManager::GetInstance().QuitRequested();
 	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);

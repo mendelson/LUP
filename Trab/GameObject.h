@@ -11,6 +11,7 @@
 #include "Point.h"
 #include "Sprite.h"
 using std::string;
+
 class GameObject{
 public:
 	virtual ~GameObject(){};

@@ -19,6 +19,7 @@ Sprite::Sprite(){
 	frameTime = 1;
 	currentFrame = 0;
 	timeElapsed = 0;
+	flipH = false;
 }
 
 Sprite::Sprite(string file,int frameCount,float frameTime){
@@ -30,6 +31,7 @@ Sprite::Sprite(string file,int frameCount,float frameTime){
 	Open(file);
 	scaleX = 1;
 	scaleY = 1;
+	flipH = false;
 
 }
 
@@ -48,7 +50,10 @@ void Sprite::Open(string file){
 		exit(1);
 	}
 
-	SDL_QueryTexture(texture,NULL,NULL,&width,&height);
+	if ((SDL_QueryTexture(texture, NULL, NULL, &width, &height)) != 0)
+	{
+		std::cout << "Erro: " << SDL_GetError() << std::endl;
+	}
 
 	width = width/frameCount;
 
@@ -81,7 +86,7 @@ int Sprite::GetHeight(){
 }
 
 int Sprite::GetWidth(){
-	return width*scaleX*frameCount;
+	return width*scaleX;
 }
 
 bool Sprite::IsOpen(){
@@ -117,6 +122,7 @@ void Sprite::Update(float dt){
 
 void Sprite::SetFrame(int frame){
 	currentFrame = frame;
+	SetClip(currentFrame*width,0,width,height);
 }
 
 void Sprite::SetFrameCount(int frameCount){
