@@ -70,7 +70,10 @@ void Sprite::Render(int x,int y,float angle){
 	auxrect.y = y;
 	auxrect.w = clipRect.w*scaleX;
 	auxrect.h = clipRect.h*scaleY;
-	SDL_RenderCopyEx((Game::GetInstance().GetRenderer()),texture,&clipRect,&auxrect,angle,NULL,SDL_FLIP_NONE);
+	if (flipH)
+		SDL_RenderCopyEx((Game::GetInstance().GetRenderer()),texture,&clipRect,&auxrect,angle,NULL,SDL_FLIP_HORIZONTAL );
+	else
+		SDL_RenderCopyEx((Game::GetInstance().GetRenderer()),texture,&clipRect,&auxrect,angle,NULL,SDL_FLIP_NONE );
 }
 
 int Sprite::GetHeight(){
@@ -126,4 +129,9 @@ void Sprite::SetFrameTime(float frameTime){
 
 int Sprite::GetFrameWidth(){
 	return width*scaleX;
+}
+
+void Sprite::SetFlipH(bool flipH)
+{
+	this->flipH = flipH;
 }

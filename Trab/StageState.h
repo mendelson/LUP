@@ -19,6 +19,7 @@
 #include "Alien.h"
 #include "Minion.h"
 #include "Penguins.h"
+#include "Player.h"
 #include "State.h"
 #include "Music.h"
 using std::string;

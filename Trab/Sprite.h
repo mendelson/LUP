@@ -30,6 +30,7 @@ public:
 	void SetFrame(int frame);
 	void SetFrameCount(int frameCount);
 	void SetFrameTime(float frameTime);
+	void SetFlipH(bool flipH);
 private:
 	SDL_Texture* texture;
 	int width;
@@ -41,6 +42,7 @@ private:
 	int currentFrame;
 	float timeElapsed;
 	float frameTime;
+	bool flipH;
 };
 
 

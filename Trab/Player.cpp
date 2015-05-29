@@ -11,17 +11,16 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y): bodySp("img/penguin.png"),speed(),timer(){
-	int novox = x - (bodySp.GetWidth()/2);
-	int novoy = y - (bodySp.GetHeight()/2);
+Player::Player(float x, float y): sp("img/penguin.png"),speed(),timer(){
+	int novox = x - (sp.GetWidth()/2);
+	int novoy = y - (sp.GetHeight()/2);
 	box.setX(novox);
 	box.setY(novoy);
-	box.setH(bodySp.GetHeight());
-	box.setW(bodySp.GetWidth());
-	linearSpeed = 0;
-	cannonAngle = 0;
+	box.setH(sp.GetHeight());
+	box.setW(sp.GetWidth());
 	hp = 30;
-	player = this;
+	speed.x = 15;
+	speed.y = 10;
 }
 
 Player::~Player(){
@@ -30,28 +29,71 @@ Player::~Player(){
 
 
 void Player::Update(float dt){
-	timer.Update(dt);
-	/*float distAPercorrer = 1;
+	//timer.Update(dt);
 
-	if(InputManager::GetInstance().IsKeyDown(SDLK_a)){
-		box.setX(box.getX() - distAPercorrer);
-	}
-	if(InputManager::GetInstance().IsKeyDown(SDLK_d)){
-		box.setX(box.getX() + distAPercorrer);
+	if(InputManager::GetInstance().KeyPress(SDLK_w) && jumpState != DJUMP)
+	{
+		if (jumpState == STAND)
+		{
+			jumpState = JUMP;
+		}
+		else if (jumpState == JUMP)
+		{
+			jumpState = DJUMP;
+			timer.Restart();
+		}
 	}
 
-	//gravidade
-	while(box.getY() < 450){
-		box.setY(box.getY() + dt);
+	if(InputManager::GetInstance().IsKeyDown(SDLK_a))
+	{
+		orientation = LEFT;
+		sp.SetFlipH(true);
+		box.setX(box.getX() - speed.x);
+		sp.Update(dt);
+	}
+	else if(InputManager::GetInstance().IsKeyDown(SDLK_d))
+	{
+		orientation = RIGHT;
+		sp.SetFlipH(false);
+		box.setX(box.getX() + speed.x);
+		sp.Update(dt);
+	}
+	else
+	{
+		sp.SetFrame(0);
 	}
 
-	if(InputManager::GetInstance().IsKeyDown(SDLK_w)){
-		box.setY(box.getY() + 100);
-	}*/
+	if (jumpState == JUMP || jumpState == DJUMP)
+	{
+		timer.Update(dt);
+
+		if (timer.Get() <= 0.6)
+		{
+			box.setY(box.getY() - speed.y);
+		}
+		else if (box.getY() < 200)
+		{
+			box.setY(box.getY() + speed.y);
+		}
+		else
+		{
+			jumpState = STAND;
+			timer.Restart();
+		}
+	}
+
+
+	if(box.getX() <= 324){
+		box.setX(1920);
+	}
+	if(box.getX() >= 3523){
+		box.setX(1920);
+	}
+
 }
 
 void Player::Render(){
-	bodySp.Render(box.getX() +  Camera::pos.getX(),box.getY() +  Camera::pos.getY());
+	sp.Render(box.getX() +  Camera::pos.getX(),box.getY() +  Camera::pos.getY());
 }
 
 
@@ -67,7 +109,7 @@ bool Player::IsDead(){
 
 
 Sprite Player::getSprite(){
-	return bodySp;
+	return sp;
 }
 
 void Player::NotifyCollision(GameObject& other){

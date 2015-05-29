@@ -14,6 +14,9 @@
 #include "EndState.h"
 #include "StateData.h"
 
+enum Facing { RIGHT, LEFT };
+enum Jumping { STAND, JUMP, DJUMP };
+
 class Player : public GameObject{
 public:
 	Player(float x,float y);
@@ -26,13 +29,13 @@ public:
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
 private:
-	Sprite bodySp;
-	Sprite weaponSp;
+	Sprite sp;
 	Point speed;
-	float linearSpeed;
-	float cannonAngle;
 	int hp;
 	Timer timer;
+	Facing orientation;
+	Jumping jumpState;
+
 };
 
 
