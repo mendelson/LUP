@@ -41,31 +41,39 @@ void Penguins::Update(float dt){
 	float posY = InputManager::GetInstance().GetMouseY() - Camera::pos.getY();
 	float proxHeight = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX() + speedWalk);
 	float antHeight = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX()- speedWalk);
-	if(InputManager::GetInstance().IsKeyDown(SDLK_w) && box.getY() >= 250){
+	/*if(InputManager::GetInstance().IsKeyDown(SDLK_w) && box.getY() >= 250){
 		pulando = true;
 		posInicial = box.getY();
-	}
-	if(InputManager::GetInstance().IsKeyDown(SDLK_a) && box.getY() <= antHeight){
+	}*/
+	if(InputManager::GetInstance().IsKeyDown(SDLK_a) ){
 		box.setX(box.getX() - speedWalk);
 	}
-	if(InputManager::GetInstance().IsKeyDown(SDLK_d) && box.getY() <= proxHeight){
+	if(InputManager::GetInstance().IsKeyDown(SDLK_d)){
 		box.setX(box.getX() + speedWalk);
 	}
 
-	if(pulando == true){
-		if((posInicial - box.getY()) < 150){
-			box.setY(box.getY() - 2*gravity*dt);
-		}else{
-			pulando = false;
-		}
-	}else{
-		if(box.getY() < floorHeight && floorHeight != 0){
-			box.setY(box.getY() + gravity*dt);
-		}
-		if(box.getY() > floorHeight){
-				box.setY(floorHeight);
-		}
+	if(InputManager::GetInstance().IsKeyDown(SDLK_s)){
+		box.setY(box.getY() + speedWalk);
 	}
+
+	if(InputManager::GetInstance().IsKeyDown(SDLK_w)){
+			box.setY(box.getY() - speedWalk);
+		}
+
+//	if(pulando == true){
+//		if((posInicial - box.getY()) < 150){
+//			box.setY(box.getY() - 2*gravity*dt);
+//		}else{
+//			pulando = false;
+//		}
+//	}else{
+//		if(box.getY() < floorHeight && floorHeight != 0){
+//			box.setY(box.getY() + gravity*dt);
+//		}
+//		if(box.getY() > floorHeight){
+//				box.setY(floorHeight);
+//		}
+//	}
 
 
 	if(box.getX() <= 324){

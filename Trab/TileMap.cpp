@@ -7,6 +7,7 @@
 
 #include "TileMap.h"
 #include "Camera.h"
+#include "InputManager.h"
 
 TileMap::TileMap(string file, TileSet* tileSet){
 	Load(file);
@@ -40,12 +41,25 @@ int& TileMap::At(int x, int y, int z = 0){
 }
 
 void TileMap::RenderLayer(int layer, int cameraX = 0, int cameraY = 0){
+	int raioPlaneta = 1000;
+	int qntTiles = 600/tileSet->GetTileWidth();
 	for(int i=0;i<mapHeight;i++){
 		for(int j=0;j<(mapWidth*3);j++){
 			int auxj = abs(j)%mapWidth;
-			int aux = At(auxj,i,layer);
+			int aux = At(0,0,layer);
+			int tileAtualCam = -cameraX/tileSet->GetTileWidth();
+			float angle = j - tileAtualCam;
+			float posX = raioPlaneta*cos(qntTiles*angle);
+			float posy = raioPlaneta*sin(qntTiles*angle) + i*tileSet->GetTileHeight();
+			posX = 1920 + posX + cameraX*(layer+1);
+			posy = posy  + cameraY*(layer+1) + 250 + raioPlaneta;
 			if(aux >= 0){
-				tileSet->Render(aux,j*tileSet->GetTileWidth() + cameraX*(layer+1) ,i*tileSet->GetTileHeight() + cameraY*(layer+1) + 250);
+				//cout << "Imprimiu tile!" << cameraX << " - "  << posX  << " - "  << cameraY  << " - "  << posy << endl;
+				angle += 3.1415/2;
+				tileSet->Render(0,posX  ,posy,angle*180/3.1415);
+			}
+			if(InputManager::GetInstance().KeyPress(SDLK_p)){
+				cout << tileAtualCam << endl;
 			}
 		}
 	}

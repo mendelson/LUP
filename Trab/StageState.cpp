@@ -11,7 +11,7 @@
 #include "Camera.h"
 #include "Collision.h"
 
-StageState::StageState() : bg("img/ocean.jpg") ,tileSet(64,64,"img/tileset.png"), tileMap("map/tileMap.txt",&tileSet),music("audio/stageState.ogg"){
+StageState::StageState() : bg("img/ocean.jpg") ,tileSet(64,64,"img/tileTeste.jpg"), tileMap("map/tileMapTeste.txt",&tileSet),music("audio/stageState.ogg"){
 	quitRequested = false;
 	srand( (unsigned int)time(NULL));
 	GameObject* penguin = new Penguins(1920,100);
