@@ -1,42 +1,36 @@
 /*
  * Player.h
  *
- *  Created on: 22/05/2015
- *      Author: Vitor
+ *  Created on: 29/05/2015
+ *      Author: Lucas
  */
 
-#ifndef TRAB_PLAYER_H_
-#define TRAB_PLAYER_H_
+#ifndef TRAB_SUPPORT_H_
+#define TRAB_SUPPORT_H_
 #include "GameObject.h"
 #include "Timer.h"
 #include "StillAnimation.h"
 #include "Sound.h"
 #include "EndState.h"
 #include "StateData.h"
+#include "Player.h"
 
-enum Jumping { STAND, JUMP, DJUMP };
-
-class Player : public GameObject{
+class Support : public GameObject{
 public:
-	Player(float x,float y);
-	~Player();
+	Support();
+	~Support();
 	void Update(float dt);
 	void Render();
 	bool IsDead();
 	Sprite getSprite();
-	static Player* player;
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
-	Facing orientation;
 private:
 	Sprite sp;
-	Point speed;
-	int hp;
 	Timer timer;
-	Jumping jumpState;
-	int jumpY;
-	int jumped;
+	Facing orientation;
+	float orbitation;
 };
 
 
-#endif /* TRAB_PLAYER_H_ */
+#endif /* TRAB_SUPPORT_H_ */

@@ -27,6 +27,9 @@ StageState::StageState() : bg("img/ocean.jpg") ,tileSet(64,64,"img/tileset.png")
 	GameObject* jelly = new Jellyfish (2120, 0);
 	objectArray.emplace_back(jelly);
 
+	GameObject* support = new Support ();
+	objectArray.emplace_back(support);
+
 	//GameObject* alien = new Alien(512,300,5,(rand()%5) + 3);
 	//objectArray.emplace_back(alien);
 	//GameObject* alien2 = new Alien(300,512,5,(rand()%5) + 3);
