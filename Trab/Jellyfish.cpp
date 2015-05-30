@@ -58,6 +58,16 @@ void Jellyfish::Update(float dt)
 			Shoot(*playerPos);
 			shootcd.Restart();
 		}
+		if (playerPos->x > currentPos->x)
+		{
+			orientation = RIGHT;
+			sp.SetFlipH(true);
+		}
+		else if (playerPos->x < currentPos->x)
+		{
+			orientation = LEFT;
+			sp.SetFlipH(false);
+		}
 	}
 }
 
