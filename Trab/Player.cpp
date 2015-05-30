@@ -25,6 +25,8 @@ Player::Player(float x, float y): sp("img/player.png",8,0.3),speed(),timer(){
 	orientation = RIGHT;
 	jumped = 0;
 
+	player = this;
+
 }
 
 Player::~Player(){
@@ -105,12 +107,6 @@ void Player::Render(){
 		c = 80;
 
 	sp.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
-
-	if(InputManager::GetInstance().IsKeyDown(SDLK_q))
-	{
-		std::cout << box.getX() +  Camera::pos.getX() << std::endl;
-		std::cout << box.getY() +  Camera::pos.getY() << std::endl;
-	}
 }
 
 

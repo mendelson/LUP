@@ -14,7 +14,6 @@
 #include "EndState.h"
 #include "StateData.h"
 
-enum Facing { RIGHT, LEFT };
 enum Jumping { STAND, JUMP, DJUMP };
 
 class Player : public GameObject{

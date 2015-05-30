@@ -24,6 +24,9 @@ StageState::StageState() : bg("img/ocean.jpg") ,tileSet(64,64,"img/tileset.png")
 	objectArray.emplace_back(player);
 	Camera::Follow(player);
 
+	GameObject* jelly = new Jellyfish (2120, 0);
+	objectArray.emplace_back(jelly);
+
 	//GameObject* alien = new Alien(512,300,5,(rand()%5) + 3);
 	//objectArray.emplace_back(alien);
 	//GameObject* alien2 = new Alien(300,512,5,(rand()%5) + 3);
@@ -72,7 +75,7 @@ void StageState::Pause(){
 }
 
 void StageState::Resume(){
-	music.Play(-1);
+	//music.Play(-1);
 }
 
 float StageState::getTileMapHeight(int x){

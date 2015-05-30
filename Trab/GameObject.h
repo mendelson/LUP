@@ -12,6 +12,8 @@
 #include "Sprite.h"
 using std::string;
 
+enum Facing { RIGHT, LEFT };
+
 class GameObject{
 public:
 	virtual ~GameObject(){};

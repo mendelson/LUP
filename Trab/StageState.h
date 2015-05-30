@@ -20,6 +20,7 @@
 #include "Minion.h"
 #include "Penguins.h"
 #include "Player.h"
+#include "Jellyfish.h"
 #include "State.h"
 #include "Music.h"
 using std::string;
