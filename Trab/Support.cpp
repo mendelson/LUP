@@ -1,15 +1,13 @@
 #include "Support.h"
 
-Support::Support() : sp("img/support.png"), timer()
+Support::Support() : sp("img/support.png",19,0.3,2,15), timer()
 {
-	sp.SetScaleX(0.05);
-	sp.SetScaleY(0.05);
 
 	orientation = Player::player->orientation;
 
 	int c;
 	if (orientation == RIGHT)
-		c = -50;
+		c = -13;
 	else
 		c = Player::player->box.getW() + 50;
 
@@ -29,16 +27,12 @@ Support::~Support()
 void Support::Update(float dt)
 {
 	timer.Update(dt);
-	if (timer.Get() >= 2)
-	{
-		timer.Restart();
-	}
 
 	orientation = Player::player->orientation;
 	int c;
 	if (orientation == RIGHT)
 	{
-		c = -50;
+		c = -13;
 		sp.SetFlipH(false);
 	}
 	else
@@ -47,17 +41,10 @@ void Support::Update(float dt)
 		sp.SetFlipH(true);
 	}
 
-	if (timer.Get() <= 1)
-	{
-		orbitation += 0.5;
-	}
-	else
-	{
-		orbitation -= 0.5;
-	}
-
 	box.setX(Player::player->box.getX() + c);
-	box.setY(Player::player->box.getY() + 50 + orbitation);
+	box.setY(Player::player->box.getY() + 50);
+
+	sp.Update(dt);
 }
 
 void Support::Render()

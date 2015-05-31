@@ -22,17 +22,18 @@ Sprite::Sprite(){
 	flipH = false;
 }
 
-Sprite::Sprite(string file,int frameCount,float frameTime){
+Sprite::Sprite(string file,int frameCount, float frameTime, float rows, float columns){
 	texture = NULL;
 	this->frameCount = frameCount;
 	this->frameTime = frameTime;
+	this->rows = rows;
+	this->columns = columns;
 	currentFrame = 0;
 	timeElapsed = 0;
 	Open(file);
 	scaleX = 1;
 	scaleY = 1;
 	flipH = false;
-
 }
 
 Sprite::~Sprite(){
@@ -55,7 +56,8 @@ void Sprite::Open(string file){
 		std::cout << "Erro: " << SDL_GetError() << std::endl;
 	}
 
-	width = width/frameCount;
+	width = width/columns;
+	height = height/rows;
 
 	SetClip(0,0,width,height);
 }
@@ -116,7 +118,19 @@ void Sprite::Update(float dt){
 			currentFrame = 0;
 			timeElapsed = 0;
 		}
-		SetClip(currentFrame*width,0,width,height);
+		int x = currentFrame;
+		while (x > (columns-1))
+			x -= columns;
+		int y = floor (currentFrame/columns);
+		SetClip(x*width,y*height,width,height);
+		if (rows > 1)
+		{
+			if (currentFrame == 15)
+			{
+				std::cout << x << std::endl;
+				std::cout << y << std::endl;
+			}
+		}
 	}
 }
 

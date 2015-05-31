@@ -8,7 +8,7 @@
 #include "Bullet.h"
 #include "Camera.h"
 
-Bullet::Bullet(float x,float y,float angle, float speed, float maxDistance, string Sprite,bool targetsPlay,int frameCount):sp(Sprite,frameCount,0.1){
+Bullet::Bullet(float x,float y,float angle, float speed, float maxDistance, string Sprite,bool targetsPlay,int frameCount):sp(Sprite,frameCount,0.1,1,frameCount){
 	box.setX(x - sp.GetWidth()/2);
 	box.setY(y - sp.GetHeight()/2);
 	box.setH(sp.GetHeight());

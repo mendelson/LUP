@@ -11,7 +11,7 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y): sp("img/player.png",8,0.3),speed(),timer(){
+Player::Player(float x, float y): sp("img/player.png",8,0.3,1,8),speed(),timer(){
 	int novox = x - (sp.GetFrameWidth()/2);
 	int novoy = y - (sp.GetHeight()/2);
 	box.setX(novox);

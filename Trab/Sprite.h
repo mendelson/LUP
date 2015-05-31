@@ -15,7 +15,7 @@ using std::string;
 class Sprite{
 public:
 	Sprite();
-	Sprite(string file,int frameCount = 1,float frameTime = 1);
+	Sprite(string file,int frameCount = 1,float frameTime = 1, float rows = 1, float columns = 1);
 	~Sprite();
 	void Open(string file);
 	void SetClip(int x, int y,int w,int h);
@@ -42,6 +42,8 @@ private:
 	int currentFrame;
 	float timeElapsed;
 	float frameTime;
+	int rows;
+	int columns;
 	bool flipH;
 };
 
