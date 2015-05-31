@@ -123,14 +123,6 @@ void Sprite::Update(float dt){
 			x -= columns;
 		int y = floor (currentFrame/columns);
 		SetClip(x*width,y*height,width,height);
-		if (rows > 1)
-		{
-			if (currentFrame == 15)
-			{
-				std::cout << x << std::endl;
-				std::cout << y << std::endl;
-			}
-		}
 	}
 }
 
