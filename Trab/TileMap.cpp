@@ -60,7 +60,7 @@ void TileMap::RenderLayer(int layer, int cameraX = 0, int cameraY = 0){
 			int indexRender = 18;
 			if(layer > 0 ){
 				posy -= 250;
-				indexRender = 217;
+				indexRender = 0;
 				if(i>0 || (j%10)>1){
 					aux = -1;
 				}
