@@ -19,6 +19,8 @@ Sprite::Sprite(){
 	frameTime = 1;
 	currentFrame = 0;
 	timeElapsed = 0;
+	loopStart = 0;
+	loopEnd = 0;
 	flipH = false;
 }
 
@@ -30,6 +32,8 @@ Sprite::Sprite(string file,int frameCount, float frameTime, float rows, float co
 	this->columns = columns;
 	currentFrame = 0;
 	timeElapsed = 0;
+	loopStart = 0;
+	loopEnd = frameCount;
 	Open(file);
 	scaleX = 1;
 	scaleY = 1;
@@ -114,8 +118,8 @@ void Sprite::Update(float dt){
 	if(timeElapsed >= frameTime){
 		currentFrame++;
 		timeElapsed = 0;
-		if(currentFrame >= frameCount){
-			currentFrame = 0;
+		if(currentFrame >= loopEnd){
+			currentFrame = loopStart;
 			timeElapsed = 0;
 		}
 		int x = currentFrame;
@@ -146,4 +150,10 @@ int Sprite::GetFrameWidth(){
 void Sprite::SetFlipH(bool flipH)
 {
 	this->flipH = flipH;
+}
+
+void Sprite::SetLoop(int start, int end)
+{
+	loopStart = start;
+	loopEnd = end;
 }

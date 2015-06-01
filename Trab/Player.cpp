@@ -11,13 +11,14 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y): sp("img/player.png",8,0.3,1,8),speed(),timer(){
-	int novox = x - (sp.GetFrameWidth()/2);
-	int novoy = y - (sp.GetHeight()/2);
+Player::Player(float x, float y): body("img/lup.png",8,0.3,1,8), speed(),timer()
+{
+	int novox = x - (body.GetFrameWidth()/2);
+	int novoy = y - (body.GetHeight()/2);
 	box.setX(novox);
 	box.setY(novoy);
-	box.setH(sp.GetHeight());
-	box.setW(sp.GetWidth());
+	box.setH(body.GetHeight());
+	box.setW(body.GetWidth());
 	hp = 30;
 	speed.x = 15;
 	speed.y = 25;
@@ -27,6 +28,9 @@ Player::Player(float x, float y): sp("img/player.png",8,0.3,1,8),speed(),timer()
 
 	player = this;
 
+	loopStart = 0;
+	loopEnd = 0;
+
 }
 
 Player::~Player(){
@@ -34,8 +38,10 @@ Player::~Player(){
 }
 
 
-void Player::Update(float dt){
-	//timer.Update(dt);
+void Player::Update(float dt)
+{
+	if (energyUpdate == true)
+		energyUpdate = false;
 
 	if(InputManager::GetInstance().KeyPress(SDLK_w) && jumpState != DJUMP)
 	{
@@ -53,23 +59,29 @@ void Player::Update(float dt){
 
 	if(InputManager::GetInstance().IsKeyDown(SDLK_a))
 	{
+		loopStart = 0;
+		loopEnd = 8;
 		orientation = LEFT;
-		sp.SetFlipH(true);
+		body.SetFlipH(true);
 		box.setX(box.getX() - speed.x);
-		sp.Update(dt);
 	}
 	else if(InputManager::GetInstance().IsKeyDown(SDLK_d))
 	{
+		loopStart = 0;
+		loopEnd = 8;
 		orientation = RIGHT;
-		sp.SetFlipH(false);
+		body.SetFlipH(false);
 		box.setX(box.getX() + speed.x);
-		sp.Update(dt);
 	}
 	else
 	{
-		sp.SetFrame(0);
-		sp.Update(0);
+		loopStart = 0;
+		loopEnd = 0;
+		body.SetFrame(0);
+
 	}
+	body.SetLoop(loopStart,loopEnd);
+	body.Update(dt);
 
 	if (jumpState == JUMP || jumpState == DJUMP)
 	{
@@ -99,18 +111,20 @@ void Player::Update(float dt){
 
 }
 
-void Player::Render(){
+void Player::Render()
+{
 	int c;
 	if (orientation == RIGHT)
 		c = -80;
 	else
 		c = 80;
 
-	sp.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
+	body.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
 }
 
 
-bool Player::Is(string type){
+bool Player::Is(string type)
+{
 	return (type == "Player");
 }
 bool Player::IsDead(){
@@ -121,9 +135,26 @@ bool Player::IsDead(){
 }
 
 
-Sprite Player::getSprite(){
-	return sp;
+Sprite Player::getSprite()
+{
+	return body;
 }
 
-void Player::NotifyCollision(GameObject& other){
+void Player::NotifyCollision(GameObject& other)
+{
+}
+
+int Player::GetHp()
+{
+	return hp;
+}
+
+int Player::GetXp()
+{
+	return xp;
+}
+
+bool Player::GetEnergyUpdate()
+{
+	return energyUpdate;
 }

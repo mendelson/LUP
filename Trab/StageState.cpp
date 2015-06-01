@@ -24,8 +24,11 @@ StageState::StageState() : bg("img/ocean.jpg") ,tileSet(64,64,"img/tileset.png")
 	objectArray.emplace_back(player);
 	Camera::Follow(player);
 
-	GameObject* jelly = new Jellyfish (2120, 0);
-	objectArray.emplace_back(jelly);
+	GameObject* weapon = new Weapon("img/lup_vassoura.png");
+	objectArray.emplace_back(weapon);
+
+	GameObject* tank = new EnemyTank (2120, 200);
+	objectArray.emplace_back(tank);
 
 	GameObject* support = new Support ();
 	objectArray.emplace_back(support);

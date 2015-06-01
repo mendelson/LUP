@@ -27,11 +27,20 @@ public:
 	static Player* player;
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
+	int GetHp();
+	int GetXp();
+	bool GetEnergyUpdate();
+
 	Facing orientation;
+	int loopStart;
+	int loopEnd;
+
 private:
-	Sprite sp;
+	Sprite body;
 	Point speed;
 	int hp;
+	int xp;
+	bool energyUpdate;
 	Timer timer;
 	Jumping jumpState;
 	int jumpY;

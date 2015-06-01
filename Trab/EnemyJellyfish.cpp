@@ -1,7 +1,7 @@
-#include "Jellyfish.h"
+#include "EnemyJellyfish.h"
 #include "Game.h"
 
-Jellyfish::Jellyfish(float x,float y) : sp("img/inimigo_01.png"),speed(),shootcd()
+EnemyJellyfish::EnemyJellyfish(float x,float y) : sp("img/inimigo_01.png"),speed(),shootcd()
 {
 	int novox = x - (sp.GetFrameWidth()/2);
 	int novoy = y - (sp.GetHeight()/2);
@@ -15,12 +15,12 @@ Jellyfish::Jellyfish(float x,float y) : sp("img/inimigo_01.png"),speed(),shootcd
 	orientation = LEFT;
 }
 
-Jellyfish::~Jellyfish()
+EnemyJellyfish::~EnemyJellyfish()
 {
 
 }
 
-void Jellyfish::Update(float dt)
+void EnemyJellyfish::Update(float dt)
 {
 	Point* playerPos = new Point (Player::player->box.getCenterX(), Player::player->box.getCenterY());
 	Point* currentPos = new Point (box.getCenterX(), box.getCenterY());
@@ -71,7 +71,7 @@ void Jellyfish::Update(float dt)
 	}
 }
 
-void Jellyfish::Render()
+void EnemyJellyfish::Render()
 {
 	int c;
 	if (orientation == RIGHT)
@@ -82,27 +82,27 @@ void Jellyfish::Render()
 	sp.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
 }
 
-bool Jellyfish::IsDead()
+bool EnemyJellyfish::IsDead()
 {
 	return (hp <= 0);
 }
 
-Sprite Jellyfish::getSprite()
+Sprite EnemyJellyfish::getSprite()
 {
 	return sp;
 }
 
-bool Jellyfish::Is(string type)
+bool EnemyJellyfish::Is(string type)
 {
-	return (type == "Jellyfish");
+	return (type == "EnemyJellyfish");
 }
 
-void Jellyfish::NotifyCollision(GameObject&)
+void EnemyJellyfish::NotifyCollision(GameObject&)
 {
 
 }
 
-void Jellyfish::Shoot(Point pos){
+void EnemyJellyfish::Shoot(Point pos){
 	Point* pspeed = new Point(box.getCenterX() - pos.getX(),box.getCenterY() - pos.getY());
 	float speed = pspeed->magVector();
 	float angle = atan(pspeed->getY()/pspeed->getX());

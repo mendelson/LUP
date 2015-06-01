@@ -5,8 +5,8 @@
  *      Author: Lucas
  */
 
-#ifndef TRAB_JELLYFISH_H_
-#define TRAB_JELLYFISH_H_
+#ifndef TRAB_ENEMYJELLYFISH_H_
+#define TRAB_ENEMYJELLYFISH_H_
 #include "Sprite.h"
 #include "Point.h"
 #include "GameObject.h"
@@ -15,10 +15,10 @@
 #include "InputManager.h"
 #include "Player.h"
 
-class Jellyfish : public GameObject{
+class EnemyJellyfish : public GameObject{
 public:
-	Jellyfish(float x,float y);
-	~Jellyfish();
+	EnemyJellyfish(float x,float y);
+	~EnemyJellyfish();
 	void Update(float dt);
 	void Render();
 	bool IsDead();
@@ -35,4 +35,4 @@ private:
 };
 
 
-#endif /* TRAB_JELLYFISH_H_ */
+#endif /* TRAB_ENEMYJELLYFISH_H_ */

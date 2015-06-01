@@ -12,7 +12,7 @@ Support::Support() : sp("img/support.png",19,0.3,2,15), timer()
 		c = Player::player->box.getW() + 50;
 
 	box.setX(Player::player->box.getX() + c);
-	box.setY(Player::player->box.getY() + 50);
+	box.setY(Player::player->box.getY() + 1);
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
 
@@ -42,7 +42,7 @@ void Support::Update(float dt)
 	}
 
 	box.setX(Player::player->box.getX() + c);
-	box.setY(Player::player->box.getY() + 50);
+	box.setY(Player::player->box.getY() + 1);
 
 	sp.Update(dt);
 }
