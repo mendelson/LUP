@@ -15,13 +15,15 @@ TileSet::TileSet(int aux_tileWidth, int aux_tileHeight, string file) : tileSet(f
 		exit(1);
 	}
 	rows = tileSet.GetHeight()/tileHeight;
+	cout<< "rows : " << rows << endl;
 	columns = tileSet.GetWidth()/tileWidth;
+	cout<< "columns : " << columns << endl;
 }
 
 
 void TileSet::Render(unsigned int index,float x,float y,float angle){
 	if(index > ((rows*columns) - 1)){
-		cout << "Index de tileSet inválido!!" << endl;
+		cout << "Index de tileSet inválido!!  - " << index << endl;
 		exit(1);
 	}
 	int sp_x = index%columns;

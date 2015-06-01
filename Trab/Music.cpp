@@ -17,7 +17,7 @@ Music::Music(std::string file){
 }
 
 void Music::Play(int times){
-	Mix_PlayMusic(music,times);
+	//Mix_PlayMusic(music,times);
 }
 
 void Music::Stop(){
