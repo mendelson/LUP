@@ -1,9 +1,3 @@
-/*
- * Player.cpp
- *
- *  Created on: 22/05/2015
- *      Author: Vitor
- */
 #include "Player.h"
 #include "InputManager.h"
 #include "Camera.h"

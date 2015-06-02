@@ -1,12 +1,6 @@
-/*
- * Player.h
- *
- *  Created on: 22/05/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_PLAYER_H_
 #define SRC_PLAYER_H_
+
 #include "GameObject.h"
 #include "Timer.h"
 #include "StillAnimation.h"

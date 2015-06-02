@@ -1,11 +1,3 @@
-/*
- * Text.cpp
- *
- *  Created on: 11/05/2015
- *      Author: Vitor
- */
-
-
 #include "Text.h"
 #include "Resources.h"
 #include "Camera.h"
@@ -103,6 +95,7 @@ void Text::RemakeTexture(){
 	int w;
 	int h;
 	SDL_QueryTexture(texture,NULL,NULL,&w,&h);
+
 	box.setW(w);
 	box.setH(h);
 }

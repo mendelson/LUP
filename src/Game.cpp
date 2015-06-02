@@ -1,10 +1,3 @@
-/*
- * Game.cpp
- *
- *  Created on: 18/03/2015
- *      Author: Vitor
- */
-
 #include "Game.h"
 
 #include "InputManager.h"

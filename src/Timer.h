@@ -1,15 +1,7 @@
-/*
- * Timer.h
- *
- *  Created on: 24/04/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_TIMER_H_
 #define SRC_TIMER_H_
 
-
-class Timer{
+class Timer {
 public:
 	Timer();
 	void Update(float dt);
@@ -18,6 +10,5 @@ public:
 private:
 	float time;
 };
-
 
 #endif /* SRC_TIMER_H_ */

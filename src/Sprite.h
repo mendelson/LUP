@@ -1,15 +1,10 @@
-/*
- * Sprite.h
- *
- *  Created on: 21/03/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_SPRITE_H_
 #define SRC_SPRITE_H_
+
 #include "SDL.h"
 #include <iostream>
 #include <stdlib.h>
+
 using std::string;
 
 class Sprite{
@@ -49,7 +44,5 @@ private:
 	int columns;
 	bool flipH;
 };
-
-
 
 #endif /* SRC_SPRITE_H_ */

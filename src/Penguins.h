@@ -1,12 +1,6 @@
-/*
- * Penguins.h
- *
- *  Created on: 24/04/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_PENGUINS_H_
 #define SRC_PENGUINS_H_
+
 #include "GameObject.h"
 #include "Timer.h"
 #include "StillAnimation.h"
@@ -26,6 +20,9 @@ public:
 	static Penguins* player;
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
+	int getLife() {	return hp; }
+	int getXp() { return xp; }
+	bool getEnergyUpdate() { return newEnergy; }
 private:
 	Sprite bodySp;
 	Sprite cannonSp;
@@ -36,7 +33,8 @@ private:
 	Timer timer;
 	bool pulando;
 	float posInicial;
+	int xp;
+	bool newEnergy;
 };
-
 
 #endif /* SRC_PENGUINS_H_ */

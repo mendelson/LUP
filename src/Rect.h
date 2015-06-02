@@ -1,15 +1,9 @@
-/*
- * Rect.h
- *
- *  Created on: 25/03/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_RECT_H_
 #define SRC_RECT_H_
+
 #include "Point.h"
 
-class Rect{
+class Rect {
 public:
 	float x;
 	float y;
@@ -17,7 +11,7 @@ public:
 	float h;
 
 	Rect();
-	Rect(float aux_x,float aux_y,float aux_w, float aux_h);
+	Rect(float aux_x, float aux_y, float aux_w, float aux_h);
 	void setX(float aux_x);
 	void setY(float aux_y);
 	void setW(float aux_w);
@@ -33,8 +27,5 @@ public:
 	float pegaDistFromCenter(Rect rect);
 	bool isPontoInside(Point ponto);
 };
-
-
-
 
 #endif /* SRC_RECT_H_ */

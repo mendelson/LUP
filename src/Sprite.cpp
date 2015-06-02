@@ -1,10 +1,3 @@
-/*
- * Sprite.cpp
- *
- *  Created on: 21/03/2015
- *      Author: Vitor
- */
-
 #include "Sprite.h"
 #include "Game.h"
 #include "Resources.h"

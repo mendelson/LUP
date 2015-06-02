@@ -1,12 +1,7 @@
-/*
- * Point.cpp
- *
- *  Created on: 25/03/2015
- *      Author: Vitor
- */
-
-
 #include "Point.h"
+
+#include <cmath>
+
 #include "Game.h"
 
 Point::Point(){

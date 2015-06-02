@@ -14,7 +14,7 @@
 #include "Text.h"
 #include "Sprite.h"
 
-class EndState: public State{
+class EndState: public State {
 public:
 	EndState(StateData stateData);
 	void Update(float dt);
@@ -26,8 +26,5 @@ private:
 	Music music;
 	Text instruction;
 };
-
-
-
 
 #endif /* SRC_ENDSTATE_H_ */

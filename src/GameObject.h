@@ -1,10 +1,3 @@
-/*
- * GameObject.h
- *
- *  Created on: 27/03/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_GAMEOBJECT_H_
 #define SRC_GAMEOBJECT_H_
 #include "Rect.h"

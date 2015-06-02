@@ -1,12 +1,3 @@
-/*
- * Game.h
- *
- *  Created on: 18/03/2015
- *      Author: Vitor
- */
-
-
-
 #ifndef SRC_GAME_H_
 #define SRC_GAME_H_
 
@@ -52,6 +43,5 @@ private:
 	void CalculateDeltaTime();
 	std::stack<std::unique_ptr<State>> stateStack;
 };
-
 
 #endif /* SRC_GAME_H_ */

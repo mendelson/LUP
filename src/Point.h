@@ -1,16 +1,7 @@
-/*
- * Point.h
- *
- *  Created on: 25/03/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_POINT_H_
 #define SRC_POINT_H_
 
-#include<math.h>
-
-class Point{
+class Point {
 public:
 	float x;
 	float y;
@@ -31,16 +22,14 @@ public:
 	void negateVector();
 	float magVector();
 
-	 Point operator+(const Point& rhs) const {
-	    return Point(x + rhs.x, y + rhs.y);
-	 }
+	Point operator+(const Point& rhs) const {
+		return Point(x + rhs.x, y + rhs.y);
+	}
 
-	 Point operator-(const Point& rhs) const {
-	    return Point(x - rhs.x, y - rhs.y);
-	 }
-
+	Point operator-(const Point& rhs) const {
+		return Point(x - rhs.x, y - rhs.y);
+	}
 
 };
-
 
 #endif /* SRC_POINT_H_ */

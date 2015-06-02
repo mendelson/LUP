@@ -1,10 +1,3 @@
-/*
- * Bullet.cpp
- *
- *  Created on: 16/04/2015
- *      Author: Vitor
- */
-
 #include "Bullet.h"
 #include "Camera.h"
 

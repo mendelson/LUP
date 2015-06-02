@@ -1,12 +1,6 @@
-/*
- * State.h
- *
- *  Created on: 21/03/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_STAGESTATE_H_
 #define SRC_STAGESTATE_H_
+
 #include "SDL.h"
 #include "Sprite.h"
 #include <vector>
@@ -25,9 +19,11 @@
 #include "Support.h"
 #include "State.h"
 #include "Music.h"
+#include "UI.h"
+
 using std::string;
 
-class StageState : public State{
+class StageState: public State {
 public:
 	StageState();
 	~StageState();
@@ -41,7 +37,7 @@ private:
 	TileMap tileMap;
 	Sprite bg;
 	Music music;
+	UI ui;
 };
-
 
 #endif /* SRC_STAGESTATE_H_ */

@@ -10,7 +10,6 @@
 #include "GameObject.h"
 #include "Point.h"
 #include "Bullet.h"
-//#include "State.h"
 
 class Minion: public GameObject{
 public:

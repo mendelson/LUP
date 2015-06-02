@@ -1,15 +1,10 @@
-/*
- * Text.h
- *
- *  Created on: 11/05/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_TEXT_H_
 #define SRC_TEXT_H_
+
 #include <iostream>
 #include "SDL_ttf.h"
 #include "Rect.h"
+
 class Text{
 public:
 	enum TextStyle{SOLID,SHADED,BLENDED};
@@ -22,7 +17,8 @@ public:
 	void SetColor(SDL_Color color);
 	void SetStyle(TextStyle style);
 	void SetFontSize(int fontSize);
-
+	float GetXCenter() { return box.x*2 + box.getW(); }
+	float GetYCenter() { return box.y*2 + box.getH(); }
 private:
 	void RemakeTexture();
 	TTF_Font* font;
@@ -33,7 +29,5 @@ private:
 	SDL_Color color;
 	Rect box;
 };
-
-
 
 #endif /* SRC_TEXT_H_ */

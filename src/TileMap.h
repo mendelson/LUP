@@ -1,10 +1,3 @@
-/*
- * TileMap.h
- *
- *  Created on: 07/04/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_TILEMAP_H_
 #define SRC_TILEMAP_H_
 #include<iostream>

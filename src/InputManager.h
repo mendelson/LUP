@@ -1,12 +1,6 @@
-/*
- * InputManager.h
- *
- *  Created on: 08/04/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_INPUTMANAGER_H_
 #define SRC_INPUTMANAGER_H_
+
 #define LEFT_ARROW_KEY SDLK_LEFT
 #define RIGHT_ARROW_KEY SDLK_RIGHT
 #define UP_ARROW_KEY SDLK_UP
@@ -15,7 +9,9 @@
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
 #define SPACE_KEY SDLK_SPACE
-#include<iostream>
+#define RETURN_KEY SDLK_RETURN
+
+#include <iostream>
 #include <unordered_map>
 #include "SDL.h"
 
@@ -23,7 +19,7 @@ using std::cout;
 using std::string;
 using std::endl;
 
-class InputManager{
+class InputManager {
 public:
 	void Update();
 	bool KeyPress(int key);
@@ -48,7 +44,5 @@ private:
 	int mouseX;
 	int mouseY;
 };
-
-
 
 #endif /* SRC_INPUTMANAGER_H_ */

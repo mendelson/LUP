@@ -1,10 +1,3 @@
-/*
- * State.h
- *
- *  Created on: 06/05/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_STATE_H_
 #define SRC_STATE_H_
 #include <iostream>
