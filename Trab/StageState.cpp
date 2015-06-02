@@ -11,7 +11,7 @@
 #include "Camera.h"
 #include "Collision.h"
 
-StageState::StageState() : bg("img/ocean.jpg") ,tileSet(64,64,"img/tileset.png"), tileMap("map/tileMap.txt",&tileSet),music("audio/stageState.ogg"){
+StageState::StageState() : bg("img/ocean.jpg") ,tileSet(60,60,"img/plataformas.png"), tileMap("map/tileMapTeste.txt",&tileSet),music("audio/stageState.ogg"){
 	quitRequested = false;
 	srand( (unsigned int)time(NULL));
 	/*
@@ -20,14 +20,14 @@ StageState::StageState() : bg("img/ocean.jpg") ,tileSet(64,64,"img/tileset.png")
 	Camera::Follow(penguin);
 	*/
 
-	GameObject* player = new Player(1920,200);
+	GameObject* player = new Player(1920,100);
 	objectArray.emplace_back(player);
 	Camera::Follow(player);
 
 	GameObject* weapon = new Weapon("img/lup_vassoura.png");
 	objectArray.emplace_back(weapon);
 
-	GameObject* tank = new EnemyTank (2120, 200);
+	GameObject* tank = new EnemyTank (2120, 100);
 	objectArray.emplace_back(tank);
 
 	GameObject* support = new Support ();
@@ -85,5 +85,5 @@ void StageState::Resume(){
 }
 
 float StageState::getTileMapHeight(int x){
-	return tileMap.GetFloorHeight(x);
+	return tileMap.GetFloorHeight(x,Camera::pos.getX());
 }

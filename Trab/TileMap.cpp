@@ -7,6 +7,7 @@
 
 #include "TileMap.h"
 #include "Camera.h"
+#include "InputManager.h"
 
 TileMap::TileMap(string file, TileSet* tileSet){
 	Load(file);
@@ -40,12 +41,38 @@ int& TileMap::At(int x, int y, int z = 0){
 }
 
 void TileMap::RenderLayer(int layer, int cameraX = 0, int cameraY = 0){
+	int raioPlaneta = 1000;
+	int qntTiles = 600/tileSet->GetTileWidth();
 	for(int i=0;i<mapHeight;i++){
-		for(int j=0;j<(mapWidth*3);j++){
+		for(int j=0;j<mapWidth*3;j++){
 			int auxj = abs(j)%mapWidth;
-			int aux = At(auxj,i,layer);
+			int aux = At(9,1,layer);
+			int tileAtualCam = -cameraX/tileSet->GetTileWidth();
+			float angle = j - tileAtualCam;
+			angle = angle/18;
+			//cout << angle << endl;
+			float posX = raioPlaneta*cos(angle);
+			float posy = raioPlaneta*sin(angle) + i*tileSet->GetTileHeight();
+			posX +=  500;
+			//posX = 1920 + posX + cameraX;
+			posy = posy  + cameraY + 100 + raioPlaneta;
+			//posy = 100;
+			//posX += mapWidth*tileSet->GetTileWidth()/6;
+			int indexRender = 18;
+			if(layer > 0 ){
+				posy -= 250;
+				indexRender = 0;
+				if(i>0 || (j%10)>1){
+					aux = -1;
+				}
+			}
 			if(aux >= 0){
-				tileSet->Render(aux,j*tileSet->GetTileWidth() + cameraX*(layer+1) ,i*tileSet->GetTileHeight() + cameraY*(layer+1) + 250);
+				//cout << "Imprimiu tile!" << cameraX << " - "  << posX  << " - "  << cameraY  << " - "  << posy << endl;
+				angle += 3.1415/2;
+				tileSet->Render(indexRender,posX  ,posy,angle*180/3.1415);
+			}
+			if(InputManager::GetInstance().KeyPress(SDLK_p)){
+				cout << tileAtualCam << endl;
 			}
 		}
 	}
@@ -69,8 +96,10 @@ int TileMap::GetDepth(){
 	return mapDepth;
 }
 
-float TileMap::GetFloorHeight(int x){
+float TileMap::GetFloorHeight(int x, int cameraX){
+	int raioPlaneta = 1000;
 	int tileX = x/tileSet->GetTileWidth();
+	int tileAtualCam = -cameraX/tileSet->GetTileWidth();
 	while(tileX > 25){
 		tileX -= 25;
 	}
@@ -79,8 +108,11 @@ float TileMap::GetFloorHeight(int x){
 		for(int i=mapDepth-1;i>=0;i--){
 			int aux = At(tileX,j,i);
 			if(aux > 0){
+				float angle = tileX - tileAtualCam;
+				angle = angle/12;
 				//250 é a altura inicial dos Tiles
-				return j*tileSet->GetTileHeight() + 250;
+				float varY = raioPlaneta*sin(angle) + j*tileSet->GetTileHeight();
+				return j*tileSet->GetTileHeight() + 250 + varY;
 			}
 		}
 	}
