@@ -17,6 +17,8 @@ public:
 	void SetColor(SDL_Color color);
 	void SetStyle(TextStyle style);
 	void SetFontSize(int fontSize);
+	float GetXCenter() { return box.x*2 + box.getW(); }
+	float GetYCenter() { return box.y*2 + box.getH(); }
 
 private:
 	void RemakeTexture();

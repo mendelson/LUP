@@ -15,6 +15,8 @@
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
 #define SPACE_KEY SDLK_SPACE
+#define RETURN_KEY SDLK_RETURN
+
 #include<iostream>
 #include <unordered_map>
 #include "SDL.h"

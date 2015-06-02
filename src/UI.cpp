@@ -62,6 +62,4 @@ void UI::Render() {
 		textLife.Render();
 		textEnergy.Render();
 	}
-
-
 }
