@@ -35,7 +35,8 @@ public:
 	void Render();
 	void Pause();
 	void Resume();
-	float getTileMapHeight(int x);
+	float getTileMapHeight(int x,int y);
+	float getTileMapAngle(int x);
 private:
 	TileSet tileSet;
 	TileMap tileMap;

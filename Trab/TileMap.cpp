@@ -8,6 +8,7 @@
 #include "TileMap.h"
 #include "Camera.h"
 #include "InputManager.h"
+#include "Game.h"
 
 TileMap::TileMap(string file, TileSet* tileSet){
 	Load(file);
@@ -43,33 +44,37 @@ int& TileMap::At(int x, int y, int z = 0){
 void TileMap::RenderLayer(int layer, int cameraX = 0, int cameraY = 0){
 	int raioPlaneta = 1000;
 	int qntTiles = 600/tileSet->GetTileWidth();
-	for(int i=0;i<mapHeight;i++){
+	for(int i=0;i<mapHeight*2;i++){
+		int auxi = i;
+		if(auxi>=mapHeight){
+			auxi=mapHeight-1;
+		}
 		for(int j=0;j<mapWidth*3;j++){
 			int auxj = abs(j)%mapWidth;
-			int aux = At(9,1,layer);
+			int aux = At(auxj,auxi,layer);
 			int tileAtualCam = -cameraX/tileSet->GetTileWidth();
 			float angle = j - tileAtualCam;
 			angle = angle/18;
 			//cout << angle << endl;
 			float posX = raioPlaneta*cos(angle);
 			float posy = raioPlaneta*sin(angle) + i*tileSet->GetTileHeight();
-			posX +=  500;
+			posX += 512;// (Game::GetInstance().getWidth()/2);
 			//posX = 1920 + posX + cameraX;
-			posy = posy  + cameraY + 100 + raioPlaneta;
+			posy = posy  + cameraY + 2*raioPlaneta/3;
 			//posy = 100;
 			//posX += mapWidth*tileSet->GetTileWidth()/6;
-			int indexRender = 18;
-			if(layer > 0 ){
-				posy -= 250;
-				indexRender = 0;
-				if(i>0 || (j%10)>1){
-					aux = -1;
-				}
-			}
+			//int indexRender = 18;
+			//if(layer > 0 ){
+			//	posy -= 250;
+			//	indexRender = 0;
+			//	if(i>0 || (j%10)>1){
+			//		aux = -1;
+			//	}
+			//}
 			if(aux >= 0){
 				//cout << "Imprimiu tile!" << cameraX << " - "  << posX  << " - "  << cameraY  << " - "  << posy << endl;
 				angle += 3.1415/2;
-				tileSet->Render(indexRender,posX  ,posy,angle*180/3.1415);
+				tileSet->Render(aux,posX  ,posy,angle*180/3.1415);
 			}
 			if(InputManager::GetInstance().KeyPress(SDLK_p)){
 				cout << tileAtualCam << endl;
@@ -79,7 +84,7 @@ void TileMap::RenderLayer(int layer, int cameraX = 0, int cameraY = 0){
 }
 
 void TileMap::Render(int cameraX,int cameraY){
-	for(int i=1;i<mapDepth;i++){
+	for(int i=2;i<mapDepth;i++){
 		RenderLayer(i,cameraX,cameraY);
 	}
 }
@@ -96,25 +101,42 @@ int TileMap::GetDepth(){
 	return mapDepth;
 }
 
-float TileMap::GetFloorHeight(int x, int cameraX){
+float TileMap::GetFloorHeight(int x,int y, int cameraX){
 	int raioPlaneta = 1000;
-	int tileX = x/tileSet->GetTileWidth();
+	int tileX = (x - (Game::GetInstance().getWidth()/2))/tileSet->GetTileWidth();
 	int tileAtualCam = -cameraX/tileSet->GetTileWidth();
-	while(tileX > 25){
-		tileX -= 25;
-	}
+	//while(tileX > 25){
+	//	tileX -= 25;
+	//}
 
 	for(int j=0;j<mapHeight;j++){
-		for(int i=mapDepth-1;i>=0;i--){
+		for(int i=mapDepth-1;i>=1;i--){
 			int aux = At(tileX,j,i);
-			if(aux > 0){
+			//if(aux > 0){
 				float angle = tileX - tileAtualCam;
 				angle = angle/12;
-				//250 é a altura inicial dos Tiles
 				float varY = raioPlaneta*sin(angle) + j*tileSet->GetTileHeight();
-				return j*tileSet->GetTileHeight() + 250 + varY;
-			}
+				//if(y < abs(varY))
+					return abs(varY/10);
+			//}
 		}
 	}
 	return 0;
+}
+
+float TileMap::GetAngle(int x,int cameraX){
+	int raioPlaneta = 1000;
+	int tileX = (x - (Game::GetInstance().getWidth()/2))/tileSet->GetTileWidth();
+	int tileAtualCam = -cameraX/tileSet->GetTileWidth();
+	for(int j=0;j<mapHeight;j++){
+			for(int i=mapDepth-1;i>=0;i--){
+				//int aux = At(tileX,j,i);
+				//if(aux > 0){
+					float angle = tileX - tileAtualCam;
+					angle = angle/12;
+					return angle*180/3.1415;
+				//}
+			}
+		}
+		return 0;
 }

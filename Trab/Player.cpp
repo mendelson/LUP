@@ -43,12 +43,16 @@ void Player::Update(float dt)
 	if (energyUpdate == true)
 		energyUpdate = false;
 
+	//jumpY = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX());
+	float novojumpy = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX(),box.getY());
+	jumpY = novojumpy;
+
 	if(InputManager::GetInstance().KeyPress(SDLK_w) && jumpState != DJUMP)
 	{
 		if (jumpState == STAND)
 		{
 			jumpState = JUMP;
-			jumpY = box.getY();
+			//jumpY = box.getY();
 		}
 		else if (jumpState == JUMP)
 		{
@@ -108,6 +112,8 @@ void Player::Update(float dt)
 	if(box.getX() >= 3523){
 		box.setX(1920);
 	}
+
+	//cout << "Player y " << box.getY() << endl;
 
 }
 

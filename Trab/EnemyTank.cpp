@@ -51,6 +51,9 @@ void EnemyTank::Update(float dt)
 		{
 			box.setY(box.getY() - speed.y);
 		}
+		float novoY = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX(),box.getY());
+		//cout << novoY << endl;
+		box.setY(novoY);
 	}
 	else
 	{
@@ -74,7 +77,7 @@ void EnemyTank::Update(float dt)
 
 void EnemyTank::Render()
 {
-	sp.Render(box.getX() +  Camera::pos.getX(),box.getY() +  Camera::pos.getY());
+	sp.Render(box.getX() +  Camera::pos.getX(),box.getY() +  Camera::pos.getY(),Game::GetInstance().GetCurrentState().getTileMapAngle(box.getX()));
 }
 
 bool EnemyTank::IsDead()

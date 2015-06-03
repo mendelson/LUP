@@ -33,76 +33,76 @@ Penguins::~Penguins(){
 }
 
 void Penguins::Update(float dt){
-	timer.Update(dt);
-	float speedWalk = 20;
-	float gravity = 500;
-	float floorHeight = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX());
-	float posX = InputManager::GetInstance().GetMouseX() - Camera::pos.getX();
-	float posY = InputManager::GetInstance().GetMouseY() - Camera::pos.getY();
-	float proxHeight = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX() + speedWalk);
-	float antHeight = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX()- speedWalk);
-	if(InputManager::GetInstance().IsKeyDown(SDLK_w) && box.getY() >= 250){
-		pulando = true;
-		posInicial = box.getY();
-	}
-	if(InputManager::GetInstance().IsKeyDown(SDLK_a) && box.getY() <= antHeight){
-		box.setX(box.getX() - speedWalk);
-	}
-	if(InputManager::GetInstance().IsKeyDown(SDLK_d) && box.getY() <= proxHeight){
-		box.setX(box.getX() + speedWalk);
-	}
-
-	if(pulando == true){
-		if((posInicial - box.getY()) < 150){
-			box.setY(box.getY() - 2*gravity*dt);
-		}else{
-			pulando = false;
-		}
-	}else{
-		if(box.getY() < floorHeight && floorHeight != 0){
-			box.setY(box.getY() + gravity*dt);
-		}
-		if(box.getY() > floorHeight){
-				box.setY(floorHeight);
-		}
-	}
-
-
-	if(box.getX() <= 324){
-		box.setX(1920);
-	}
-	if(box.getX() >= 3523){
-		box.setX(1920);
-	}
-
-	/*Point* pspeed = new Point(box.getCenterX() - posX,box.getCenterY() - posY);
-	speed = *pspeed;
-	cannonAngle = atan(speed.getY()/speed.getX());
-	if(speed.getX() > 0){
-		cannonAngle += 3.141592653;
-	}
-	if(InputManager::GetInstance().IsMouseDown(LEFT_MOUSE_BUTTON) && timer.Get() > 1){
-		timer.Restart();
-		Shoot();
-	}
-	if(box.getX() >= 0 && box.getX() <= 1480){
-		box.setX(box.getX() + linearSpeed*dt*cos(rotation));
-	}
-	if(box.getY() >= 0 && box.getY() <= 1280){
-		box.setY(box.getY() + linearSpeed*dt*sin(rotation));
-	}
-
-	if(box.getX() < 0){
-		box.setX(0);
-	}else if(box.getX() > 1480){
-		box.setX(1480);
-	}
-
-	if(box.getY() < 0){
-		box.setY(0);
-	}else if(box.getY() > 1280){
-		box.setY(1280);
-	}*/
+//	timer.Update(dt);
+//	float speedWalk = 20;
+//	float gravity = 500;
+//	//float floorHeight = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX());
+//	float posX = InputManager::GetInstance().GetMouseX() - Camera::pos.getX();
+//	float posY = InputManager::GetInstance().GetMouseY() - Camera::pos.getY();
+//	//float proxHeight = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX() + speedWalk);
+//	//float antHeight = Game::GetInstance().GetCurrentState().getTileMapHeight(box.getX()- speedWalk);
+//	if(InputManager::GetInstance().IsKeyDown(SDLK_w) && box.getY() >= 250){
+//		pulando = true;
+//		posInicial = box.getY();
+//	}
+//	if(InputManager::GetInstance().IsKeyDown(SDLK_a) && box.getY() <= antHeight){
+//		box.setX(box.getX() - speedWalk);
+//	}
+//	if(InputManager::GetInstance().IsKeyDown(SDLK_d) && box.getY() <= proxHeight){
+//		box.setX(box.getX() + speedWalk);
+//	}
+//
+//	if(pulando == true){
+//		if((posInicial - box.getY()) < 150){
+//			box.setY(box.getY() - 2*gravity*dt);
+//		}else{
+//			pulando = false;
+//		}
+//	}else{
+//		if(box.getY() < floorHeight && floorHeight != 0){
+//			box.setY(box.getY() + gravity*dt);
+//		}
+//		if(box.getY() > floorHeight){
+//				box.setY(floorHeight);
+//		}
+//	}
+//
+//
+//	if(box.getX() <= 324){
+//		box.setX(1920);
+//	}
+//	if(box.getX() >= 3523){
+//		box.setX(1920);
+//	}
+//
+//	/*Point* pspeed = new Point(box.getCenterX() - posX,box.getCenterY() - posY);
+//	speed = *pspeed;
+//	cannonAngle = atan(speed.getY()/speed.getX());
+//	if(speed.getX() > 0){
+//		cannonAngle += 3.141592653;
+//	}
+//	if(InputManager::GetInstance().IsMouseDown(LEFT_MOUSE_BUTTON) && timer.Get() > 1){
+//		timer.Restart();
+//		Shoot();
+//	}
+//	if(box.getX() >= 0 && box.getX() <= 1480){
+//		box.setX(box.getX() + linearSpeed*dt*cos(rotation));
+//	}
+//	if(box.getY() >= 0 && box.getY() <= 1280){
+//		box.setY(box.getY() + linearSpeed*dt*sin(rotation));
+//	}
+//
+//	if(box.getX() < 0){
+//		box.setX(0);
+//	}else if(box.getX() > 1480){
+//		box.setX(1480);
+//	}
+//
+//	if(box.getY() < 0){
+//		box.setY(0);
+//	}else if(box.getY() > 1280){
+//		box.setY(1280);
+//	}*/
 
 }
 

@@ -11,7 +11,7 @@
 #include "Camera.h"
 #include "Collision.h"
 
-StageState::StageState() : bg("img/ocean.jpg") ,tileSet(60,60,"img/plataformas.png"), tileMap("map/tileMapTeste.txt",&tileSet),music("audio/stageState.ogg"){
+StageState::StageState() : bg("img/ocean.jpg") ,tileSet(60,60,"img/plataformas2.png"), tileMap("map/tileMapPlataforma.txt",&tileSet),music("audio/stageState.ogg"){
 	quitRequested = false;
 	srand( (unsigned int)time(NULL));
 	/*
@@ -66,6 +66,7 @@ void StageState::Update(float dt){
 void StageState::Render(){
 	bg.Render(0,0);
 	tileMap.RenderLayer(0,Camera::pos.getX(),Camera::pos.getY());
+	tileMap.RenderLayer(1,Camera::pos.getX(),Camera::pos.getY());
 	RenderArray();
 	tileMap.Render(Camera::pos.getX(),Camera::pos.getY());
 
@@ -84,6 +85,10 @@ void StageState::Resume(){
 	//music.Play(-1);
 }
 
-float StageState::getTileMapHeight(int x){
-	return tileMap.GetFloorHeight(x,Camera::pos.getX());
+float StageState::getTileMapHeight(int x,int y){
+	return tileMap.GetFloorHeight(x,y,Camera::pos.getX());
+}
+
+float StageState::getTileMapAngle(int x){
+	return tileMap.GetAngle(x,Camera::pos.getX());
 }
