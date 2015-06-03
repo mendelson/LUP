@@ -17,16 +17,15 @@ Sprite::Sprite(){
 	flipH = false;
 }
 
-Sprite::Sprite(string file,int frameCount, float frameTime, float rows, float columns){
+Sprite::Sprite(string file, float frameTime, float rows, float columns){
 	texture = NULL;
-	this->frameCount = frameCount;
 	this->frameTime = frameTime;
 	this->rows = rows;
 	this->columns = columns;
 	currentFrame = 0;
 	timeElapsed = 0;
 	loopStart = 0;
-	loopEnd = frameCount;
+	loopEnd = 0;
 	Open(file);
 	scaleX = 1;
 	scaleY = 1;
@@ -110,8 +109,12 @@ void Sprite::Update(float dt){
 
 	if(timeElapsed >= frameTime){
 		currentFrame++;
+
+		if (currentFrame < loopStart)
+			currentFrame = loopStart;
+
 		timeElapsed = 0;
-		if(currentFrame >= loopEnd){
+		if(currentFrame > loopEnd){
 			currentFrame = loopStart;
 			timeElapsed = 0;
 		}
@@ -125,11 +128,6 @@ void Sprite::Update(float dt){
 
 void Sprite::SetFrame(int frame){
 	currentFrame = frame;
-	SetClip(currentFrame*width,0,width,height);
-}
-
-void Sprite::SetFrameCount(int frameCount){
-	this->frameCount = frameCount;
 }
 
 void Sprite::SetFrameTime(float frameTime){
@@ -149,4 +147,9 @@ void Sprite::SetLoop(int start, int end)
 {
 	loopStart = start;
 	loopEnd = end;
+}
+
+int Sprite::GetCurrentFrame()
+{
+	return currentFrame;
 }

@@ -5,7 +5,7 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y): body("img/lup.png",8,0.3,1,8), speed(),timer()
+Player::Player(float x, float y): body("img/lup.png",0.15,3,9), speed(),timer()
 {
 	int novox = x - (body.GetFrameWidth()/2);
 	int novoy = y - (body.GetHeight()/2);
@@ -37,8 +37,9 @@ void Player::Update(float dt)
 	if (energyUpdate == true)
 		energyUpdate = false;
 
-	if(InputManager::GetInstance().KeyPress(SDLK_w) && jumpState != DJUMP)
+	if(InputManager::GetInstance().KeyPress(SDLK_UP) && jumpState != DJUMP)
 	{
+		body.SetFrame(10);
 		if (jumpState == STAND)
 		{
 			jumpState = JUMP;
@@ -51,17 +52,17 @@ void Player::Update(float dt)
 		}
 	}
 
-	if(InputManager::GetInstance().IsKeyDown(SDLK_a))
+	if(InputManager::GetInstance().IsKeyDown(SDLK_LEFT))
 	{
-		loopStart = 0;
+		loopStart = 1;
 		loopEnd = 8;
 		orientation = LEFT;
 		body.SetFlipH(true);
 		box.setX(box.getX() - speed.x);
 	}
-	else if(InputManager::GetInstance().IsKeyDown(SDLK_d))
+	else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
 	{
-		loopStart = 0;
+		loopStart = 1;
 		loopEnd = 8;
 		orientation = RIGHT;
 		body.SetFlipH(false);
@@ -69,13 +70,11 @@ void Player::Update(float dt)
 	}
 	else
 	{
-		loopStart = 0;
-		loopEnd = 0;
-		body.SetFrame(0);
+		loopStart = 1;
+		loopEnd = 1;
+		body.Update(0);
 
 	}
-	body.SetLoop(loopStart,loopEnd);
-	body.Update(dt);
 
 	if (jumpState == JUMP || jumpState == DJUMP)
 	{
@@ -93,15 +92,18 @@ void Player::Update(float dt)
 			jumpState = STAND;
 			jumped = 0;
 		}
+		loopStart = 10;
+		loopEnd = 14;
+
+		if (body.GetCurrentFrame() >= 14)
+		{
+			loopStart = 14;
+			body.Update(0);
+		}
 	}
 
-
-	if(box.getX() <= 324){
-		box.setX(1920);
-	}
-	if(box.getX() >= 3523){
-		box.setX(1920);
-	}
+	body.SetLoop(loopStart,loopEnd);
+	body.Update(dt);
 
 }
 

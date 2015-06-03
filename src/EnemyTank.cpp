@@ -1,7 +1,7 @@
 #include "EnemyTank.h"
 #include "Game.h"
 
-EnemyTank::EnemyTank(float x,float y) : sp("img/enemy_tank.png",8,0.3,1,8),speed(),shootcd()
+EnemyTank::EnemyTank(float x,float y) : sp("img/enemy_tank.png",0.1,1,8),speed(),shootcd()
 {
 	int novox = x - (sp.GetFrameWidth()/2);
 	int novoy = y - (sp.GetHeight()/2);
@@ -10,9 +10,10 @@ EnemyTank::EnemyTank(float x,float y) : sp("img/enemy_tank.png",8,0.3,1,8),speed
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
 	hp = 30;
-	speed.x = 10;
+	speed.x = 2;
 	speed.y = 0;
 	orientation = LEFT;
+	sp.SetLoop(0,7);
 }
 
 EnemyTank::~EnemyTank()
@@ -26,9 +27,8 @@ void EnemyTank::Update(float dt)
 	Point* currentPos = new Point (box.getCenterX(), box.getCenterY());
 
 	shootcd.Update(dt);
-	sp.Update(dt);
 
-	if (currentPos->getDist(*playerPos) >= 300)
+	if (currentPos->getDist(*playerPos) <= 300 && currentPos->getDist(*playerPos) >= 20)
 	{
 		if (playerPos->x > currentPos->x)
 		{
@@ -51,24 +51,7 @@ void EnemyTank::Update(float dt)
 		{
 			box.setY(box.getY() - speed.y);
 		}
-	}
-	else
-	{
-		if (shootcd.Get() >= 0.5)
-		{
-			Shoot(*playerPos);
-			shootcd.Restart();
-		}
-		if (playerPos->x > currentPos->x)
-		{
-			orientation = RIGHT;
-			sp.SetFlipH(true);
-		}
-		else if (playerPos->x < currentPos->x)
-		{
-			orientation = LEFT;
-			sp.SetFlipH(false);
-		}
+		sp.Update(dt);
 	}
 }
 
@@ -95,16 +78,4 @@ bool EnemyTank::Is(string type)
 void EnemyTank::NotifyCollision(GameObject&)
 {
 
-}
-
-void EnemyTank::Shoot(Point pos){
-	Point* pspeed = new Point(box.getCenterX() - pos.getX(),box.getCenterY() - pos.getY());
-	float speed = pspeed->magVector();
-	float angle = atan(pspeed->getY()/pspeed->getX());
-	if(pspeed->getX() > 0){
-		angle += 3.141592653;
-	}
-	delete(pspeed);
-	Bullet* bullet = new Bullet(box.getCenterX(),box.getCenterY(),angle,speed,2000,"img/minionBullet2.png",true,3);
-	Game::GetInstance().GetCurrentState().AddObject(bullet);
 }

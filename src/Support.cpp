@@ -1,6 +1,6 @@
 #include "Support.h"
 
-Support::Support() : sp("img/support.png",19,0.3,2,15), timer()
+Support::Support() : sp("img/support.png",0.3,2,15), timer()
 {
 
 	orientation = Player::player->orientation;

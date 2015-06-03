@@ -10,7 +10,7 @@ using std::string;
 class Sprite{
 public:
 	Sprite();
-	Sprite(string file,int frameCount = 1,float frameTime = 1, float rows = 1, float columns = 1);
+	Sprite(string file,float frameTime = 1, float rows = 1, float columns = 1);
 	~Sprite();
 	void Open(string file);
 	void SetClip(int x, int y,int w,int h);
@@ -27,6 +27,7 @@ public:
 	void SetFrameTime(float frameTime);
 	void SetFlipH(bool flipH);
 	void SetLoop(int start, int end);
+	int GetCurrentFrame();
 private:
 	SDL_Texture* texture;
 	int width;

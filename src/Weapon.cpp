@@ -1,6 +1,6 @@
 #include "Weapon.h"
 
-Weapon::Weapon(std::string file) : sp(file,8,0.3,1,8)
+Weapon::Weapon(std::string file) : sp(file,0.1,3,9)
 {
 	box.setX(Player::player->box.x);
 	box.setY(Player::player->box.y);
@@ -28,7 +28,18 @@ void Weapon::Update(float dt)
 	else
 		sp.SetFlipH(false);
 
-	sp.SetLoop(Player::player->loopStart, Player::player->loopEnd);
+	if (sp.GetCurrentFrame() == 22)
+		attacking = false;
+
+	if(InputManager::GetInstance().KeyPress(SDLK_a) || attacking)
+	{
+		attacking = true;
+		sp.SetLoop(19, 22);
+	}
+	else
+	{
+		sp.SetLoop(Player::player->loopStart, Player::player->loopEnd);
+	}
 	sp.Update(dt);
 }
 

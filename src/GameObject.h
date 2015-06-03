@@ -9,7 +9,7 @@ enum Facing { RIGHT, LEFT };
 
 class GameObject{
 public:
-	virtual ~GameObject(){};
+	virtual ~GameObject(){ attacking = false; };
 	GameObject(){rotation = 0;}
 	virtual void Update(float dt) = 0;
 	virtual void Render() = 0;
@@ -17,6 +17,7 @@ public:
 	virtual Sprite getSprite() = 0;
 	Rect box;
 	float rotation;
+	bool attacking;
 	virtual void NotifyCollision(GameObject&) = 0;
 	virtual bool Is(string type) = 0;
 };
