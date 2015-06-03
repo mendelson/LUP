@@ -2,7 +2,7 @@
 #include "Game.h"
 
 EnemyTank::EnemyTank(float x, float y) :
-		sp("img/enemy_tank.png", 0.5, 1, 8), speed(), startPos(x, y), dmgCD() {
+		sp("img/enemy_tank.png", 0.35, 1, 8), speed(), startPos(x, y), dmgCD() {
 	int novox = x - (sp.GetFrameWidth() / 2);
 	int novoy = y - (sp.GetHeight() / 2);
 	box.setX(novox);
@@ -86,6 +86,7 @@ void EnemyTank::NotifyCollision(GameObject& other) {
 		}
 
 		if (IsDead()) {
+			Player::player->IncXp(100);
 			Sprite* aux = new Sprite("img/enemy_tank_dying.png", 0.2, 1, 9);
 			aux->SetLoop(0, 6);
 			StillAnimation* animacao = new StillAnimation(box.getCenterX(),

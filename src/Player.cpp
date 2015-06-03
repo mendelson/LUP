@@ -14,6 +14,7 @@ Player::Player(float x, float y): body("img/lup.png",0.15,3,8), speed(),dmgCD()
 	box.setH(body.GetHeight());
 	box.setW(body.GetWidth());
 	hp = 50;
+	xp = 0;
 	speed.x = 15;
 	speed.y = 25;
 	jumpState = STAND;
@@ -184,6 +185,11 @@ int Player::GetHp()
 int Player::GetXp()
 {
 	return xp;
+}
+
+void Player::IncXp(int xp)
+{
+	this->xp += xp;
 }
 
 bool Player::GetEnergyUpdate()

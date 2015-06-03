@@ -23,6 +23,7 @@ public:
 	void NotifyCollision(GameObject&);
 	int GetHp();
 	int GetXp();
+	void IncXp(int xp);
 	bool GetEnergyUpdate();
 
 	Facing orientation;
