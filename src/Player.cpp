@@ -38,7 +38,7 @@ void Player::Update(float dt)
 
 	if (energyUpdate == true)
 		energyUpdate = false;
-
+/*
 	if (dmgCD.Get() < 1)
 	{
 		loopStart = 16;
@@ -52,7 +52,7 @@ void Player::Update(float dt)
 		body.Update(dt);
 		return;
 	}
-
+*/
 	if(InputManager::GetInstance().KeyPress(SDLK_UP) && jumpState != DJUMP)
 	{
 		body.SetFrame(8);
