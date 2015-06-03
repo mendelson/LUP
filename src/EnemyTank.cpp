@@ -28,7 +28,7 @@ void EnemyTank::Update(float dt)
 
 	dmgCD.Update(dt);
 
-	if (currentPos->getDist(*playerPos) <= 300 && currentPos->getDist(*playerPos) >= 20)
+	if (currentPos->getDist(*playerPos) <= 300 && currentPos->getDist(*playerPos) >= 30)
 	{
 		if (playerPos->x > currentPos->x)
 		{

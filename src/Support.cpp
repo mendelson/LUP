@@ -7,14 +7,15 @@ Support::Support() : sp("img/support.png",0.1,3,16), timer()
 
 	int c;
 	if (orientation == RIGHT)
-		c = -13;
+		c = -50;
 	else
-		c = Player::player->box.getW() + 50;
+		c = Player::player->box.getW() - 50;
 
 	box.setX(Player::player->box.getX() + c);
 	box.setY(Player::player->box.getY() + 1);
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
+	attacking = false;
 
 	sp.SetLoop(0,14);
 }
@@ -46,6 +47,17 @@ void Support::Update(float dt)
 	else if (sp.GetCurrentFrame() == 19)
 		sp.SetLoop(0,14);
 
+	if (sp.GetCurrentFrame() == 47)
+	{
+		attacking = false;
+		sp.SetLoop(16,19);
+	}
+
+	if(InputManager::GetInstance().KeyPress(SDLK_s) || attacking)
+	{
+		attacking = true;
+		sp.SetLoop(32, 47);
+	}
 
 	box.setX(Player::player->box.getX() + c);
 	box.setY(Player::player->box.getY() + 1);

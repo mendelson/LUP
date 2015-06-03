@@ -55,7 +55,7 @@ void Player::Update(float dt)
 
 	if(InputManager::GetInstance().KeyPress(SDLK_UP) && jumpState != DJUMP)
 	{
-		body.SetFrame(10);
+		body.SetFrame(8);
 		if (jumpState == STAND)
 		{
 			jumpState = JUMP;
@@ -154,6 +154,7 @@ Sprite Player::getSprite()
 
 void Player::NotifyCollision(GameObject& other)
 {
+	/*
 	if (other.Is("EnemyTank") && other.attacking)
 	{
 		if (dmgCD.Get() > 1)
@@ -172,6 +173,7 @@ void Player::NotifyCollision(GameObject& other)
 			Game::GetInstance().GetCurrentState().SetPopRequested(true);
 		}
 	}
+	*/
 }
 
 int Player::GetHp()
