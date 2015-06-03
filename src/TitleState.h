@@ -18,6 +18,7 @@ public:
 	void Resume();
 private:
 	Sprite bg;
+	Sprite selector;
 	Timer timer;
 	std::vector<Text*> textVector;
 	int focus;

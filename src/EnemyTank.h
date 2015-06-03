@@ -1,5 +1,6 @@
 #ifndef SRC_ENEMYTANK_H_
 #define SRC_ENEMYTANK_H_
+
 #include "Sprite.h"
 #include "Point.h"
 #include "GameObject.h"
@@ -8,9 +9,9 @@
 #include "InputManager.h"
 #include "Player.h"
 
-class EnemyTank : public GameObject{
+class EnemyTank: public GameObject {
 public:
-	EnemyTank(float x,float y);
+	EnemyTank(float x, float y);
 	~EnemyTank();
 	void Update(float dt);
 	void Render();
@@ -26,6 +27,5 @@ private:
 	Timer dmgCD;
 	Facing orientation;
 };
-
 
 #endif /* SRC_ENEMYTANK_H_ */

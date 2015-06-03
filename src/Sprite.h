@@ -1,9 +1,10 @@
 #ifndef SRC_SPRITE_H_
 #define SRC_SPRITE_H_
 
-#include "SDL.h"
-#include <iostream>
-#include <stdlib.h>
+#include <SDL_rect.h>
+#include <string>
+
+struct SDL_Texture;
 
 using std::string;
 

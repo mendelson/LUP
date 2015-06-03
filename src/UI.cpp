@@ -10,7 +10,7 @@
 #include <sstream>
 #include <string>
 
-#include "Penguins.h"
+#include "Player.h"
 
 UI::UI(int requiredEnergy, int collectedEnergy) :
 		requiredEnergy(requiredEnergy),
@@ -26,11 +26,11 @@ UI::UI(int requiredEnergy, int collectedEnergy) :
 void UI::Update(float dt) {
 	timer.Update(dt);
 
-	if (Penguins::player != NULL) {
-		this->xp = Penguins::player->getXp();
-		this->life = Penguins::player->getLife();
+	if (Player::player != NULL) {
+		this->xp = Player::player->GetXp();
+		this->life = Player::player->GetHp();
 
-		newEnergy = Penguins::player->getEnergyUpdate();
+		newEnergy = Player::player->GetEnergyUpdate();
 
 		if(newEnergy) {
 			collectedEnergy++;

@@ -6,20 +6,33 @@
 #include "InputManager.h"
 #include "StageState.h"
 
+const std::string FONT_FILE = "font/OpenSans-Bold.ttf";
+const int ITEMS_DISTANCE = 50;
+
 TitleState::TitleState() :
-		bg("img/fundo.png"), timer() {
+		bg("img/fundo.png"), selector("img/planeta_menu.png"), timer() {
 
 	focus = 0;
 	initialize = true;
 
-	menuYStartPosition = Game::GetInstance().getWidth() / 3.5;
+	menuYStartPosition = Game::GetInstance().getHeight() / 1.5;
+	textVector.emplace_back(new Text(FONT_FILE, 30, Text::SOLID, "JOGAR", { 255,
+			255, 255 }, 0, 0));
+	textVector.emplace_back(
+			new Text(FONT_FILE, 30, Text::SOLID, "INSTRUCOES DE JOGO", { 255,
+					255, 255 }, 0, 0));
+	textVector.emplace_back(new Text(FONT_FILE, 30, Text::SOLID, "CREDITOS", {
+			255, 255, 255 }, 0, 0));
+	textVector.emplace_back(new Text(FONT_FILE, 30, Text::SOLID, "SAIR", { 255,
+			255, 255 }, 0, 0));
 
-	textVector.emplace_back(new Text("font/Call me maybe.ttf", 30, Text::SOLID, "JOGAR", { 0, 0, 0 }, 0, 0));
-	textVector.emplace_back(new Text("font/Call me maybe.ttf", 30, Text::SOLID, "CREDITOS", { 0, 0, 0 }, 0, 0));
-	textVector.emplace_back(new Text("font/Call me maybe.ttf", 30, Text::SOLID, "SAIR", { 0, 0, 0 }, 0, 0));
-	textVector[0]->SetPos(30, menuYStartPosition, true, true);
-	textVector[1]->SetPos(20, menuYStartPosition + 40, true, true);
-	textVector[2]->SetPos(10, menuYStartPosition + 80, true, true);
+	for (unsigned int i = 0; i < textVector.size(); i++) {
+		textVector[i]->SetPos(0, menuYStartPosition + i * ITEMS_DISTANCE, true,
+				true);
+		if(i == 0){
+		cout << textVector[i]->GetXCenter() << endl;
+		}
+	}
 }
 
 TitleState::~TitleState() {
@@ -35,10 +48,13 @@ void TitleState::Update(float dt) {
 
 		for (int i = 0; i < (int) textVector.size(); i++) {
 			if (textVector[i]->GetXCenter() < Game::GetInstance().getWidth() / 2) {
-				textVector[i]->SetPos(textVector[i]->GetXCenter() + 0.0000001, menuYStartPosition + i * 40, true, true);
+				if(i == 0) {
+					cout << textVector[i]->GetXCenter() << endl;
+				}
+				textVector[i]->SetPos(textVector[i]->GetXCenter() + 1, menuYStartPosition + i * ITEMS_DISTANCE, true, true);
 				initialize = true;
 			} else {
-				textVector[i]->SetPos(Game::GetInstance().getWidth() / 2, menuYStartPosition + i * 40, true, true);
+				textVector[i]->SetPos(Game::GetInstance().getWidth() / 2, menuYStartPosition + i * ITEMS_DISTANCE, true, true);
 			}
 		}
 	}
@@ -63,7 +79,7 @@ void TitleState::Update(float dt) {
 			Game::GetInstance().Push(stageState);
 		}
 
-		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 2) {
+		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 3) {
 			quitRequested = true;
 		}
 
@@ -75,34 +91,44 @@ void TitleState::Update(float dt) {
 }
 
 void TitleState::Render() {
-	bg.Render(0, 0);
+	bg.Render(0, -100);
 
 	for (int i = 0; i < (int) textVector.size(); i++) {
 		if (initialize) {
 			textVector[i]->Render();
 		} else if (i != focus) {
-			textVector[i]->SetColor( { 0, 0, 0 });
 			textVector[i]->Render();
-		} else if (timer.Get() <= 0.6) {
-			textVector[i]->SetColor( { 0, 0, 255 });
-			textVector[i]->Render();
+		} else {
+			selector.Render(textVector[i]->GetX() - 60,
+					textVector[i]->GetY() - 10);
+
+			if (timer.Get() <= 0.6) {
+				textVector[i]->Render();
+			}
 		}
 	}
 }
 
 void TitleState::Pause() {
+	textVector.clear();
 }
 
 void TitleState::Resume() {
 	focus = 0;
 	initialize = true;
 
-	textVector.clear();
+	textVector.emplace_back(new Text(FONT_FILE, 30, Text::SOLID, "JOGAR", { 255,
+			255, 255 }, 0, 0));
+	textVector.emplace_back(
+			new Text(FONT_FILE, 30, Text::SOLID, "INSTRUCOES DE JOGO", { 255,
+					255, 255 }, 0, 0));
+	textVector.emplace_back(new Text(FONT_FILE, 30, Text::SOLID, "CREDITOS", {
+			255, 255, 255 }, 0, 0));
+	textVector.emplace_back(new Text(FONT_FILE, 30, Text::SOLID, "SAIR", { 255,
+			255, 255 }, 0, 0));
 
-	textVector.emplace_back(new Text("font/Call me maybe.ttf", 30, Text::SOLID, "JOGAR", { 0, 0, 0 }, 0, 0));
-	textVector.emplace_back(new Text("font/Call me maybe.ttf", 30, Text::SOLID, "CREDITOS", { 0, 0, 0 }, 0, 0));
-	textVector.emplace_back(new Text("font/Call me maybe.ttf", 30, Text::SOLID, "SAIR", { 0, 0, 0 }, 0, 0));
-	textVector[0]->SetPos(30, menuYStartPosition, true, true);
-	textVector[1]->SetPos(20, menuYStartPosition + 40, true, true);
-	textVector[2]->SetPos(10, menuYStartPosition + 80, true, true);
+	for (unsigned int i = 0; i < textVector.size(); i++) {
+		textVector[i]->SetPos(0, menuYStartPosition + i * ITEMS_DISTANCE, true,
+				true);
+	}
 }
