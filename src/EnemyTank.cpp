@@ -1,7 +1,7 @@
 #include "EnemyTank.h"
 #include "Game.h"
 
-EnemyTank::EnemyTank(float x,float y) : sp("img/enemy_tank.png",0.1,1,8),speed(),shootcd()
+EnemyTank::EnemyTank(float x,float y) : sp("img/enemy_tank.png",0.5,1,8),speed(),dmgCD(),startPos(x,y)
 {
 	int novox = x - (sp.GetFrameWidth()/2);
 	int novoy = y - (sp.GetHeight()/2);
@@ -9,7 +9,7 @@ EnemyTank::EnemyTank(float x,float y) : sp("img/enemy_tank.png",0.1,1,8),speed()
 	box.setY(novoy);
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
-	hp = 30;
+	hp = 50;
 	speed.x = 2;
 	speed.y = 0;
 	orientation = LEFT;
@@ -26,7 +26,7 @@ void EnemyTank::Update(float dt)
 	Point* playerPos = new Point (Player::player->box.getCenterX(), Player::player->box.getCenterY());
 	Point* currentPos = new Point (box.getCenterX(), box.getCenterY());
 
-	shootcd.Update(dt);
+	dmgCD.Update(dt);
 
 	if (currentPos->getDist(*playerPos) <= 300 && currentPos->getDist(*playerPos) >= 20)
 	{
@@ -43,16 +43,34 @@ void EnemyTank::Update(float dt)
 			box.setX(box.getX() - speed.x);
 		}
 
-		if ((playerPos->y > currentPos->y) && fabs(playerPos->y - currentPos->y) > 10)
+		sp.Update(dt);
+	}
+	else if (currentPos->getDist(startPos) > speed.x)
+	{
+		if (startPos.x > currentPos->x)
 		{
-			box.setY(box.getY() + speed.y);
+			orientation = RIGHT;
+			sp.SetFlipH(true);
+			box.setX(box.getX() + speed.x);
 		}
-		else if ((playerPos->y < currentPos->y) && fabs(playerPos->y - currentPos->y) > 10)
+		else if (startPos.x < currentPos->x)
 		{
-			box.setY(box.getY() - speed.y);
+			orientation = LEFT;
+			sp.SetFlipH(false);
+			box.setX(box.getX() - speed.x);
 		}
 		sp.Update(dt);
 	}
+	else
+	{
+		sp.SetFrame(7);
+		sp.Update(1);
+	}
+
+	if (sp.GetCurrentFrame() >= 2 && sp.GetCurrentFrame() <= 6)
+		attacking = true;
+	else
+		attacking = false;
 }
 
 void EnemyTank::Render()
@@ -75,7 +93,22 @@ bool EnemyTank::Is(string type)
 	return (type == "EnemyTank");
 }
 
-void EnemyTank::NotifyCollision(GameObject&)
+void EnemyTank::NotifyCollision(GameObject& other)
 {
+	if (other.Is("Weapon") && other.attacking)
+	{
+		if (dmgCD.Get() > 0.5)
+		{
+			dmgCD.Restart();
+			hp -= 10;
+		}
 
+		if (IsDead())
+		{
+			Sprite* aux = new Sprite("img/enemy_tank_dying.png",0.2,1,9);
+			aux->SetLoop(0,6);
+			StillAnimation* animacao = new StillAnimation(box.getCenterX(),box.getCenterY(), rotation, *aux, 0.2 * 7, true);
+			Game::GetInstance().GetCurrentState().AddObject(animacao);
+		}
+	}
 }

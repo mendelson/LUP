@@ -1,6 +1,6 @@
 #include "Support.h"
 
-Support::Support() : sp("img/support.png",0.3,2,15), timer()
+Support::Support() : sp("img/support.png",0.1,3,16), timer()
 {
 
 	orientation = Player::player->orientation;
@@ -16,7 +16,7 @@ Support::Support() : sp("img/support.png",0.3,2,15), timer()
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
 
-	orbitation = 0;
+	sp.SetLoop(0,14);
 }
 
 Support::~Support()
@@ -32,7 +32,7 @@ void Support::Update(float dt)
 	int c;
 	if (orientation == RIGHT)
 	{
-		c = -13;
+		c = -50;
 		sp.SetFlipH(false);
 	}
 	else
@@ -40,6 +40,12 @@ void Support::Update(float dt)
 		c = Player::player->box.getW() - 50;
 		sp.SetFlipH(true);
 	}
+
+	if (sp.GetCurrentFrame() == 14)
+		sp.SetLoop(16,19);
+	else if (sp.GetCurrentFrame() == 19)
+		sp.SetLoop(0,14);
+
 
 	box.setX(Player::player->box.getX() + c);
 	box.setY(Player::player->box.getY() + 1);

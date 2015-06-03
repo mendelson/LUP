@@ -23,7 +23,7 @@ StageState::StageState() :
 	GameObject* weapon = new Weapon("img/lup_vassoura.png");
 	objectArray.emplace_back(weapon);
 
-	GameObject* tank = new EnemyTank(2120, 100);
+	GameObject* tank = new EnemyTank(2300, 100);
 	objectArray.emplace_back(tank);
 
 	GameObject* support = new Support();
@@ -57,7 +57,6 @@ void StageState::Update(float dt) {
 	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
 	UpdateArray(dt);
 	ui.Update(dt);
-
 }
 
 void StageState::Render() {

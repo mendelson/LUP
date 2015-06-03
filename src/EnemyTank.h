@@ -21,8 +21,9 @@ public:
 private:
 	Sprite sp;
 	Point speed;
+	Point startPos;
 	int hp;
-	Timer shootcd;
+	Timer dmgCD;
 	Facing orientation;
 };
 

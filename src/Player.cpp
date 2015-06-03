@@ -5,7 +5,7 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y): body("img/lup.png",0.15,3,9), speed(),timer()
+Player::Player(float x, float y): body("img/lup.png",0.15,3,8), speed(),dmgCD()
 {
 	int novox = x - (body.GetFrameWidth()/2);
 	int novoy = y - (body.GetHeight()/2);
@@ -13,7 +13,7 @@ Player::Player(float x, float y): body("img/lup.png",0.15,3,9), speed(),timer()
 	box.setY(novoy);
 	box.setH(body.GetHeight());
 	box.setW(body.GetWidth());
-	hp = 30;
+	hp = 50;
 	speed.x = 15;
 	speed.y = 25;
 	jumpState = STAND;
@@ -34,8 +34,24 @@ Player::~Player(){
 
 void Player::Update(float dt)
 {
+	dmgCD.Update(dt);
+
 	if (energyUpdate == true)
 		energyUpdate = false;
+
+	if (dmgCD.Get() < 1)
+	{
+		loopStart = 16;
+		loopEnd = 18;
+		if (body.GetCurrentFrame() >= 18)
+		{
+			loopStart = 18;
+			body.Update(0);
+		}
+		body.SetLoop(loopStart,loopEnd);
+		body.Update(dt);
+		return;
+	}
 
 	if(InputManager::GetInstance().KeyPress(SDLK_UP) && jumpState != DJUMP)
 	{
@@ -54,16 +70,16 @@ void Player::Update(float dt)
 
 	if(InputManager::GetInstance().IsKeyDown(SDLK_LEFT))
 	{
-		loopStart = 1;
-		loopEnd = 8;
+		loopStart = 0;
+		loopEnd = 7;
 		orientation = LEFT;
 		body.SetFlipH(true);
 		box.setX(box.getX() - speed.x);
 	}
 	else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
 	{
-		loopStart = 1;
-		loopEnd = 8;
+		loopStart = 0;
+		loopEnd = 7;
 		orientation = RIGHT;
 		body.SetFlipH(false);
 		box.setX(box.getX() + speed.x);
@@ -92,12 +108,12 @@ void Player::Update(float dt)
 			jumpState = STAND;
 			jumped = 0;
 		}
-		loopStart = 10;
-		loopEnd = 14;
+		loopStart = 8;
+		loopEnd = 10;
 
-		if (body.GetCurrentFrame() >= 14)
+		if (body.GetCurrentFrame() >= 10)
 		{
-			loopStart = 14;
+			loopStart = 10;
 			body.Update(0);
 		}
 	}
@@ -138,6 +154,24 @@ Sprite Player::getSprite()
 
 void Player::NotifyCollision(GameObject& other)
 {
+	if (other.Is("EnemyTank") && other.attacking)
+	{
+		if (dmgCD.Get() > 1)
+		{
+			dmgCD.Restart();
+			hp -= 10;
+		}
+
+		if (IsDead())
+		{
+			Sprite* aux = new Sprite("img/lup_dying.png",0.2,1,8);
+			aux->SetLoop(1,7);
+			StillAnimation* animacao = new StillAnimation(box.getCenterX(),box.getCenterY(), rotation, *aux, 0.2 * 7, true);
+			Game::GetInstance().GetCurrentState().AddObject(animacao);
+			Camera::Unfollow();
+			Game::GetInstance().GetCurrentState().SetPopRequested(true);
+		}
+	}
 }
 
 int Player::GetHp()

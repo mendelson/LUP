@@ -29,7 +29,6 @@ private:
 	Sprite sp;
 	Timer timer;
 	Facing orientation;
-	float orbitation;
 };
 
 

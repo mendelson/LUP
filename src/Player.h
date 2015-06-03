@@ -35,7 +35,7 @@ private:
 	int hp;
 	int xp;
 	bool energyUpdate;
-	Timer timer;
+	Timer dmgCD;
 	Jumping jumpState;
 	int jumpY;
 	int jumped;
