@@ -17,8 +17,10 @@ public:
 	void Pause();
 	void Resume();
 private:
+	void mountMainMenu();
+
 	Sprite bg;
-	Sprite selector;
+	std::vector<Sprite*> selector;
 	Timer timer;
 	std::vector<Text*> textVector;
 	int focus;

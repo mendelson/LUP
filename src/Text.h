@@ -22,14 +22,21 @@ public:
 	float GetXCenter() {
 		return box.x * 2 + box.getW();
 	}
+
 	float GetYCenter() {
 		return box.y * 2 + box.getH();
 	}
+
 	float GetX() {
 		return box.x;
 	}
+
 	float GetY() {
 		return box.y;
+	}
+
+	float GetWidth() {
+		return box.w;
 	}
 private:
 	void RemakeTexture();
