@@ -5,6 +5,7 @@
 GameObject* Camera::focus = NULL;
 Point Camera::pos;
 Point Camera::speed;
+float Camera::rotation = 0;
 
 void Camera::Follow(GameObject* newFocus){
 	focus = newFocus;
@@ -36,5 +37,6 @@ void Camera::Update(float dt){
 	}else{
 		pos.setX((Game::GetInstance().getWidth()/2) - focus->box.getCenterX());
 		pos.setY((Game::GetInstance().getHeight()/2) - focus->box.getCenterY());
+		rotation = focus->globalRotation;
 	}
 }

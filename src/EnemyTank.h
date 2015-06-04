@@ -26,6 +26,7 @@ private:
 	int hp;
 	Timer dmgCD;
 	Facing orientation;
+	float startRotation;
 };
 
 #endif /* SRC_ENEMYTANK_H_ */

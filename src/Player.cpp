@@ -22,7 +22,7 @@ Player::Player(float x, float y): body("img/lup.png",0.15,3,8), speed(),dmgCD()
 	jumped = 0;
 
 	player = this;
-
+	globalRotation = 0;
 	loopStart = 0;
 	loopEnd = 0;
 
@@ -76,6 +76,7 @@ void Player::Update(float dt)
 		orientation = LEFT;
 		body.SetFlipH(true);
 		box.setX(box.getX() - speed.x);
+		globalRotation += 18*dt;
 	}
 	else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
 	{
@@ -84,6 +85,7 @@ void Player::Update(float dt)
 		orientation = RIGHT;
 		body.SetFlipH(false);
 		box.setX(box.getX() + speed.x);
+		globalRotation -= 18*dt;
 	}
 	else
 	{

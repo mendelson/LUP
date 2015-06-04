@@ -14,6 +14,7 @@ EnemyTank::EnemyTank(float x, float y) :
 	speed.y = 0;
 	orientation = LEFT;
 	sp.SetLoop(0, 7);
+	startRotation = 25;
 }
 
 EnemyTank::~EnemyTank() {
@@ -60,10 +61,12 @@ void EnemyTank::Update(float dt) {
 		attacking = true;
 	else
 		attacking = false;
+	rotation = startRotation + Camera::rotation;
+	box.y = startPos.y + abs(Game::GetInstance().GetCurrentState().raioPlaneta*sin(rotation/180)/2);
 }
 
 void EnemyTank::Render() {
-	sp.Render(box.getX() + Camera::pos.getX(), box.getY() + Camera::pos.getY());
+	sp.Render(box.getX() + Camera::pos.getX(), box.getY() + Camera::pos.getY(),30 + rotation);
 }
 
 bool EnemyTank::IsDead() {

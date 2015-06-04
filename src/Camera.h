@@ -18,6 +18,7 @@ public:
 	static void Update(float dt);
 	static Point pos;
 	static Point speed;
+	static float rotation;
 private:
 	static GameObject* focus;
 };

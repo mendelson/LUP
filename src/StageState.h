@@ -18,6 +18,7 @@
 #include "State.h"
 #include "Music.h"
 #include "UI.h"
+#include "Plataforma1.h"
 
 using std::string;
 
@@ -29,13 +30,14 @@ public:
 	void Render();
 	void Pause();
 	void Resume();
-	float getTileMapHeight(int x);
 private:
 	TileSet tileSet;
 	TileMap tileMap;
 	Sprite bg;
 	Music music;
 	UI ui;
+	Sprite planeta;
+	float rotacaoPlaneta;
 };
 
 #endif /* SRC_STAGESTATE_H_ */

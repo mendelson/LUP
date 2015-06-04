@@ -19,7 +19,7 @@ public:
 	bool PopRequested();
 	void SetPopRequested(bool pop);
 	bool QuitRequested();
-	virtual float getTileMapHeight(int x){ return 0;};
+	float raioPlaneta;
 protected:
 	virtual void UpdateArray(float dt);
 	virtual void RenderArray();
