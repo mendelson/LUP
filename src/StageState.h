@@ -18,7 +18,8 @@
 #include "State.h"
 #include "Music.h"
 #include "UI.h"
-#include "Plataforma1.h"
+#include "Plataforma.h"
+#include "Planet.h"
 
 using std::string;
 
@@ -36,7 +37,6 @@ private:
 	Sprite bg;
 	Music music;
 	UI ui;
-	Sprite planeta;
 	float rotacaoPlaneta;
 };
 

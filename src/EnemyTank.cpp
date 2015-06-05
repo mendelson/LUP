@@ -1,20 +1,23 @@
 #include "EnemyTank.h"
 #include "Game.h"
 
-EnemyTank::EnemyTank(float x, float y) :
+EnemyTank::EnemyTank(float x, float y,GameObject* planet, float initialRotation, float alturaInicial) :
 		sp("img/enemy_tank.png", 0.35, 1, 8), speed(), startPos(x, y), dmgCD() {
-	int novox = x - (sp.GetFrameWidth() / 2);
-	int novoy = y - (sp.GetHeight() / 2);
-	box.setX(novox);
-	box.setY(novoy);
+	this->planet = planet;
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
+	rotation = initialRotation;
+	float arc = rotation*3.1415/180;
+	this->alturaInicial = alturaInicial;
+	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial)*cos(arc)) - (box.getW()/2));
+	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300  + alturaInicial)*sin(arc)) - (box.getH()/2));
 	hp = 50;
 	speed.x = 2;
 	speed.y = 0;
 	orientation = LEFT;
 	sp.SetLoop(0, 7);
-	startRotation = 25;
+
+
 }
 
 EnemyTank::~EnemyTank() {
@@ -61,12 +64,22 @@ void EnemyTank::Update(float dt) {
 		attacking = true;
 	else
 		attacking = false;
-	rotation = startRotation + Camera::rotation;
-	box.y = startPos.y + abs(Game::GetInstance().GetCurrentState().raioPlaneta*sin(rotation/180)/2);
+	if(InputManager::GetInstance().IsKeyDown(SDLK_LEFT))
+	{
+		rotation += 18*dt;
+	}
+	else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
+	{
+		rotation -= 18*dt;
+	}
+
+	float arc = rotation*3.1415/180;
+	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial)*cos(arc)) - (box.getW()/2));
+	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300 + alturaInicial)*sin(arc)) - (box.getH()/2));
 }
 
 void EnemyTank::Render() {
-	sp.Render(box.getX() + Camera::pos.getX(), box.getY() + Camera::pos.getY(),30 + rotation);
+	sp.Render(box.getX() + Camera::pos.getX(), box.getY() + Camera::pos.getY(),rotation + 90);
 }
 
 bool EnemyTank::IsDead() {

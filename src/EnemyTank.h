@@ -11,7 +11,7 @@
 
 class EnemyTank: public GameObject {
 public:
-	EnemyTank(float x, float y);
+	EnemyTank(float x, float y,GameObject* planet, float initialRotation, float alturaIncial);
 	~EnemyTank();
 	void Update(float dt);
 	void Render();
@@ -26,7 +26,8 @@ private:
 	int hp;
 	Timer dmgCD;
 	Facing orientation;
-	float startRotation;
+	GameObject* planet;
+	float alturaInicial;
 };
 
 #endif /* SRC_ENEMYTANK_H_ */

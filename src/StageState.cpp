@@ -6,7 +6,7 @@
 
 StageState::StageState() :
 		tileSet(64, 64, "img/tileset.png"), tileMap("map/tileMap.txt",
-				&tileSet), bg("img/ocean.jpg"), music("audio/stageState.ogg"),planeta("img/planeta.png"), ui(
+				&tileSet), bg("img/ocean.jpg"), music("audio/stageState.ogg"), ui(
 				3) {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
@@ -16,6 +16,11 @@ StageState::StageState() :
 	 Camera::Follow(penguin);
 	 */
 
+
+
+	GameObject* planet = new Planet(0,-300,"img/planeta.png");
+	objectArray.emplace_back(planet);
+
 	GameObject* player = new Player(0, 0);
 	objectArray.emplace_back(player);
 	Camera::Follow(player);
@@ -23,14 +28,14 @@ StageState::StageState() :
 	GameObject* weapon = new Weapon("img/lup_vassoura.png");
 	objectArray.emplace_back(weapon);
 
-	GameObject* tank = new EnemyTank(500, 0);
+	GameObject* tank = new EnemyTank(500, 0,planet,18,0);
 	objectArray.emplace_back(tank);
 
 	GameObject* support = new Support();
 	objectArray.emplace_back(support);
 
-	GameObject* plataforma1 = new Plataforma1(200,-100,0);
-	objectArray.emplace_back(plataforma1);
+	GameObject* plataforma = new Plataforma(500,0,planet,9,50,"img/plataforma1.png");
+	objectArray.emplace_back(plataforma);
 
 	rotacaoPlaneta = 0;
 	raioPlaneta = 1000;
@@ -58,14 +63,6 @@ void StageState::Update(float dt) {
 				<< std::endl;
 	}
 
-//	if (InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY)) {
-//		rotacaoPlaneta += 50*dt;
-//	}
-//
-//	if (InputManager::GetInstance().IsKeyDown(RIGHT_ARROW_KEY)) {
-//			rotacaoPlaneta -= 50*dt;
-//		}
-
 	Camera::Update(dt);
 	quitRequested = InputManager::GetInstance().QuitRequested();
 	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
@@ -76,7 +73,6 @@ void StageState::Update(float dt) {
 void StageState::Render() {
 	bg.Render(0, 0);
 	//tileMap.RenderLayer(0, Camera::pos.getX(), Camera::pos.getY());
-	planeta.Render(-1000,-300+Camera::pos.getY(),Camera::rotation);
 	RenderArray();
 	//tileMap.Render(Camera::pos.getX(), Camera::pos.getY());
 	ui.Render();
