@@ -62,5 +62,5 @@ void Plataforma::NotifyCollision(GameObject&){
 }
 
 bool Plataforma::Is(string type){
-	return (type == "Plataforma1");
+	return (type == "Plataforma");
 }
