@@ -28,6 +28,7 @@ void Planet::Update(float dt){
 	if(InputManager::GetInstance().IsKeyDown(SDLK_LEFT))
 	{
 		rotation += 18*dt;
+
 	}
 	else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
 	{
