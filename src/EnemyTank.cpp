@@ -31,29 +31,21 @@ void EnemyTank::Update(float dt) {
 
 	dmgCD.Update(dt);
 
-	if (currentPos->getDist(*playerPos) <= 300
-			&& currentPos->getDist(*playerPos) >= 30) {
+	if (currentPos->getDist(*playerPos) <= 600
+			&& currentPos->getDist(*playerPos) >= 50) {
 		if (playerPos->x > currentPos->x) {
 			orientation = RIGHT;
 			sp.SetFlipH(true);
-			box.setX(box.getX() + speed.x);
+			rotation += 5*dt;
+			//box.setX(box.getX() + speed.x);
 		} else if (playerPos->x < currentPos->x) {
 			orientation = LEFT;
 			sp.SetFlipH(false);
-			box.setX(box.getX() - speed.x);
+			rotation -= 5*dt;
+			//box.setX(box.getX() - speed.x);
 		}
-
 		sp.Update(dt);
-	} else if (currentPos->getDist(startPos) > speed.x) {
-		if (startPos.x > currentPos->x) {
-			orientation = RIGHT;
-			sp.SetFlipH(true);
-			box.setX(box.getX() + speed.x);
-		} else if (startPos.x < currentPos->x) {
-			orientation = LEFT;
-			sp.SetFlipH(false);
-			box.setX(box.getX() - speed.x);
-		}
+	} else if(currentPos->getDist(*playerPos) <= 50) {
 		sp.Update(dt);
 	} else {
 		sp.SetFrame(7);
@@ -64,6 +56,7 @@ void EnemyTank::Update(float dt) {
 		attacking = true;
 	else
 		attacking = false;
+
 	if(InputManager::GetInstance().IsKeyDown(SDLK_LEFT))
 	{
 		rotation += 18*dt;
@@ -110,4 +103,9 @@ void EnemyTank::NotifyCollision(GameObject& other) {
 			Game::GetInstance().GetCurrentState().AddObject(animacao);
 		}
 	}
+}
+
+void EnemyTank::Move(Point dest)
+{
+
 }

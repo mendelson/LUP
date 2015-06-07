@@ -19,6 +19,7 @@ public:
 	Sprite getSprite();
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
+	void Move(Point dest);
 private:
 	Sprite sp;
 	Point speed;
