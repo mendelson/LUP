@@ -1,11 +1,13 @@
 #include "Weapon.h"
 
-Weapon::Weapon(std::string file) : sp(file,0.1,3,8)
+Weapon::Weapon(std::string file) : sp(file,0.1,4,8)
 {
 	box.setX(Player::player->box.x);
 	box.setY(Player::player->box.y);
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
+
+	atkFrame = false;
 
 	orientation = Player::player->orientation;
 	if (orientation == LEFT)
@@ -32,27 +34,36 @@ void Weapon::Update(float dt)
 		sp.SetFlipH(false);
 
 	if (sp.GetCurrentFrame() == 19)
-		attacking = false;
+		atkFrame = false;
 
-	if(InputManager::GetInstance().KeyPress(SDLK_a) || attacking)
+	if(InputManager::GetInstance().KeyPress(SDLK_a) || atkFrame)
 	{
-		attacking = true;
+		atkFrame = true;
 		sp.SetLoop(16, 19);
 	}
 	else
 	{
 		sp.SetLoop(Player::player->loopStart, Player::player->loopEnd);
 	}
+
+	attacking = (sp.GetCurrentFrame() == 18);
+
+	if (orientation == RIGHT)
+		rotation += 90;
+	else
+		rotation -= 90;
+
 	sp.Update(dt);
 }
 
 void Weapon::Render()
 {
-	int c;
+	int c = 0;
+
 	if (orientation == RIGHT)
-		c = -80;
+		c = -50;
 	else
-		c = 80;
+		c = 50;
 
 	sp.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
 }

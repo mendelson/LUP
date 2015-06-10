@@ -5,7 +5,7 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y): body("img/lup.png",0.15,3,8), speed(),dmgCD()
+Player::Player(float x, float y): body("img/Sprites_Corpo_LUP.png",0.15,4,8), speed(),dmgCD()
 {
 	int novox = x - (body.GetFrameWidth()/2);
 	int novoy = y - (body.GetHeight()/2);
@@ -125,11 +125,12 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
-	int c;
+	int c = 0;
+
 	if (orientation == RIGHT)
-		c = -80;
+		c = -50;
 	else
-		c = 80;
+		c = 50;
 
 	body.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
 }

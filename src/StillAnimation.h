@@ -9,6 +9,7 @@
 #define SRC_STILLANIMATION_H_
 
 #include "GameObject.h"
+#include "InputManager.h"
 #include "Timer.h"
 
 class StillAnimation: public GameObject{

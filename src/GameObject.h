@@ -18,6 +18,7 @@ public:
 	Rect box;
 	float rotation;
 	bool attacking;
+	Facing orientation;
 	virtual void NotifyCollision(GameObject&) = 0;
 	virtual bool Is(string type) = 0;
 };

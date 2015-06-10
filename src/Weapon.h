@@ -22,6 +22,7 @@ public:
 	Facing orientation;
 
 private:
+	bool atkFrame;
 	Sprite sp;
 };
 

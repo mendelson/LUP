@@ -2,7 +2,7 @@
 #include "Game.h"
 
 EnemyTank::EnemyTank(float x, float y,GameObject* planet, float initialRotation, float alturaInicial) :
-		sp("img/enemy_tank.png", 0.35, 1, 8), speed(), startPos(x, y), dmgCD() {
+		sp("img/enemy_tank.png", 0.35, 1, 8), speed(), startPos(x, y), dmgCD(), knockback() {
 	this->planet = planet;
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
@@ -16,7 +16,7 @@ EnemyTank::EnemyTank(float x, float y,GameObject* planet, float initialRotation,
 	speed.y = 0;
 	orientation = LEFT;
 	sp.SetLoop(0, 7);
-
+	knockback.Update(10);
 
 }
 
@@ -30,19 +30,25 @@ void EnemyTank::Update(float dt) {
 	Point* currentPos = new Point(box.getCenterX(), box.getCenterY());
 
 	dmgCD.Update(dt);
+	if (knockback.Get() < 0.3)
+	{
+		if (kbDirection == LEFT)
+			rotation -= 18*dt;
+		else
+			rotation += 18*dt;
 
-	if (currentPos->getDist(*playerPos) <= 600
+		sp.Update(dt);
+	}
+	else if (currentPos->getDist(*playerPos) <= 600
 			&& currentPos->getDist(*playerPos) >= 50) {
 		if (playerPos->x > currentPos->x) {
 			orientation = RIGHT;
 			sp.SetFlipH(true);
 			rotation += 5*dt;
-			//box.setX(box.getX() + speed.x);
 		} else if (playerPos->x < currentPos->x) {
 			orientation = LEFT;
 			sp.SetFlipH(false);
 			rotation -= 5*dt;
-			//box.setX(box.getX() - speed.x);
 		}
 		sp.Update(dt);
 	} else if(currentPos->getDist(*playerPos) <= 50) {
@@ -69,6 +75,8 @@ void EnemyTank::Update(float dt) {
 	float arc = rotation*3.1415/180;
 	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial)*cos(arc)) - (box.getW()/2));
 	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300 + alturaInicial)*sin(arc)) - (box.getH()/2));
+
+	knockback.Update(dt);
 }
 
 void EnemyTank::Render() {
@@ -89,9 +97,19 @@ bool EnemyTank::Is(string type) {
 
 void EnemyTank::NotifyCollision(GameObject& other) {
 	if (other.Is("Weapon") && other.attacking) {
+
 		if (dmgCD.Get() > 0.5) {
 			dmgCD.Restart();
 			hp -= 10;
+
+			knockback.Restart();
+
+			if (box.getCenterX() < other.box.getCenterX())
+				kbDirection = LEFT;
+			else
+				kbDirection = RIGHT;
+
+			std::cout << "Collision: Weapon>Tank\n";
 		}
 
 		if (IsDead()) {

@@ -99,7 +99,7 @@ StageState::StageState() :
 
 
 
-	GameObject* weapon = new Weapon("img/lup_vassoura.png");
+	GameObject* weapon = new Weapon("img/Sprites_Bracos_LUP.png");
 	objectArray.emplace_back(weapon);
 
 	GameObject* tank = new EnemyTank(500, 0,planet,18,0);

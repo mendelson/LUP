@@ -26,7 +26,6 @@ public:
 	void IncXp(int xp);
 	bool GetEnergyUpdate();
 
-	Facing orientation;
 	int loopStart;
 	int loopEnd;
 

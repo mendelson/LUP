@@ -29,6 +29,8 @@ private:
 	Facing orientation;
 	GameObject* planet;
 	float alturaInicial;
+	Timer knockback;
+	Facing kbDirection;
 };
 
 #endif /* SRC_ENEMYTANK_H_ */
