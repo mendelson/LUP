@@ -20,6 +20,7 @@ public:
 	bool attacking;
 	virtual void NotifyCollision(GameObject&) = 0;
 	virtual bool Is(string type) = 0;
+	virtual int getAltura(){return 0;}
 };
 
 

@@ -5,7 +5,7 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y): body("img/lup.png",0.15,3,8), speed(),dmgCD()
+Player::Player(float x, float y,GameObject* planet): body("img/lup.png",0.15,3,8), speed(),dmgCD()
 {
 	int novox = x - (body.GetFrameWidth()/2);
 	int novoy = y - (body.GetHeight()/2);
@@ -24,6 +24,7 @@ Player::Player(float x, float y): body("img/lup.png",0.15,3,8), speed(),dmgCD()
 	player = this;
 	loopStart = 0;
 	loopEnd = 0;
+	this->planet = planet;
 
 }
 
@@ -35,6 +36,16 @@ Player::~Player(){
 void Player::Update(float dt)
 {
 	dmgCD.Update(dt);
+	jumpY = planet->getAltura();
+
+	if(box.getY() < jumpY){
+		jumpState = DJUMP;
+		jumped = 250;
+	}
+
+	//if(box.getCenterY() > jumpY){
+	//	box.setY(jumpY);
+	//}
 
 	if (energyUpdate == true)
 		energyUpdate = false;
@@ -59,7 +70,7 @@ void Player::Update(float dt)
 		if (jumpState == STAND)
 		{
 			jumpState = JUMP;
-			jumpY = box.getY();
+			//jumpY = box.getY();
 		}
 		else if (jumpState == JUMP)
 		{

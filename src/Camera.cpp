@@ -8,6 +8,7 @@ Point Camera::speed;
 
 void Camera::Follow(GameObject* newFocus){
 	focus = newFocus;
+	pos.setY(100);
 }
 
 void Camera::Unfollow(){
@@ -35,6 +36,6 @@ void Camera::Update(float dt){
 		pos.somaPonto(speed);
 	}else{
 		pos.setX((Game::GetInstance().getWidth()/2) - focus->box.getCenterX());
-		pos.setY((Game::GetInstance().getHeight()/2) - focus->box.getCenterY() + 150);
+		//pos.setY((Game::GetInstance().getHeight()/2) - focus->box.getCenterY() + 150);
 	}
 }

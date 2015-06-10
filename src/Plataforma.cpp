@@ -20,8 +20,8 @@ Plataforma::Plataforma(float x,float y,GameObject* planet, float rotation,float 
 	this->rotation = rotation;
 	this->alturaInicial = alturaInicial;
 	float arc = rotation*3.1415/180;
-	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial)*cos(arc)) - (box.getW()/2));
-	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300  + alturaInicial)*sin(arc)) - (box.getH()/2));
+	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 + planet->box.getCenterY() + alturaInicial)*cos(arc)) - (box.getW()/2));
+	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 + planet->box.getCenterY() + alturaInicial)*sin(arc)) - (box.getH()/2));
 
 
 }

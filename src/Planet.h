@@ -9,6 +9,9 @@
 #define SRC_PLANET_H_
 #include "GameObject.h"
 #include "Sprite.h"
+#include "Player.h"
+#include<iostream>
+#include<stdio.h>
 
 class Planet : public GameObject{
 public:
@@ -20,8 +23,10 @@ public:
 	Sprite getSprite();
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
+	int getAltura();
 private:
 	Sprite sp;
+	int offsetALtura[361];
 };
 
 #endif /* SRC_PLANET_H_ */
