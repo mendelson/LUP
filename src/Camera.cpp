@@ -8,7 +8,7 @@ Point Camera::speed;
 
 void Camera::Follow(GameObject* newFocus){
 	focus = newFocus;
-	pos.setY(100);
+	pos.setY(300);
 }
 
 void Camera::Unfollow(){

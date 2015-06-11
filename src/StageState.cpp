@@ -18,7 +18,7 @@ StageState::StageState() :
 
 
 
-	GameObject* planet = new Planet(0,0,"img/planetafase1.png");
+	GameObject* planet = new Planet(0,-100,"img/planetafase1.png");
 	objectArray.emplace_back(planet);
 
 	GameObject* plataforma1 = new Plataforma(500,0,planet,-30,100,"img/plataformas/2200/plataformas2200_44.png");
@@ -92,7 +92,7 @@ StageState::StageState() :
 
 
 
-	GameObject* player = new Player(0, 0,planet);
+	GameObject* player = new Player(0,0,planet);
 	objectArray.emplace_back(player);
 	Camera::Follow(player);
 

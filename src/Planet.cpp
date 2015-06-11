@@ -29,16 +29,8 @@ Planet::~Planet() {
 }
 
 void Planet::Update(float dt){
-		if(InputManager::GetInstance().IsKeyDown(SDLK_LEFT))
-		{
-			rotation += 18*dt;
-
-		}
-		else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
-		{
-			rotation -= 18*dt;
-			cout << rotation << "  -  " << getAltura() << endl;
-		}
+		somaRotation = Player::player->somaRotation;
+		rotation += somaRotation;
 		while(rotation > 360){
 				rotation -= 360;
 		}
@@ -70,5 +62,5 @@ void Planet::NotifyCollision(GameObject& object){
 
 int Planet::getAltura(){
 	int auxrotation = ((int ) rotation) % 360;
-	return 100 - offsetALtura[auxrotation];
+	return -offsetALtura[auxrotation];
 }

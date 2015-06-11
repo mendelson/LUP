@@ -17,6 +17,7 @@ public:
 	virtual Sprite getSprite() = 0;
 	Rect box;
 	float rotation;
+	float somaRotation;
 	bool attacking;
 	virtual void NotifyCollision(GameObject&) = 0;
 	virtual bool Is(string type) = 0;

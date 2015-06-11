@@ -17,10 +17,9 @@ Player::Player(float x, float y,GameObject* planet): body("img/lup.png",0.15,3,8
 	xp = 0;
 	speed.x = 15;
 	speed.y = 25;
-	jumpState = STAND;
+	jumpState = DJUMP;
 	orientation = RIGHT;
-	jumped = 0;
-
+	jumped = 250;
 	player = this;
 	loopStart = 0;
 	loopEnd = 0;
@@ -37,11 +36,27 @@ void Player::Update(float dt)
 {
 	dmgCD.Update(dt);
 	jumpY = planet->getAltura();
+	somaRotation = 0;
+	//if(box.getY() < jumpY){
+	//	jumpState = DJUMP;
+	//	jumped = 250;
+	//}
 
-	if(box.getY() < jumpY){
-		jumpState = DJUMP;
-		jumped = 250;
+
+	//float yPersonagem = box.getCenterY() - planet->box.getW()/2 + planet->box.getCenterY();
+	float distPlaneta = - planet->box.getW()/2 + planet->box.getCenterY();
+	float yPersonagem = box.getCenterY() + distPlaneta;
+	if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
+		cout << "y do personagem :" << yPersonagem<< endl;
+		cout << "jumpY :" << jumpY << endl;
 	}
+
+	if(yPersonagem < jumpY && jumpState == STAND){
+		body.SetFrame(8);
+		jumpState = DJUMP;
+		jumped = 300;
+	}
+
 
 	//if(box.getCenterY() > jumpY){
 	//	box.setY(jumpY);
@@ -85,6 +100,8 @@ void Player::Update(float dt)
 		loopEnd = 7;
 		orientation = LEFT;
 		body.SetFlipH(true);
+		if(yPersonagem-10 < jumpY)
+		somaRotation = 1;
 		//box.setX(box.getX() - speed.x);
 	}
 	else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
@@ -93,6 +110,8 @@ void Player::Update(float dt)
 		loopEnd = 7;
 		orientation = RIGHT;
 		body.SetFlipH(false);
+		if(yPersonagem-10 < jumpY)
+		somaRotation = -1;
 		//box.setX(box.getX() + speed.x);
 	}
 	else
@@ -105,7 +124,7 @@ void Player::Update(float dt)
 
 	if (jumpState == JUMP || jumpState == DJUMP)
 	{
-		if (jumped <= 250)
+		if (jumped <= 100)
 		{
 			jumped += speed.y;
 			box.setY(box.getY() - speed.y);
@@ -127,6 +146,11 @@ void Player::Update(float dt)
 			loopStart = 10;
 			body.Update(0);
 		}
+	}
+
+
+	if(yPersonagem-30 > jumpY){
+		box.setY(box.getY() - 30);
 	}
 
 	body.SetLoop(loopStart,loopEnd);

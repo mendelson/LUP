@@ -17,6 +17,7 @@ Support::Support() : sp("img/support.png",0.1,3,16), timer()
 	box.setW(sp.GetWidth());
 	attacking = false;
 
+
 	sp.SetLoop(0,14);
 }
 

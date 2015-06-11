@@ -31,14 +31,8 @@ Plataforma::~Plataforma() {
 }
 
 void Plataforma::Update(float dt){
-	if(InputManager::GetInstance().IsKeyDown(SDLK_LEFT))
-		{
-			rotation += 18*dt;
-		}
-		else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
-		{
-			rotation -= 18*dt;
-		}
+	somaRotation = planet->somaRotation;
+	rotation += somaRotation;
 
 		float arc = rotation*3.1415/180;
 		box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial)*cos(arc)) - (box.getW()/2));
