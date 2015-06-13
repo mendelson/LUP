@@ -108,6 +108,8 @@ void Player::Update(float dt)
 			}else if(difAltura > -25){
 				box.setY(box.getY() + difAltura);
 
+			}else{
+				somaRotation = 0;
 			}
 		}
 		//cout << "proxAltura  -  " << proxAltura << endl;
@@ -131,6 +133,8 @@ void Player::Update(float dt)
 			}else if(difAltura > -25){
 				box.setY(box.getY() - difAltura);
 
+			}else{
+				somaRotation = 0;
 			}
 		}
 
@@ -223,7 +227,11 @@ Sprite Player::getSprite()
 void Player::NotifyCollision(GameObject& other)
 {
 	if(other.Is("Plataforma")){
-		cout<<"Colidiu com plataforma!" << endl;
+		//cout<<"Colidiu com plataforma!" << endl;
+		if(box.getY() + box.getH() > other.box.getY()){
+			box.setY(other.box.getY() - box.getH());
+			jumpState = STAND;
+		}
 	}
 	/*
 	if (other.Is("EnemyTank") && other.attacking)
