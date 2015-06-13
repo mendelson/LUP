@@ -23,7 +23,7 @@ public:
 	Sprite getSprite();
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
-	int getAltura();
+	int getAltura(float rotation);
 private:
 	Sprite sp;
 	int offsetALtura[361];

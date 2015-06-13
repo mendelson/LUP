@@ -60,7 +60,11 @@ void Planet::NotifyCollision(GameObject& object){
 
 }
 
-int Planet::getAltura(){
+int Planet::getAltura(float rotation){
+	while(rotation < 0) rotation += 360;
+
+	while (rotation > 360) rotation  -= 360;
+
 	int auxrotation = ((int ) rotation) % 360;
 	return -offsetALtura[auxrotation];
 }
