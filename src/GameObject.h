@@ -17,10 +17,12 @@ public:
 	virtual Sprite getSprite() = 0;
 	Rect box;
 	float rotation;
+	float somaRotation;
 	bool attacking;
 	Facing orientation;
 	virtual void NotifyCollision(GameObject&) = 0;
 	virtual bool Is(string type) = 0;
+	virtual int getAltura(float rotation){return 0;}
 };
 
 

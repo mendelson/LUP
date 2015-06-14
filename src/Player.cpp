@@ -5,7 +5,7 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y): body("img/Sprites_Corpo_LUP.png",0.15,4,8), speed(),dmgCD()
+Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP.png",0.15,4,8), speed(),dmgCD()
 {
 	int novox = x - (body.GetFrameWidth()/2);
 	int novoy = y - (body.GetHeight()/2);
@@ -17,13 +17,13 @@ Player::Player(float x, float y): body("img/Sprites_Corpo_LUP.png",0.15,4,8), sp
 	xp = 0;
 	speed.x = 15;
 	speed.y = 25;
-	jumpState = STAND;
+	jumpState = DJUMP;
 	orientation = RIGHT;
-	jumped = 0;
-
+	jumped = 250;
 	player = this;
 	loopStart = 0;
 	loopEnd = 0;
+	this->planet = planet;
 
 }
 
@@ -35,6 +35,29 @@ Player::~Player(){
 void Player::Update(float dt)
 {
 	dmgCD.Update(dt);
+	jumpY = planet->getAltura(planet->rotation);
+	somaRotation = 0;
+	//if(box.getY() < jumpY){
+	//	jumpState = DJUMP;
+	//	jumped = 250;
+	//}
+
+
+	//float yPersonagem = box.getCenterY() - planet->box.getW()/2 + planet->box.getCenterY();
+	//float distPlaneta = - planet->box.getW()/2 + planet->box.getCenterY();
+	float distPlaneta =  planet->box.getY() - 100;
+	float yPersonagem = box.getY() + box.getH() +  distPlaneta;
+
+	if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
+		cout << box.getY() << endl;
+		cout << "jumpY :" << jumpY << endl;
+	}
+
+	//if(box.getY() < jumpY && jumpState == STAND){
+	//	body.SetFrame(8);
+    //	jumpState = DJUMP;
+	//	jumped = 300;
+	//}
 
 	if (energyUpdate == true)
 		energyUpdate = false;
@@ -59,7 +82,7 @@ void Player::Update(float dt)
 		if (jumpState == STAND)
 		{
 			jumpState = JUMP;
-			jumpY = box.getY();
+			//jumpY = box.getY();
 		}
 		else if (jumpState == JUMP)
 		{
@@ -74,6 +97,23 @@ void Player::Update(float dt)
 		loopEnd = 7;
 		orientation = LEFT;
 		body.SetFlipH(true);
+		int proxAltura = planet->getAltura(planet->rotation + 1);
+		int difAltura = proxAltura - box.getY();
+		somaRotation = 1;
+		if(jumpState == STAND){
+			if(difAltura > 0){
+				body.SetFrame(8);
+				jumpState = DJUMP;
+				jumped = 300;
+			}else if(difAltura > -25){
+				box.setY(box.getY() + difAltura);
+
+			}else{
+				somaRotation = 0;
+			}
+		}
+		//cout << "proxAltura  -  " << proxAltura << endl;
+		//cout << "difAltura  -  " << difAltura << endl;
 		//box.setX(box.getX() - speed.x);
 	}
 	else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
@@ -82,6 +122,29 @@ void Player::Update(float dt)
 		loopEnd = 7;
 		orientation = RIGHT;
 		body.SetFlipH(false);
+		int antAltura = planet->getAltura(planet->rotation - 1);
+		int difAltura = antAltura - box.getY();
+		somaRotation = -1;
+		if(jumpState == STAND){
+			if(difAltura > 0){
+				body.SetFrame(8);
+				jumpState = DJUMP;
+				jumped = 300;
+			}else if(difAltura > -25){
+				box.setY(box.getY() - difAltura);
+
+			}else{
+				somaRotation = 0;
+			}
+		}
+
+		//limite para nao passar do chao
+		if(box.getY() > jumpY){
+			box.setY(jumpY);
+		}
+
+		//cout << "antAltura  -  " << antAltura << endl;
+		//cout << "difAltura  -  " << difAltura << endl;
 		//box.setX(box.getX() + speed.x);
 	}
 	else
@@ -94,7 +157,7 @@ void Player::Update(float dt)
 
 	if (jumpState == JUMP || jumpState == DJUMP)
 	{
-		if (jumped <= 250)
+		if (jumped <= 100)
 		{
 			jumped += speed.y;
 			box.setY(box.getY() - speed.y);
@@ -117,6 +180,15 @@ void Player::Update(float dt)
 			body.Update(0);
 		}
 	}
+
+	//gambi para corrigir bug
+	//if(box.getY() > jumpY)
+	//	box.setY(jumpY - 1);
+
+
+	//if(box.getY()-15 > jumpY){
+	//	box.setY(box.getY() + 14);
+	//}
 
 	body.SetLoop(loopStart,loopEnd);
 	body.Update(dt);
@@ -155,6 +227,13 @@ Sprite Player::getSprite()
 
 void Player::NotifyCollision(GameObject& other)
 {
+	if(other.Is("Plataforma")){
+		//cout<<"Colidiu com plataforma!" << endl;
+		if(box.getY() + box.getH() > other.box.getY()){
+			box.setY(other.box.getY() - box.getH());
+			jumpState = STAND;
+		}
+	}
 	/*
 	if (other.Is("EnemyTank") && other.attacking)
 	{

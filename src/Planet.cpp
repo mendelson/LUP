@@ -17,7 +17,11 @@ Planet::Planet(float x, float y,string file):sp(file) {
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
 	rotation = 0;
-	float scale;
+	FILE* fp;
+	fp = fopen("map/mapPlaneta.txt","r");
+	for(int i=0;i<361;i++){
+		fscanf(fp,"%d,",&offsetALtura[i]);
+	}
 }
 
 Planet::~Planet() {
@@ -25,15 +29,14 @@ Planet::~Planet() {
 }
 
 void Planet::Update(float dt){
-	if(InputManager::GetInstance().IsKeyDown(SDLK_LEFT))
-	{
-		rotation += 18*dt;
-
-	}
-	else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
-	{
-		rotation -= 18*dt;
-	}
+		somaRotation = Player::player->somaRotation;
+		rotation += somaRotation;
+		while(rotation > 360){
+				rotation -= 360;
+		}
+		while(rotation <0 ){
+				rotation += 360;
+		}
 }
 
 void Planet::Render(){
@@ -55,4 +58,13 @@ Sprite Planet::getSprite(){
 
 void Planet::NotifyCollision(GameObject& object){
 
+}
+
+int Planet::getAltura(float rotation){
+	while(rotation < 0) rotation += 360;
+
+	while (rotation > 360) rotation  -= 360;
+
+	int auxrotation = ((int ) rotation) % 360;
+	return -offsetALtura[auxrotation];
 }

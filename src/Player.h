@@ -12,7 +12,7 @@ enum Jumping { STAND, JUMP, DJUMP };
 
 class Player : public GameObject{
 public:
-	Player(float x,float y);
+	Player(float x,float y,GameObject* planet);
 	~Player();
 	void Update(float dt);
 	void Render();
@@ -39,6 +39,7 @@ private:
 	Jumping jumpState;
 	int jumpY;
 	int jumped;
+	GameObject* planet;
 };
 
 
