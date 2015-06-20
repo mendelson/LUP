@@ -2,6 +2,8 @@
 
 Weapon::Weapon(std::string file) : sp(file,0.1,4,8)
 {
+	sp.SetScaleX(0.5);
+	sp.SetScaleY(0.5);
 	box.setX(Player::player->box.x);
 	box.setY(Player::player->box.y);
 	box.setH(sp.GetHeight());

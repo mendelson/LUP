@@ -7,8 +7,11 @@ Player* Player::player = NULL;
 
 Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP.png",0.15,4,8), speed(),dmgCD()
 {
+	body.SetScaleX(0.5);
+	body.SetScaleY(0.5);
 	int novox = x - (body.GetFrameWidth()/2);
 	int novoy = y - (body.GetHeight()/2);
+	novoy += body.GetHeight()*3/2;
 	box.setX(novox);
 	box.setY(novoy);
 	box.setH(body.GetHeight());
@@ -37,52 +40,22 @@ void Player::Update(float dt)
 	dmgCD.Update(dt);
 	jumpY = planet->getAltura(planet->rotation);
 	somaRotation = 0;
-	//if(box.getY() < jumpY){
-	//	jumpState = DJUMP;
-	//	jumped = 250;
-	//}
-
-
-	//float yPersonagem = box.getCenterY() - planet->box.getW()/2 + planet->box.getCenterY();
-	//float distPlaneta = - planet->box.getW()/2 + planet->box.getCenterY();
-	float distPlaneta =  planet->box.getY() - 100;
-	float yPersonagem = box.getY() + box.getH() +  distPlaneta;
 
 	if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
 		cout << box.getY() << endl;
 		cout << "jumpY :" << jumpY << endl;
 	}
 
-	//if(box.getY() < jumpY && jumpState == STAND){
-	//	body.SetFrame(8);
-    //	jumpState = DJUMP;
-	//	jumped = 300;
-	//}
 
 	if (energyUpdate == true)
 		energyUpdate = false;
-/*
-	if (dmgCD.Get() < 1)
-	{
-		loopStart = 16;
-		loopEnd = 18;
-		if (body.GetCurrentFrame() >= 18)
-		{
-			loopStart = 18;
-			body.Update(0);
-		}
-		body.SetLoop(loopStart,loopEnd);
-		body.Update(dt);
-		return;
-	}
-*/
+
 	if(InputManager::GetInstance().KeyPress(SDLK_UP) && jumpState != DJUMP)
 	{
 		body.SetFrame(8);
 		if (jumpState == STAND)
 		{
 			jumpState = JUMP;
-			//jumpY = box.getY();
 		}
 		else if (jumpState == JUMP)
 		{
@@ -91,30 +64,14 @@ void Player::Update(float dt)
 		}
 	}
 
+	//verifica se o personagem esta querendo andar pra algum lado
 	if(InputManager::GetInstance().IsKeyDown(SDLK_LEFT))
 	{
-		loopStart = 0;
-		loopEnd = 7;
-		orientation = LEFT;
-		body.SetFlipH(true);
-		int proxAltura = planet->getAltura(planet->rotation + 1);
-		int difAltura = proxAltura - box.getY();
-		somaRotation = 1;
-		if(jumpState == STAND){
-			if(difAltura > 0){
-				body.SetFrame(8);
-				jumpState = DJUMP;
-				jumped = 300;
-			}else if(difAltura > -25){
-				box.setY(box.getY() + difAltura);
-
-			}else{
-				somaRotation = 0;
-			}
-		}
-		//cout << "proxAltura  -  " << proxAltura << endl;
-		//cout << "difAltura  -  " << difAltura << endl;
-		//box.setX(box.getX() - speed.x);
+			loopStart = 0;
+			loopEnd = 7;
+			orientation = LEFT;
+			body.SetFlipH(true);
+			somaRotation = 1;
 	}
 	else if(InputManager::GetInstance().IsKeyDown(SDLK_RIGHT))
 	{
@@ -122,37 +79,53 @@ void Player::Update(float dt)
 		loopEnd = 7;
 		orientation = RIGHT;
 		body.SetFlipH(false);
-		int antAltura = planet->getAltura(planet->rotation - 1);
-		int difAltura = antAltura - box.getY();
 		somaRotation = -1;
-		if(jumpState == STAND){
-			if(difAltura > 0){
-				body.SetFrame(8);
-				jumpState = DJUMP;
-				jumped = 300;
-			}else if(difAltura > -25){
-				box.setY(box.getY() - difAltura);
-
-			}else{
-				somaRotation = 0;
-			}
-		}
-
-		//limite para nao passar do chao
-		if(box.getY() > jumpY){
-			box.setY(jumpY);
-		}
-
-		//cout << "antAltura  -  " << antAltura << endl;
-		//cout << "difAltura  -  " << difAltura << endl;
-		//box.setX(box.getX() + speed.x);
 	}
 	else
 	{
 		loopStart = 1;
 		loopEnd = 1;
 		body.Update(0);
+	}
 
+	//verifica se ele quer correr pra esse lado
+	//corrida
+	if(InputManager::GetInstance().IsKeyDown(SDLK_SPACE)){
+		somaRotation*=2;
+	}
+
+	//verifica se ele pode ir pra onde quer, e sobe se ele deve subir
+	if(jumpState == STAND){
+		int proxAltura = planet->getAltura(planet->rotation + somaRotation);
+		//a de cima é a proxima altura que ele ira, esta é a proxima altura do angulo, deve se usar a de baixo para verificar se eh uma rampa que ele pode subir, pois se ele estiver correndo pode subir muito
+		//usamos entao a de cima para subir o personagem
+		int alturaProxAngulo = planet->getAltura(planet->rotation + (somaRotation/abs(somaRotation)));
+		int difAltura = proxAltura - jumpY;
+		int difAlturaProxAngulo = alturaProxAngulo - jumpY;
+		//usa esse porque se ele estiver correndo a altura pode subir mais do que o normal
+		//float difAlturaPorAngulo = abs(difAltura / somaRotation);
+		if(difAlturaProxAngulo > -25){
+			box.setY(box.getY() + difAltura);
+		}
+
+
+		//se ele andar e o jumpy nao for o mesmo do chao tenta fazer ele cair, pois ele pode estar saindo da plataforma, se ainda estivar na plataforma isso vai ser resolvido na colisao
+		if(somaRotation != 0){
+			if(jumpY > box.getY()){
+				body.SetFrame(8);
+				jumpState = DJUMP;
+				jumped = 300;
+			}
+		}
+
+	}
+
+
+
+
+	//limite para nao passar do chao --- GAMBIARRA
+	if(box.getY() > jumpY){
+		box.setY(jumpY);
 	}
 
 	if (jumpState == JUMP || jumpState == DJUMP)
@@ -180,6 +153,8 @@ void Player::Update(float dt)
 			body.Update(0);
 		}
 	}
+
+
 
 	//gambi para corrigir bug
 	//if(box.getY() > jumpY)
@@ -229,8 +204,8 @@ void Player::NotifyCollision(GameObject& other)
 {
 	if(other.Is("Plataforma")){
 		//cout<<"Colidiu com plataforma!" << endl;
-		if(box.getY() + box.getH() > other.box.getY()){
-			box.setY(other.box.getY() - box.getH());
+		if(box.getY()> other.box.getY()){
+			box.setY(other.box.getY() - box.getH()/2 - 10);
 			jumpState = STAND;
 		}
 	}

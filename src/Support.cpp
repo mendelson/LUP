@@ -3,6 +3,8 @@
 Support::Support() : sp("img/support.png",0.1,3,16), timer()
 {
 
+	sp.SetScaleX(0.5);
+	sp.SetScaleY(0.5);
 	orientation = Player::player->orientation;
 
 	int c;

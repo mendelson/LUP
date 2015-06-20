@@ -66,5 +66,5 @@ int Planet::getAltura(float rotation){
 	while (rotation > 360) rotation  -= 360;
 
 	int auxrotation = ((int ) rotation) % 360;
-	return -offsetALtura[auxrotation];
+	return -offsetALtura[auxrotation] + Player::player->getSprite().GetHeight();
 }
