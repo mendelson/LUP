@@ -20,6 +20,7 @@
 #include "UI.h"
 #include "Plataforma.h"
 #include "Planet.h"
+#include "Planta.h"
 
 using std::string;
 

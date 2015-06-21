@@ -33,8 +33,17 @@ StageState::StageState() :
 	GameObject* plataforma4 = new Plataforma(500,0,planet,-15,250,"img/plataformas/2200/plataformas2200_50.png");
 	objectArray.emplace_back(plataforma4);
 
+	GameObject* planta1 = new Planta(500,0,planet,-1,50,"img/plataformas/2200/planta.png");
+	objectArray.emplace_back(planta1);
+
+	GameObject* planta2 = new Planta(500,0,planet,39,50,"img/plataformas/2200/planta.png");
+	objectArray.emplace_back(planta2);
+
 	GameObject* plataforma5 = new Plataforma(500,0,planet,47,200,"img/plataformas/2200/plataformas2200_15.png");
 	objectArray.emplace_back(plataforma5);
+
+	GameObject* planta3 = new Planta(500,0,planet,53,50,"img/plataformas/2200/planta.png");
+	objectArray.emplace_back(planta3);
 
 	GameObject* plataforma6 = new Plataforma(500,0,planet,75,150,"img/plataformas/2200/plataformas2200_03.png");
 	objectArray.emplace_back(plataforma6);
@@ -75,8 +84,14 @@ StageState::StageState() :
 	GameObject* plataforma19 = new Plataforma(500,0,planet,218,150,"img/plataformas/2200/plataformas2200_15.png");
 	objectArray.emplace_back(plataforma19);
 
+	GameObject* planta4 = new Planta(500,0,planet,221.5,50,"img/plataformas/2200/planta.png");
+	objectArray.emplace_back(planta4);
+
 	GameObject* plataforma20 = new Plataforma(500,0,planet,224,200,"img/plataformas/2200/plataformas2200_41.png");
 	objectArray.emplace_back(plataforma20);
+
+	GameObject* planta5 = new Planta(500,0,planet,226.5,50,"img/plataformas/2200/planta.png");
+	objectArray.emplace_back(planta5);
 
 	GameObject* plataforma21 = new Plataforma(500,0,planet,230,150,"img/plataformas/2200/plataformas2200_41.png");
 	objectArray.emplace_back(plataforma21);
@@ -84,8 +99,14 @@ StageState::StageState() :
 	GameObject* plataforma22 = new Plataforma(500,0,planet,230,250,"img/plataformas/2200/plataformas2200_41.png");
 	objectArray.emplace_back(plataforma22);
 
+	GameObject* planta6 = new Planta(500,0,planet,231,50,"img/plataformas/2200/planta.png");
+	objectArray.emplace_back(planta6);
+
 	GameObject* plataforma23 = new Plataforma(500,0,planet,236,200,"img/plataformas/2200/plataformas2200_41.png");
 	objectArray.emplace_back(plataforma23);
+
+	GameObject* planta7 = new Planta(500,0,planet,236,50,"img/plataformas/2200/planta.png");
+	objectArray.emplace_back(planta7);
 
 	GameObject* plataforma24 = new Plataforma(500,0,planet,240,150,"img/plataformas/2200/plataformas2200_15.png");
 	objectArray.emplace_back(plataforma24);
