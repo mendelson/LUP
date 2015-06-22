@@ -56,6 +56,7 @@ void Player::Update(float dt)
 		if (jumpState == STAND)
 		{
 			jumpState = JUMP;
+			jumped = 0;
 		}
 		else if (jumpState == JUMP)
 		{
@@ -156,10 +157,6 @@ void Player::Update(float dt)
 
 
 
-	//gambi para corrigir bug
-	//if(box.getY() > jumpY)
-	//	box.setY(jumpY - 1);
-
 
 	//if(box.getY()-15 > jumpY){
 	//	box.setY(box.getY() + 14);
@@ -204,8 +201,9 @@ void Player::NotifyCollision(GameObject& other)
 {
 	if(other.Is("Plataforma")){
 		//cout<<"Colidiu com plataforma!" << endl;
-		if(box.getY()> other.box.getY()){
-			box.setY(other.box.getY() - box.getH()/2 - 10);
+		if(box.getY() < other.box.getY())
+		while(box.getY() + box.getH()/2 > other.box.getY() - other.box.getH()/2){
+			box.setY(box.getY() - 1);
 			jumpState = STAND;
 		}
 	}

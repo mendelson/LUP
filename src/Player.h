@@ -38,6 +38,7 @@ private:
 	Timer dmgCD;
 	Jumping jumpState;
 	int jumpY;
+	int yPlaneta;
 	int jumped;
 	GameObject* planet;
 };

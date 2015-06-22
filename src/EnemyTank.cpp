@@ -4,6 +4,8 @@
 EnemyTank::EnemyTank(float x, float y,GameObject* planet, float initialRotation, float alturaInicial) :
 		sp("img/enemy_tank.png", 0.35, 1, 8), speed(), startPos(x, y), dmgCD(), knockback() {
 	this->planet = planet;
+	sp.SetScaleX(0.5);
+	sp.SetScaleY(0.5);
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
 	rotation = initialRotation;
@@ -109,6 +111,8 @@ void EnemyTank::NotifyCollision(GameObject& other) {
 		if (IsDead()) {
 			Player::player->IncXp(100);
 			Sprite* aux = new Sprite("img/enemy_tank_dying.png", 0.2, 1, 9);
+			aux->SetScaleX(0.5);
+			aux->SetScaleY(0.5);
 			aux->SetLoop(0, 6);
 			StillAnimation* animacao = new StillAnimation(box.getCenterX(),
 					box.getCenterY(), rotation, *aux, 0.2 * 7, true);
