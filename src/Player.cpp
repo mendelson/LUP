@@ -113,8 +113,7 @@ void Player::Update(float dt)
 		//se ele andar e o jumpy nao for o mesmo do chao tenta fazer ele cair, pois ele pode estar saindo da plataforma, se ainda estivar na plataforma isso vai ser resolvido na colisao
 		if(somaRotation != 0){
 			if(jumpY > box.getY()){
-				body.SetFrame(8);
-				jumpState = DJUMP;
+				jumpState = JUMP;
 				jumped = 300;
 			}
 		}
@@ -201,8 +200,8 @@ void Player::NotifyCollision(GameObject& other)
 {
 	if(other.Is("Plataforma")){
 		//cout<<"Colidiu com plataforma!" << endl;
-		if(box.getY() < other.box.getY())
-		while(box.getY() + box.getH()/2 > other.box.getY() - other.box.getH()/2){
+		if(box.getY() + box.getH()/2 < other.box.getY())
+		while(box.getY() + box.getH()*0.75 > other.box.getY()){
 			box.setY(box.getY() - 1);
 			jumpState = STAND;
 		}

@@ -6,7 +6,7 @@
 
 StageState::StageState() :
 		tileSet(64, 64, "img/tileset.png"), tileMap("map/tileMap.txt",
-				&tileSet), bg("img/ocean.jpg"), music("audio/stageState.ogg"), ui(
+				&tileSet), bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(
 				3) {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
@@ -129,8 +129,9 @@ StageState::StageState() :
 	GameObject* support = new Support();
 	objectArray.emplace_back(support);
 
-	rotacaoPlaneta = 0;
-	raioPlaneta = 1000;
+	xBg = -1400;
+	//rotacaoPlaneta = 0;
+	//raioPlaneta = 1000;
 
 	//GameObject* alien = new Alien(512,300,5,(rand()%5) + 3);
 	//objectArray.emplace_back(alien);
@@ -155,7 +156,8 @@ void StageState::Update(float dt) {
 				<< std::endl;
 
 	}
-
+	float somaRotation = Player::player->somaRotation;
+	xBg += somaRotation;
 	Camera::Update(dt);
 	quitRequested = InputManager::GetInstance().QuitRequested();
 	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
@@ -164,7 +166,7 @@ void StageState::Update(float dt) {
 }
 
 void StageState::Render() {
-	bg.Render(0, 0);
+	bg.Render(xBg, 0);
 	//tileMap.RenderLayer(0, Camera::pos.getX(), Camera::pos.getY());
 	RenderArray();
 	//tileMap.Render(Camera::pos.getX(), Camera::pos.getY());

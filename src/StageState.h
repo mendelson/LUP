@@ -38,7 +38,7 @@ private:
 	Sprite bg;
 	Music music;
 	UI ui;
-	float rotacaoPlaneta;
+	float xBg;
 };
 
 #endif /* SRC_STAGESTATE_H_ */
