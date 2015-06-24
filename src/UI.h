@@ -20,13 +20,21 @@ private:
 	int collectedEnergy;
 	bool newEnergy;
 
-	Sprite bgXp;
-	Sprite bgLife;
-	Sprite bgEnergy;
-
 	Text textNewEnergy;
 	Timer timer;
 	bool firstExecution;
+
+	float centerX;
+	float centerY;
+	float xpUnitConstant;
+
+
+	Sprite bgLifeBackground;
+	Sprite bgLifeUnit;
+	Sprite bgLifeHeart;
+	Sprite bgXpBackground;
+	Sprite bgXpUnit;
+	Sprite bgEnergy;
 };
 
 #endif /* SRC_UI_H_ */
