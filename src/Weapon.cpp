@@ -45,7 +45,14 @@ void Weapon::Update(float dt)
 	}
 	else
 	{
-		sp.SetLoop(Player::player->loopStart, Player::player->loopEnd);
+		if (Player::player->loopStart == 16 && Player::player->loopEnd == 17)
+		{
+			sp.SetLoop(0,0);
+		}
+		else
+		{
+			sp.SetLoop(Player::player->loopStart, Player::player->loopEnd);
+		}
 	}
 
 	attacking = (sp.GetCurrentFrame() == 18);
@@ -63,9 +70,9 @@ void Weapon::Render()
 	int c = 0;
 
 	if (orientation == RIGHT)
-		c = -50;
+		c = -25;
 	else
-		c = 50;
+		c = 25;
 
 	sp.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
 }

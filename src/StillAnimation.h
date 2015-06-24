@@ -14,7 +14,7 @@
 
 class StillAnimation: public GameObject{
 public:
-	StillAnimation(float x, float y, float rotation, Sprite sprite,float timeLimit,bool ends);
+	StillAnimation(float x, float y,  GameObject* planet, float rotation, Sprite sprite,float timeLimit,bool ends, float alturaInicial);
 	void Update(float dt);
 	void Render();
 	bool IsDead();
@@ -26,6 +26,8 @@ private:
 	float timeLimit;
 	bool oneTimeOnly;
 	Sprite sp;
+	GameObject* planet;
+	float alturaInicial;
 };
 
 

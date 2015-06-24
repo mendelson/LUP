@@ -123,8 +123,10 @@ StageState::StageState() :
 	GameObject* weapon = new Weapon("img/Sprites_Bracos_LUP.png");
 	objectArray.emplace_back(weapon);
 
-	GameObject* tank = new EnemyTank(500, 0,planet,18,50);
-	objectArray.emplace_back(tank);
+	//GameObject* tank = new EnemyTank(500, 0,planet,18,50);
+	//objectArray.emplace_back(tank);
+	GameObject* e3 = new Enemy3(500, 0,planet,18,0);
+	objectArray.emplace_back(e3);
 
 	GameObject* support = new Support();
 	objectArray.emplace_back(support);

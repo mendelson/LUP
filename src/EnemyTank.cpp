@@ -2,7 +2,7 @@
 #include "Game.h"
 
 EnemyTank::EnemyTank(float x, float y,GameObject* planet, float initialRotation, float alturaInicial) :
-		sp("img/enemy_tank.png", 0.35, 1, 8), speed(), startPos(x, y), dmgCD(), knockback() {
+		sp("img/enemy_tank.png", 0.35, 2, 8), speed(), startPos(x, y), dmgCD(), knockback() {
 	this->planet = planet;
 	sp.SetScaleX(0.5);
 	sp.SetScaleY(0.5);
@@ -42,7 +42,8 @@ void EnemyTank::Update(float dt) {
 		sp.Update(dt);
 	}
 	else if (currentPos->getDist(*playerPos) <= 600
-			&& currentPos->getDist(*playerPos) >= 50) {
+			&& currentPos->getDist(*playerPos) >= 100) {
+		sp.SetLoop(0, 7);
 		if (playerPos->x > currentPos->x) {
 			orientation = RIGHT;
 			sp.SetFlipH(true);
@@ -53,14 +54,15 @@ void EnemyTank::Update(float dt) {
 			rotation -= 5*dt;
 		}
 		sp.Update(dt);
-	} else if(currentPos->getDist(*playerPos) <= 50) {
+	} else if(currentPos->getDist(*playerPos) <= 100) {
+		sp.SetLoop(8, 15);
 		sp.Update(dt);
 	} else {
 		sp.SetFrame(7);
 		sp.Update(1);
 	}
 
-	if (sp.GetCurrentFrame() >= 2 && sp.GetCurrentFrame() <= 6)
+	if (sp.GetCurrentFrame() == 3 || sp.GetCurrentFrame() == 5 || sp.GetCurrentFrame() == 11 || sp.GetCurrentFrame() == 13)
 		attacking = true;
 	else
 		attacking = false;
@@ -115,7 +117,7 @@ void EnemyTank::NotifyCollision(GameObject& other) {
 			aux->SetScaleY(0.5);
 			aux->SetLoop(0, 6);
 			StillAnimation* animacao = new StillAnimation(box.getCenterX(),
-					box.getCenterY(), rotation, *aux, 0.2 * 7, true);
+					box.getCenterY(), planet, rotation, *aux, 0.2 * 7, true, box.getY()-50);
 			Game::GetInstance().GetCurrentState().AddObject(animacao);
 		}
 	}

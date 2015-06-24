@@ -21,6 +21,7 @@
 #include "Plataforma.h"
 #include "Planet.h"
 #include "Planta.h"
+#include "Enemy3.h"
 
 using std::string;
 

@@ -14,10 +14,11 @@
 #include "Camera.h"
 #include "InputManager.h"
 #include "Player.h"
+#include "Planet.h"
 
 class EnemyJellyfish : public GameObject{
 public:
-	EnemyJellyfish(float x,float y);
+	EnemyJellyfish(GameObject* planet, float initialRotation, float alturaInicial);
 	~EnemyJellyfish();
 	void Update(float dt);
 	void Render();
@@ -32,6 +33,8 @@ private:
 	int hp;
 	Timer shootcd;
 	Facing orientation;
+	float alturaInicial;
+	GameObject* planet;
 };
 
 

@@ -36,11 +36,13 @@ private:
 	int xp;
 	bool energyUpdate;
 	Timer dmgCD;
+	Timer knockback;
 	Jumping jumpState;
 	int jumpY;
 	int yPlaneta;
 	int jumped;
 	GameObject* planet;
+	Facing kbDirection;
 };
 
 

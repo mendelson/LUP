@@ -36,12 +36,12 @@ void Support::Update(float dt)
 	int c;
 	if (orientation == RIGHT)
 	{
-		c = -50;
+		c = -25;
 		sp.SetFlipH(false);
 	}
 	else
 	{
-		c = Player::player->box.getW() - 50;
+		c = Player::player->box.getW() - 25;
 		sp.SetFlipH(true);
 	}
 

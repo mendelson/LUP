@@ -42,7 +42,7 @@ bool Bullet::Is(string type){
 }
 
 void Bullet::NotifyCollision(GameObject& other){
-	if((other.Is("Penguins") && targetsPlayer) || (other.Is("Alien") && !targetsPlayer) || (other.Is("Minion") && !targetsPlayer)){
+	if(other.Is("Player")){
 		distanceLeft = 0;
 	}
 }
