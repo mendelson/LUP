@@ -24,6 +24,7 @@ private:
 	Sprite sp;
 	GameObject* planet;
 	float alturaInicial;
+	bool dead;
 };
 
 #endif /* SRC_PLANTA_H_ */

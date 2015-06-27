@@ -22,7 +22,7 @@ Planta::Planta(float x,float y,GameObject* planet, float rotation,float alturaIn
 	float arc = rotation*3.1415/180;
 	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 + planet->box.getCenterY() + alturaInicial)*cos(arc)) - (box.getW()/2));
 	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 + planet->box.getCenterY() + alturaInicial)*sin(arc)) - (box.getH()/2));
-
+	dead = false;
 
 }
 
@@ -44,15 +44,18 @@ void Planta::Render(){
 }
 
 bool Planta::IsDead(){
-	return false;
+	return dead;
 }
 
 Sprite Planta::getSprite(){
 	return sp;
 }
 
-void Planta::NotifyCollision(GameObject&){
-
+void Planta::NotifyCollision(GameObject& other){
+	if (other.Is("Player"))
+		{
+			dead = true;
+		}
 }
 
 bool Planta::Is(string type){

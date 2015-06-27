@@ -213,7 +213,7 @@ void Player::NotifyCollision(GameObject& other)
 {
 	if(other.Is("Plataforma")){
 		//cout<<"Colidiu com plataforma!" << endl;
-		if(box.getY() + box.getH()/2 < other.box.getY())
+		if(box.getY() + box.getH()/2 < other.box.getY()  && jumped >= 150)
 		while(box.getY() + box.getH()*0.75 > other.box.getY()){
 			box.setY(box.getY() - 1);
 			jumpState = STAND;

@@ -34,8 +34,6 @@ public:
 	void Pause();
 	void Resume();
 private:
-	TileSet tileSet;
-	TileMap tileMap;
 	Sprite bg;
 	Music music;
 	UI ui;

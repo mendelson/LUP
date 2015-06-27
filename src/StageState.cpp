@@ -4,9 +4,7 @@
 #include "Camera.h"
 #include "Collision.h"
 
-StageState::StageState() :
-		tileSet(64, 64, "img/tileset.png"), tileMap("map/tileMap.txt",
-				&tileSet), bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(
+StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(
 				3) {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
@@ -125,8 +123,8 @@ StageState::StageState() :
 
 	//GameObject* tank = new EnemyTank(500, 0,planet,18,50);
 	//objectArray.emplace_back(tank);
-	GameObject* e3 = new Enemy3(500, 0,planet,18,0);
-	objectArray.emplace_back(e3);
+	//GameObject* e3 = new Enemy3(500, 0,planet,18,0);
+	//objectArray.emplace_back(e3);
 
 	GameObject* support = new Support();
 	objectArray.emplace_back(support);
@@ -169,9 +167,7 @@ void StageState::Update(float dt) {
 
 void StageState::Render() {
 	bg.Render(xBg, 0);
-	//tileMap.RenderLayer(0, Camera::pos.getX(), Camera::pos.getY());
 	RenderArray();
-	//tileMap.Render(Camera::pos.getX(), Camera::pos.getY());
 	ui.Render();
 }
 
