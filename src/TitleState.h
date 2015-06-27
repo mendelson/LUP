@@ -7,6 +7,7 @@
 #include "State.h"
 #include "Text.h"
 #include "Timer.h"
+#include "Music.h"
 
 class TitleState: public State {
 public:
@@ -26,6 +27,7 @@ private:
 	int focus;
 	bool initialize;
 	int menuYStartPosition;
+	Music music;
 
 };
 

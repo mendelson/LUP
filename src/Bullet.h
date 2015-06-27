@@ -11,6 +11,7 @@
 #include "GameObject.h"
 #include "Sprite.h"
 #include "Point.h"
+#include "Sound.h"
 #include <iostream>
 #include <math.h>
 

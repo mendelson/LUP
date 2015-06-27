@@ -12,6 +12,9 @@ Bullet::Bullet(float x,float y,float angle, float speed, float maxDistance, stri
 	distanceLeft = maxDistance;
 	this->angle = angle;
 	targetsPlayer = targetsPlay;
+	Sound* sound = new Sound("audio/projetil.wav");
+	sound->Play(0);
+	delete(sound);
 }
 
 void Bullet::Update(float dt){

@@ -28,6 +28,9 @@ Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP
 	loopEnd = 0;
 	this->planet = planet;
 	knockback.Update(10);
+	Sound* sound = new Sound("audio/Start.wav");
+	sound->Play(0);
+	delete(sound);
 
 }
 
@@ -181,7 +184,7 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
-	int c = 0;
+	c = 0;
 
 	if (orientation == RIGHT)
 		c = -25;
@@ -213,7 +216,8 @@ void Player::NotifyCollision(GameObject& other)
 {
 	if(other.Is("Plataforma")){
 		//cout<<"Colidiu com plataforma!" << endl;
-		if(box.getY() + box.getH()/2 < other.box.getY()  && jumped >= 150)
+		if(box.getY() + box.getH()/2 < other.box.getY()  && jumped >= 150 && box.getX() + box.getW()/2 + c > other.box.getX()
+				&& box.getX() + box.getW()/2 + c < other.box.getX() + other.box.getW() )
 		while(box.getY() + box.getH()*0.75 > other.box.getY()){
 			box.setY(box.getY() - 1);
 			jumpState = STAND;
@@ -235,8 +239,11 @@ void Player::NotifyCollision(GameObject& other)
 		}
 	}
 
-	if (other.Is("Bullet"))
+	if (other.Is("Bullet") || other.Is("Planta"))
 	{
+		Sound* sound = new Sound("audio/dano.wav");
+		sound->Play(0);
+		delete(sound);
 		if (dmgCD.Get() > 0.5) {
 			dmgCD.Restart();
 			hp -= 10;

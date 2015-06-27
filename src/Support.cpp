@@ -58,6 +58,9 @@ void Support::Update(float dt)
 
 	if(InputManager::GetInstance().KeyPress(SDLK_s) || attacking)
 	{
+		Sound* sound = new Sound("audio/robo.wav");
+		sound->Play(0);
+		delete(sound);
 		attacking = true;
 		sp.SetLoop(32, 47);
 	}

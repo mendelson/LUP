@@ -13,7 +13,7 @@ const int ITEMS_DISTANCE = 50;
 const int NUMBER_OF_MENU_PLANETS = 3;
 
 TitleState::TitleState() :
-		bg("img/fundo.png"), timer() {
+		bg("img/fundo.png"), timer(),music("audio/titlescreenlup.ogg") {
 
 	focus = 0;
 	initialize = true;
@@ -28,6 +28,7 @@ TitleState::TitleState() :
 
 		selector.emplace_back(new Sprite(planetFile));
 	}
+	music.Play(-1);
 }
 
 TitleState::~TitleState() {
@@ -116,6 +117,7 @@ void TitleState::Render() {
 
 void TitleState::Pause() {
 	textVector.clear();
+	music.Stop();
 }
 
 void TitleState::Resume() {
@@ -123,6 +125,7 @@ void TitleState::Resume() {
 	initialize = true;
 
 	mountMainMenu();
+	music.Play(-1);
 }
 
 void TitleState::mountMainMenu() {

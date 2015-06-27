@@ -43,6 +43,7 @@ private:
 	int jumped;
 	GameObject* planet;
 	Facing kbDirection;
+	int c;
 };
 
 
