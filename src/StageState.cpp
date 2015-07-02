@@ -8,11 +8,6 @@ StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState
 				3) {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
-	/*
-	 GameObject* penguin = new Penguins(1920,100);
-	 objectArray.emplace_back(penguin);
-	 Camera::Follow(penguin);
-	 */
 
 
 

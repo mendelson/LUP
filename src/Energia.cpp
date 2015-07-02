@@ -1,16 +1,16 @@
 /*
- * Planta.cpp
+ * Energia.cpp
  *
- *  Created on: 03/06/2015
+ *  Created on: 28/06/2015
  *      Author: Vitor
  */
 
-#include "Planta.h"
+#include "Energia.h"
 #include "Camera.h"
 #include "Game.h"
 #include "InputManager.h"
 
-Planta::Planta(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file):sp(file) {
+Energia::Energia(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file):sp(file) {
 	this->planet = planet;
 
 	box.setH(sp.GetHeight());
@@ -24,11 +24,11 @@ Planta::Planta(float x,float y,GameObject* planet, float rotation,float alturaIn
 
 }
 
-Planta::~Planta() {
+Energia::~Energia() {
 	//delete(&sp);
 }
 
-void Planta::Update(float dt){
+void Energia::Update(float dt){
 	somaRotation = planet->somaRotation;
 	rotation += somaRotation;
 
@@ -37,25 +37,25 @@ void Planta::Update(float dt){
 		box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300 + alturaInicial)*sin(arc)) - (box.getH()/2));
 }
 
-void Planta::Render(){
+void Energia::Render(){
 	sp.Render(box.getX() + Camera::pos.getX(),box.getY() +  Camera::pos.getY(),rotation + 90);
 }
 
-bool Planta::IsDead(){
+bool Energia::IsDead(){
 	return dead;
 }
 
-Sprite Planta::getSprite(){
+Sprite Energia::getSprite(){
 	return sp;
 }
 
-void Planta::NotifyCollision(GameObject& other){
+void Energia::NotifyCollision(GameObject& other){
 	if (other.Is("Player"))
 		{
 			dead = true;
 		}
 }
 
-bool Planta::Is(string type){
-	return (type == "Planta");
+bool Energia::Is(string type){
+	return (type == "Energia");
 }

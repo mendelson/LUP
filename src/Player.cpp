@@ -113,7 +113,7 @@ void Player::Update(float dt)
 		}
 
 		//verifica se ele pode ir pra onde quer, e sobe se ele deve subir
-		if(jumpState == STAND){
+		if(jumpState == STAND && somaRotation!=0){
 			int proxAltura = planet->getAltura(planet->rotation + somaRotation);
 			//a de cima é a proxima altura que ele ira, esta é a proxima altura do angulo, deve se usar a de baixo para verificar se eh uma rampa que ele pode subir, pois se ele estiver correndo pode subir muito
 			//usamos entao a de cima para subir o personagem
@@ -122,7 +122,8 @@ void Player::Update(float dt)
 			int difAlturaProxAngulo = alturaProxAngulo - jumpY;
 			//usa esse porque se ele estiver correndo a altura pode subir mais do que o normal
 			//float difAlturaPorAngulo = abs(difAltura / somaRotation);
-			if(difAlturaProxAngulo > -25){
+			if(difAlturaProxAngulo > -15){
+				cout << "difAltura" << difAlturaProxAngulo << endl;
 				box.setY(box.getY() + difAltura);
 			}
 
@@ -216,8 +217,8 @@ void Player::NotifyCollision(GameObject& other)
 {
 	if(other.Is("Plataforma")){
 		//cout<<"Colidiu com plataforma!" << endl;
-		if(box.getY() + box.getH()/2 < other.box.getY()  && jumped >= 150 && box.getX() + box.getW()/2 + c > other.box.getX()
-				&& box.getX() + box.getW()/2 + c < other.box.getX() + other.box.getW() )
+		if(box.getY() + box.getH()/2 < other.box.getY()  && jumped >= 150 && box.getX() + box.getW()/2 + c + 10> other.box.getX()
+				&& box.getX() + box.getW()/2 + c - 10 < other.box.getX() + other.box.getW() )
 		while(box.getY() + box.getH()*0.75 > other.box.getY()){
 			box.setY(box.getY() - 1);
 			jumpState = STAND;
