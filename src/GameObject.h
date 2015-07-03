@@ -23,6 +23,7 @@ public:
 	virtual void NotifyCollision(GameObject&) = 0;
 	virtual bool Is(string type) = 0;
 	virtual int getAltura(float rotation){return 0;}
+	virtual bool podeSubir(float rotation){return true;}
 };
 
 

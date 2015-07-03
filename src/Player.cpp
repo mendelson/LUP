@@ -113,19 +113,23 @@ void Player::Update(float dt)
 		}
 
 		//verifica se ele pode ir pra onde quer, e sobe se ele deve subir
-		if(jumpState == STAND && somaRotation!=0){
+		if(jumpState == STAND){
 			int proxAltura = planet->getAltura(planet->rotation + somaRotation);
 			//a de cima é a proxima altura que ele ira, esta é a proxima altura do angulo, deve se usar a de baixo para verificar se eh uma rampa que ele pode subir, pois se ele estiver correndo pode subir muito
 			//usamos entao a de cima para subir o personagem
-			int alturaProxAngulo = planet->getAltura(planet->rotation + (somaRotation/abs(somaRotation)));
+			//int alturaProxAngulo = planet->getAltura(planet->rotation + (somaRotation/abs(somaRotation)));
 			int difAltura = proxAltura - jumpY;
-			int difAlturaProxAngulo = alturaProxAngulo - jumpY;
+			//int difAlturaProxAngulo = alturaProxAngulo - jumpY;
 			//usa esse porque se ele estiver correndo a altura pode subir mais do que o normal
 			//float difAlturaPorAngulo = abs(difAltura / somaRotation);
-			if(difAlturaProxAngulo > -15){
-				cout << "difAltura" << difAlturaProxAngulo << endl;
+			if(planet->podeSubir(planet->rotation + somaRotation) || difAltura >= 0){
+				//cout << "difAltura" << difAltura << endl;
 				box.setY(box.getY() + difAltura);
+			}else{
+				somaRotation = 0;
 			}
+
+
 
 
 			//se ele andar e o jumpy nao for o mesmo do chao tenta fazer ele cair, pois ele pode estar saindo da plataforma, se ainda estivar na plataforma isso vai ser resolvido na colisao

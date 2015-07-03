@@ -24,9 +24,11 @@ public:
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
 	int getAltura(float rotation);
+	bool podeSubir(float rotation);
 private:
 	Sprite sp;
 	int offsetALtura[361];
+	int mapaSubida[361];
 };
 
 #endif /* SRC_PLANET_H_ */

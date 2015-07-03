@@ -22,6 +22,11 @@ Planet::Planet(float x, float y,string file):sp(file) {
 	for(int i=0;i<361;i++){
 		fscanf(fp,"%d,",&offsetALtura[i]);
 	}
+	FILE* f;
+	f = fopen("map/mapSubida.txt","r");
+	for(int i=0;i<361;i++){
+		fscanf(f,"%d,",&mapaSubida[i]);
+	}
 }
 
 Planet::~Planet() {
@@ -67,4 +72,15 @@ int Planet::getAltura(float rotation){
 
 	int auxrotation = ((int ) rotation) % 360;
 	return -offsetALtura[auxrotation] + Player::player->getSprite().GetHeight();
+}
+
+bool Planet::podeSubir(float rotation){
+	while(rotation < 0) rotation += 360;
+
+	while (rotation > 360) rotation  -= 360;
+	int auxrotation = ((int ) rotation) % 360;
+	if(mapaSubida[auxrotation] == 1)
+		return true;
+	return false;
+
 }
