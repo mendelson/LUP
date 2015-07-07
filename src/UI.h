@@ -16,6 +16,7 @@ public:
 private:
 	int xp; // Percentage
 	int life; // Percentage
+	int special; // Percentage
 	const int requiredEnergy;
 	int collectedEnergy;
 	bool newEnergy;
@@ -29,12 +30,10 @@ private:
 	float xpUnitConstant;
 
 
-	Sprite bgLifeBackground;
-	Sprite bgLifeUnit;
-	Sprite bgLifeHeart;
+	Sprite bgLife;
 	Sprite bgXpBackground;
 	Sprite bgXpUnit;
-	Sprite bgEnergy;
+	Sprite bgSpecial;
 };
 
 #endif /* SRC_UI_H_ */

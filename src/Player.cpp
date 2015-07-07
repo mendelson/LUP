@@ -286,6 +286,12 @@ int Player::GetXp()
 	return xp;
 }
 
+int Player::GetSpecial()
+{
+	//TODO
+	return 0;
+}
+
 void Player::IncXp(int xp)
 {
 	this->xp += xp;

@@ -46,9 +46,9 @@ void TitleState::Update(float dt) {
 		for (int i = 0; i < (int) textVector.size(); i++) {
 			if (textVector[i]->GetXCenter()
 					< Game::GetInstance().getWidth() / 2) {
-				if (i == 0) {
+				/*if (i == 0) {
 					cout << textVector[i]->GetXCenter() << endl;
-				}
+				}*/
 				textVector[i]->SetPos(textVector[i]->GetXCenter() + 1,
 						menuYStartPosition + i * ITEMS_DISTANCE, true, true);
 				initialize = true;
@@ -142,8 +142,8 @@ void TitleState::mountMainMenu() {
 	for (unsigned int i = 0; i < textVector.size(); i++) {
 		textVector[i]->SetPos(0, menuYStartPosition + i * ITEMS_DISTANCE, true,
 				true);
-		if (i == 0) {
+		/*if (i == 0) {
 			cout << textVector[i]->GetXCenter() << endl;
-		}
+		}*/
 	}
 }
