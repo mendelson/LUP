@@ -34,6 +34,9 @@ private:
 	Sprite bgXpBackground;
 	Sprite bgXpUnit;
 	Sprite bgSpecial;
+	Sprite bgBroom;
+	Sprite bgSword;
+	Sprite bgEnergyBackground;
 };
 
 #endif /* SRC_UI_H_ */

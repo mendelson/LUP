@@ -12,10 +12,12 @@ const float initAngle = 98;
 const float displacementXpUnit = 6.5;
 
 UI::UI(int requiredEnergy, int collectedEnergy) :
-		requiredEnergy(requiredEnergy),
-		textNewEnergy("font/Call me maybe.ttf", 40, Text::BLENDED, "Energia recolhida!", { 0, 0, 0 }, 350, 250),
-		timer(), bgLife("img/life.png", 0, 1, 10), bgXpBackground("img/xp_background.png"),
-		bgXpUnit("img/xp_unit.png"), bgSpecial("img/special.png", 0, 1, 10) {
+		requiredEnergy(requiredEnergy), textNewEnergy("font/Call me maybe.ttf",
+				40, Text::BLENDED, "Energia recolhida!", { 0, 0, 0 }, 350, 250), timer(), bgLife(
+				"img/life.png", 0, 1, 10), bgXpBackground(
+				"img/xp_background.png"), bgXpUnit("img/xp_unit.png"), bgSpecial(
+				"img/special.png", 0, 1, 10), bgBroom("img/broom_1.png"), bgSword(
+				"img/sword_1.png"), bgEnergyBackground("img/energy_background.png") {
 	this->bgLife.SetLoop(0, 9);
 	this->bgSpecial.SetLoop(0, 9);
 	this->xp = 0;
@@ -134,8 +136,12 @@ void UI::Render() {
 	}
 	bgXpBackground.Render(lifeX + bgLife.GetFrameWidth() - 10, lifeY + 40, 0);
 
-	//Energy bar
-	//TODO
+	//Weapons
+	bgBroom.Render(lifeX + bgLife.GetFrameWidth() + 20, lifeY + 65, 0);
+	bgSword.Render(lifeX + bgLife.GetFrameWidth() + 65, lifeY + 65, 0);
+
+	//Energy
+	bgEnergyBackground.Render(lifeX + bgLife.GetFrameWidth() + 300, lifeY + 20, 0);
 
 	//Special bar
 	bgSpecial.Render(lifeX + 850, lifeY, 0);
