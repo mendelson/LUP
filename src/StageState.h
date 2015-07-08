@@ -12,7 +12,8 @@
 #include "TileMap.h"
 #include "Minion.h"
 #include "Player.h"
-#include "Weapon.h"
+#include "WeaponBroom.h"
+#include "WeaponSword.h"
 #include "EnemyTank.h"
 #include "Support.h"
 #include "State.h"
@@ -38,6 +39,7 @@ private:
 	Music music;
 	UI ui;
 	float xBg;
+	Weapon* activeWeapon;
 };
 
 #endif /* SRC_STAGESTATE_H_ */

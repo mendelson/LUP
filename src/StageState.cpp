@@ -4,8 +4,7 @@
 #include "Camera.h"
 #include "Collision.h"
 
-StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(
-				3) {
+StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(3) {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
 
@@ -110,19 +109,17 @@ StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState
 	objectArray.emplace_back(player);
 	Camera::Follow(player);
 
+	GameObject* support = new Support();
+	objectArray.emplace_back(support);
 
-
-
-	GameObject* weapon = new Weapon("img/Sprites_Bracos_LUP.png");
-	objectArray.emplace_back(weapon);
+	activeWeapon = new WeaponBroom("img/Sprites_Bracos_LUP.png");
+	//GameObject* weapon = new WeaponSword("img/Sprites_Espada_LUP.png");
+	objectArray.emplace_back(activeWeapon);
 
 	//GameObject* tank = new EnemyTank(500, 0,planet,18,50);
 	//objectArray.emplace_back(tank);
-	//GameObject* e3 = new Enemy3(500, 0,planet,18,0);
-	//objectArray.emplace_back(e3);
-
-	GameObject* support = new Support();
-	objectArray.emplace_back(support);
+	GameObject* e3 = new Enemy3(500, 0,planet,18,0);
+	objectArray.emplace_back(e3);
 
 	xBg = -1400;
 	//rotacaoPlaneta = 0;
@@ -151,6 +148,20 @@ void StageState::Update(float dt) {
 				<< std::endl;
 
 	}
+
+	if(InputManager::GetInstance().KeyPress(SDLK_d))
+	{
+		if (activeWeapon->Is("WeaponBroom"))
+		{
+			activeWeapon = new WeaponSword("img/Sprites_Espada_LUP.png");
+		}
+		else if (activeWeapon->Is("WeaponSword"))
+		{
+			activeWeapon = new WeaponBroom("img/Sprites_Bracos_LUP.png");
+		}
+		objectArray.emplace_back(activeWeapon);
+	}
+
 	float somaRotation = Player::player->somaRotation;
 	xBg += somaRotation;
 	Camera::Update(dt);

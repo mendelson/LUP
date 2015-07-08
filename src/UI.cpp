@@ -109,7 +109,6 @@ void UI::Update(float dt) {
 		} else if (this->special >= 90) {
 			bgSpecial.SetFrame(-1);
 		}
-		cout << bgSpecial.GetCurrentFrame() << endl;
 		bgSpecial.Update(1);
 	}
 }

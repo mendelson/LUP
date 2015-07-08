@@ -20,6 +20,7 @@ public:
 	void SetPopRequested(bool pop);
 	bool QuitRequested();
 	float raioPlaneta;
+
 protected:
 	virtual void UpdateArray(float dt);
 	virtual void RenderArray();
