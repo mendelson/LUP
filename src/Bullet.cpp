@@ -1,7 +1,17 @@
 #include "Bullet.h"
 #include "Camera.h"
 
-Bullet::Bullet(float x,float y,float angle, float speed, float maxDistance, string Sprite,bool targetsPlay,int frameCount):sp(Sprite,0.1,1,frameCount){
+Bullet::Bullet(float x,float y,GameObject* planet, float angle, float alturaIncial, float speed, float maxDistance, string Sprite,bool targetsPlay,int frameCount):sp(Sprite,0.1,1,frameCount){
+
+	this->planet = planet;
+	box.setH(sp.GetHeight());
+	box.setW(sp.GetWidth());
+	rotation = angle;
+	float arc = rotation*3.1415/180;
+	this->alturaInicial = alturaInicial;
+	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 + planet->box.getCenterY() + alturaInicial)*cos(arc)));
+	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 + planet->box.getCenterY()  + alturaInicial)*sin(arc)));
+
 	box.setX(x - sp.GetWidth()/2);
 	box.setY(y - sp.GetHeight()/2);
 	box.setH(sp.GetHeight());

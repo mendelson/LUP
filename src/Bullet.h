@@ -9,6 +9,7 @@
 #define SRC_BULLET_H_
 
 #include "GameObject.h"
+#include "Planet.h"
 #include "Sprite.h"
 #include "Point.h"
 #include "Sound.h"
@@ -21,7 +22,7 @@ using std::endl;
 
 class Bullet : public GameObject{
 public:
-	Bullet(float x,float y,float angle, float speed,float maxDistance, string sprite,bool targetsPlay,int frameCount = 1);
+	Bullet(float x,float y,GameObject* planet, float angle, float alturaIncial, float speed,float maxDistance, string sprite,bool targetsPlay,int frameCount = 1);
 	void Update(float dt);
 	void Render();
 	bool IsDead();
@@ -30,6 +31,8 @@ public:
 	void NotifyCollision(GameObject&);
 	bool targetsPlayer;
 private:
+	float alturaInicial;
+	GameObject* planet;
 	Sprite sp;
 	Point speed;
 	float distanceLeft;

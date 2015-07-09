@@ -48,8 +48,8 @@ void Minion::Shoot(Point pos){
 		angle += 3.141592653;
 	}
 	delete(pspeed);
-	Bullet* bullet = new Bullet(box.getCenterX(),box.getCenterY(),angle,speed,2000,"img/minionBullet2.png",true,3);
-	Game::GetInstance().GetCurrentState().AddObject(bullet);
+	//Bullet* bullet = new Bullet(box.getCenterX(),box.getCenterY(),angle,speed,2000,"img/minionBullet2.png",true,3);
+	//Game::GetInstance().GetCurrentState().AddObject(bullet);
 }
 
 Sprite Minion::getSprite(){

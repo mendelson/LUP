@@ -11,8 +11,8 @@ Enemy3::Enemy3(float x, float y, GameObject* planet, float initialRotation, floa
 	rotation = initialRotation;
 	float arc = rotation*3.1415/180;
 	this->alturaInicial = alturaInicial;
-	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 + planet->box.getCenterY() + alturaInicial)*cos(arc)));
-	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 + planet->box.getCenterY()  + alturaInicial)*sin(arc)));
+	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 + planet->box.getCenterY() + alturaInicial+box.getH())*cos(arc)) - (box.getW()/2));
+	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 + planet->box.getCenterY()  + alturaInicial+box.getH())*sin(arc)) - (box.getH()/2));
 	hp = 50;
 	speed.x = 2;
 	speed.y = 0;
@@ -79,8 +79,8 @@ void Enemy3::Update(float dt)
 	rotation += somaRotation;
 
 	float arc = rotation*3.1415/180;
-	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial)*cos(arc)) - (box.getW()/2));
-	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300 + alturaInicial)*sin(arc)) - (box.getH()/2));
+	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial+box.getH())*cos(arc)) - (box.getW()/2));
+	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300 + alturaInicial+box.getH())*sin(arc)) - (box.getH()/2));
 
 	knockback.Update(dt);
 	shootcd.Update(dt);
@@ -146,7 +146,7 @@ void Enemy3::Shoot (Point pos)
 		}
 	}
 
-	Bullet* bullet = new Bullet(xBullet,yBullet,angle,speed,2000,"img/enemy3_bullet.png",true,4);
+	Bullet* bullet = new Bullet(xBullet,yBullet,planet,angle, 0, speed,2000,"img/enemy3_bullet.png",true,4);
 	Game::GetInstance().GetCurrentState().AddObject(bullet);
 }
 
