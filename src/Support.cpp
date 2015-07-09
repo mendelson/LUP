@@ -20,7 +20,7 @@ Support::Support() : sp("img/support.png",0.1,3,16), timer()
 	attacking = false;
 
 
-	sp.SetLoop(0,14);
+	sp.SetLoop(0,12);
 }
 
 Support::~Support()
@@ -45,24 +45,27 @@ void Support::Update(float dt)
 		sp.SetFlipH(true);
 	}
 
-	if (sp.GetCurrentFrame() == 14)
-		sp.SetLoop(16,19);
-	else if (sp.GetCurrentFrame() == 19)
-		sp.SetLoop(0,14);
-
 	if (sp.GetCurrentFrame() == 47)
 	{
-		attacking = false;
-		sp.SetLoop(16,19);
+		sp.SetLoop(0,12);
 	}
 
-	if(InputManager::GetInstance().KeyPress(SDLK_s) || attacking)
+	if(InputManager::GetInstance().KeyPress(SDLK_s))
 	{
 		Sound* sound = new Sound("audio/robo.wav");
 		sound->Play(0);
 		delete(sound);
-		attacking = true;
 		sp.SetLoop(32, 47);
+	}
+	attacking = (sp.GetCurrentFrame() == 42);
+
+	if(InputManager::GetInstance().IsKeyDown(SDLK_SPACE))
+	{
+		sp.SetLoop(16,19);
+	}
+	else
+	{
+		sp.SetLoop(0,12);
 	}
 
 	box.setX(Player::player->box.getX() + c);
