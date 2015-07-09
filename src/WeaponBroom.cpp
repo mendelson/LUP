@@ -32,10 +32,7 @@ WeaponBroom::~WeaponBroom()
 
 void WeaponBroom::Update(float dt)
 {
-	if(InputManager::GetInstance().KeyPress(SDLK_d))
-	{
-		isDead = true;
-	}
+	deathCD.Update(dt);
 
 	if (Player::player == NULL)
 		return;
@@ -80,6 +77,11 @@ void WeaponBroom::Update(float dt)
 		rotation -= 90;
 
 	sp.Update(dt);
+
+	if(InputManager::GetInstance().KeyPress(SDLK_d) && deathCD.Get() > 0.5)
+	{
+		isDead = true;
+	}
 }
 
 void WeaponBroom::Render()

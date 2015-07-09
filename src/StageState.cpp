@@ -4,7 +4,7 @@
 #include "Camera.h"
 #include "Collision.h"
 
-StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(3) {
+StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(3), changeWpCD() {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
 
@@ -139,6 +139,8 @@ void StageState::Update(float dt) {
 //		quitRequested = true;
 //	}
 
+	changeWpCD.Update(dt);
+
 	if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
 		std::cout
 				<< InputManager::GetInstance().GetMouseX() - Camera::pos.getX()
@@ -149,13 +151,18 @@ void StageState::Update(float dt) {
 
 	}
 
-	if(InputManager::GetInstance().KeyPress(SDLK_d))
+	if(InputManager::GetInstance().KeyPress(SDLK_d) && (changeWpCD.Get() > 0.5))
 	{
+		changeWpCD.Restart();
 		if (activeWeapon->Is("WeaponBroom"))
 		{
 			activeWeapon = new WeaponSword("img/Sprites_Espada_LUP.png");
 		}
 		else if (activeWeapon->Is("WeaponSword"))
+		{
+			activeWeapon = new WeaponGun("img/Sprites_Gun_LUP.png");
+		}
+		else if (activeWeapon->Is("WeaponGun"))
 		{
 			activeWeapon = new WeaponBroom("img/Sprites_Bracos_LUP.png");
 		}

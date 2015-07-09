@@ -14,6 +14,7 @@
 #include "Player.h"
 #include "WeaponBroom.h"
 #include "WeaponSword.h"
+#include "WeaponGun.h"
 #include "EnemyTank.h"
 #include "Support.h"
 #include "State.h"
@@ -40,6 +41,7 @@ private:
 	UI ui;
 	float xBg;
 	Weapon* activeWeapon;
+	Timer changeWpCD;
 };
 
 #endif /* SRC_STAGESTATE_H_ */

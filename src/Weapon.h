@@ -3,6 +3,7 @@
 #define SRC_WEAPON_H_
 
 #include "GameObject.h"
+#include "Timer.h"
 
 
 class Weapon : public GameObject{
@@ -11,6 +12,7 @@ public:
 	~Weapon();
 	void Kill();
 	bool isDead;
+	Timer deathCD;
 private:
 
 };

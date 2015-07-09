@@ -1,6 +1,6 @@
-#include "WeaponSword.h"
+#include "WeaponGun.h"
 
-WeaponSword::WeaponSword(std::string file) : sp(file,0.1,2,8)
+WeaponGun::WeaponGun(std::string file) : sp(file,0.1,2,8)
 {
 	isDead = false;
 	sp.SetScaleX(0.5);
@@ -17,12 +17,12 @@ WeaponSword::WeaponSword(std::string file) : sp(file,0.1,2,8)
 		sp.SetFlipH(true);
 }
 
-WeaponSword::~WeaponSword()
+WeaponGun::~WeaponGun()
 {
 
 }
 
-void WeaponSword::Update(float dt)
+void WeaponGun::Update(float dt)
 {
 	deathCD.Update(dt);
 
@@ -38,7 +38,7 @@ void WeaponSword::Update(float dt)
 	else
 		sp.SetFlipH(false);
 
-	if (sp.GetCurrentFrame() == 3)
+	if (sp.GetCurrentFrame() == 9)
 		atkFrame = false;
 
 	if(InputManager::GetInstance().KeyPress(SDLK_a) || atkFrame)
@@ -47,7 +47,7 @@ void WeaponSword::Update(float dt)
 		sound->Play(0);
 		delete(sound);
 		atkFrame = true;
-		sp.SetLoop(0, 3);
+		sp.SetLoop(8, 9);
 	}
 	else
 	{
@@ -57,11 +57,9 @@ void WeaponSword::Update(float dt)
 		}
 		else
 		{
-			sp.SetLoop(8, 15);
+			sp.SetLoop(0, 7);
 		}
 	}
-
-	attacking = (sp.GetCurrentFrame() == 2);
 
 	if (orientation == RIGHT)
 		rotation += 90;
@@ -76,7 +74,7 @@ void WeaponSword::Update(float dt)
 	}
 }
 
-void WeaponSword::Render()
+void WeaponGun::Render()
 {
 	int c = 0;
 
@@ -88,22 +86,22 @@ void WeaponSword::Render()
 	sp.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
 }
 
-bool WeaponSword::IsDead()
+bool WeaponGun::IsDead()
 {
 	return ((Player::player == NULL) || isDead);
 }
 
-Sprite WeaponSword::getSprite()
+Sprite WeaponGun::getSprite()
 {
 	return sp;
 }
 
-bool WeaponSword::Is(string type)
+bool WeaponGun::Is(string type)
 {
-	return (type == "WeaponSword");
+	return (type == "WeaponGun");
 }
 
-void WeaponSword::NotifyCollision(GameObject&)
+void WeaponGun::NotifyCollision(GameObject&)
 {
 
 }
