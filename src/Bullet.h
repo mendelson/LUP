@@ -22,7 +22,7 @@ using std::endl;
 
 class Bullet : public GameObject{
 public:
-	Bullet(float x,float y,GameObject* planet, float angle, float alturaIncial, float speed,float maxDistance, string sprite,bool targetsPlay,int frameCount = 1);
+	Bullet(GameObject* planet, float initialRotation, float alturaIncial, float speed, float maxDistance, string Sprite, bool targetsPlay, int frameCount);
 	void Update(float dt);
 	void Render();
 	bool IsDead();
@@ -36,7 +36,6 @@ private:
 	Sprite sp;
 	Point speed;
 	float distanceLeft;
-	float angle;
 };
 
 

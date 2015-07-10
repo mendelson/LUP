@@ -29,6 +29,7 @@ public:
 
 	int loopStart;
 	int loopEnd;
+	GameObject* planet;
 
 private:
 	Sprite body;
@@ -42,7 +43,6 @@ private:
 	int jumpY;
 	int yPlaneta;
 	int jumped;
-	GameObject* planet;
 	Facing kbDirection;
 	int c;
 };

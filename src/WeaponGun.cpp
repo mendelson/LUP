@@ -65,6 +65,8 @@ void WeaponGun::Update(float dt)
 		else
 		{
 			sp.SetLoop(0, 7);
+			if (Player::player->planet->somaRotation == 0)
+				sp.SetLoop(2, 2);
 		}
 	}
 

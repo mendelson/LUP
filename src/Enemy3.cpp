@@ -49,8 +49,8 @@ void Enemy3::Update(float dt)
 
 		sp.Update(dt);
 	}
-	else if (currentPos->getDist(*playerPos) <= 600
-			&& currentPos->getDist(*playerPos) >= 300) {
+	else if (currentPos->getDist(*playerPos) <= 700
+			&& currentPos->getDist(*playerPos) >= 500) {
 		sp.SetLoop(4, 5);
 		if (playerPos->x > currentPos->x) {
 			orientation = RIGHT;
@@ -62,7 +62,7 @@ void Enemy3::Update(float dt)
 			rotation -= 5*dt;
 		}
 		sp.Update(dt);
-	} else if(currentPos->getDist(*playerPos) <= 300) {
+	} else if(currentPos->getDist(*playerPos) <= 500) {
 		sp.SetLoop(0, 13);
 		if ((sp.GetCurrentFrame() == 4 || sp.GetCurrentFrame() == 11) && shootcd.Get() > 0.35)
 		{
@@ -153,7 +153,7 @@ void Enemy3::Shoot (Point pos)
 		}
 	}
 
-	Bullet* bullet = new Bullet(xBullet,yBullet,planet,angle, 0, speed,2000,"img/enemy3_bullet.png",true,4);
+	Bullet* bullet = new Bullet(planet,rotation, 100, speed, 2000,"img/enemy3_bullet.png", true, 4);
 	Game::GetInstance().GetCurrentState().AddObject(bullet);
 }
 
