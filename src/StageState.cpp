@@ -18,12 +18,12 @@
 #include "WeaponGun.h"
 #include "WeaponSword.h"
 
-int StageState::weapon;
+StageState::WeaponName_lazy StageState::weapon;
 
 StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(3), changeWpCD() {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
-	this->weapon = 0;
+	this->weapon = BROOM;
 
 
 
@@ -174,17 +174,17 @@ void StageState::Update(float dt) {
 		if (activeWeapon->Is("WeaponBroom"))
 		{
 			activeWeapon = new WeaponSword("img/Sprites_Espada_LUP.png");
-			this->weapon = 0;
+			this->weapon = SWORD; //Sword
 		}
 		else if (activeWeapon->Is("WeaponSword"))
 		{
 			activeWeapon = new WeaponGun("img/Sprites_Gun_LUP.png");
-			this->weapon = 1;
+			this->weapon = GUN; //Gun
 		}
 		else if (activeWeapon->Is("WeaponGun"))
 		{
 			activeWeapon = new WeaponBroom("img/Sprites_Bracos_LUP.png");
-			this->weapon = 2;
+			this->weapon = BROOM; //Broom
 		}
 		objectArray.emplace_back(activeWeapon);
 	}
@@ -217,7 +217,7 @@ void StageState::Resume() {
 	//music.Play(-1);
 }
 
-int StageState::CheckWeapon()
+StageState::WeaponName_lazy StageState::CheckWeapon()
 {
 	return weapon;
 }

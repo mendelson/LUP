@@ -1,5 +1,12 @@
 #include "WeaponSword.h"
 
+#include <SDL_keycode.h>
+#include <string>
+
+#include "Camera.h"
+#include "InputManager.h"
+#include "Point.h"
+
 WeaponSword::WeaponSword(std::string file) : sp(file,0.1,2,8)
 {
 	isDead = false;

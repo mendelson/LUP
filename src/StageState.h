@@ -15,13 +15,17 @@ using std::string;
 
 class StageState: public State {
 public:
+	enum WeaponName_lazy {
+		BROOM, SWORD, GUN
+	};
+
 	StageState();
 	~StageState();
 	void Update(float dt);
 	void Render();
 	void Pause();
 	void Resume();
-	static int CheckWeapon();
+	static WeaponName_lazy CheckWeapon();
 private:
 	Sprite bg;
 	Music music;
@@ -29,7 +33,7 @@ private:
 	float xBg;
 	Weapon* activeWeapon;
 	Timer changeWpCD;
-	static int weapon;
+	static WeaponName_lazy weapon;
 };
 
 #endif /* SRC_STAGESTATE_H_ */

@@ -1,21 +1,13 @@
-/*
- * Player.h
- *
- *  Created on: 29/05/2015
- *      Author: Lucas
- */
-
 #ifndef SRC_SUPPORT_H_
 #define SRC_SUPPORT_H_
-#include "GameObject.h"
-#include "Timer.h"
-#include "StillAnimation.h"
-#include "Sound.h"
-#include "EndState.h"
-#include "StateData.h"
-#include "Player.h"
 
-class Support : public GameObject{
+#include <string>
+
+#include "GameObject.h"
+#include "Sprite.h"
+#include "Timer.h"
+
+class Support: public GameObject {
 public:
 	Support();
 	~Support();
@@ -30,6 +22,5 @@ private:
 	Timer timer;
 	Facing orientation;
 };
-
 
 #endif /* SRC_SUPPORT_H_ */

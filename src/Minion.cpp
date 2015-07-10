@@ -42,7 +42,7 @@ bool Minion::IsDead(){
 
 void Minion::Shoot(Point pos){
 	Point* pspeed = new Point(box.getCenterX() - pos.getX(),box.getCenterY() - pos.getY());
-	float speed = pspeed->magVector();
+	//float speed = pspeed->magVector();
 	float angle = atan(pspeed->getY()/pspeed->getX());
 	if(pspeed->getX() > 0){
 		angle += 3.141592653;

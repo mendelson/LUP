@@ -1,5 +1,12 @@
 #include "WeaponGun.h"
 
+#include <SDL_keycode.h>
+#include <string>
+
+#include "Camera.h"
+#include "InputManager.h"
+#include "Point.h"
+
 WeaponGun::WeaponGun(std::string file) : sp(file,0.1,2,8)
 {
 	isDead = false;

@@ -1,5 +1,13 @@
 #include "Support.h"
 
+#include <SDL_keycode.h>
+
+#include "Camera.h"
+#include "InputManager.h"
+#include "Player.h"
+#include "Point.h"
+#include "Sound.h"
+
 Support::Support() : sp("img/support.png",0.1,3,16), timer()
 {
 
@@ -67,6 +75,19 @@ void Support::Update(float dt)
 	{
 		sp.SetLoop(0,12);
 	}
+
+	/*Point p_player(Player::player->box.getX() + c,
+			Player::player->box.getY() + 1);
+	Point p_me(box.x, box.y);
+
+	if (p_me.getDist(p_player) <= 20) {
+		box.x = Player::player->box.getX() + c;
+		box.y = Player::player->box.getY() + 1;
+	} else {
+		float theta = p_player.getInclinationFromTop();
+		box.setX(box.x + SPEED * cos(theta)*dt - Camera::pos.getX());
+		box.setY(box.y + SPEED * sin(theta)*dt - Camera::pos.getY());
+	}*/
 
 	box.setX(Player::player->box.getX() + c);
 	box.setY(Player::player->box.getY() + 1);

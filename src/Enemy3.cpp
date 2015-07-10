@@ -1,5 +1,12 @@
 #include "Enemy3.h"
+
+#include <cmath>
+#include <iostream>
+#include <string>
+
+#include "Bullet.h"
 #include "Game.h"
+#include "State.h"
 
 Enemy3::Enemy3(float x, float y, GameObject* planet, float initialRotation, float alturaIncial) : sp("img/enemy3.png", 0.30, 3, 7), speed(), startPos(x, y), dmgCD(), knockback(), shootcd()
 {
