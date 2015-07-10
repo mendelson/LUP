@@ -36,6 +36,7 @@ private:
 	Sprite bgSpecial;
 	Sprite bgBroom;
 	Sprite bgSword;
+	Sprite bgGun;
 	Sprite bgEnergy;
 };
 

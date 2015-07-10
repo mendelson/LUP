@@ -1,12 +1,29 @@
 #include "StageState.h"
-#include "InputManager.h"
-#include "Game.h"
+
+#include <SDL_keycode.h>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+
 #include "Camera.h"
-#include "Collision.h"
+#include "Enemy3.h"
+#include "InputManager.h"
+#include "Planet.h"
+#include "Planta.h"
+#include "Plataforma.h"
+#include "Player.h"
+#include "Point.h"
+#include "Support.h"
+#include "WeaponBroom.h"
+#include "WeaponGun.h"
+#include "WeaponSword.h"
+
+int StageState::weapon;
 
 StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(3), changeWpCD() {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
+	this->weapon = 0;
 
 
 
@@ -157,14 +174,17 @@ void StageState::Update(float dt) {
 		if (activeWeapon->Is("WeaponBroom"))
 		{
 			activeWeapon = new WeaponSword("img/Sprites_Espada_LUP.png");
+			this->weapon = 0;
 		}
 		else if (activeWeapon->Is("WeaponSword"))
 		{
 			activeWeapon = new WeaponGun("img/Sprites_Gun_LUP.png");
+			this->weapon = 1;
 		}
 		else if (activeWeapon->Is("WeaponGun"))
 		{
 			activeWeapon = new WeaponBroom("img/Sprites_Bracos_LUP.png");
+			this->weapon = 2;
 		}
 		objectArray.emplace_back(activeWeapon);
 	}
@@ -195,4 +215,9 @@ void StageState::Pause() {
 
 void StageState::Resume() {
 	//music.Play(-1);
+}
+
+int StageState::CheckWeapon()
+{
+	return weapon;
 }

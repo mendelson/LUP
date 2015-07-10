@@ -1,9 +1,9 @@
 #include "UI.h"
 
-#include <sstream>
 #include <string>
 
 #include "Player.h"
+#include "StageState.h"
 
 const float lifeX = 10;
 const float lifeY = 5;
@@ -14,16 +14,23 @@ const float displacementXpUnit = 6.5;
 UI::UI(int requiredEnergy, int collectedEnergy) :
 		requiredEnergy(requiredEnergy), textNewEnergy("font/Call me maybe.ttf",
 				40, Text::BLENDED, "Energia recolhida!", { 0, 0, 0 }, 350, 250), timer(), bgLife(
-				"img/life.png", 0, 1, 10), bgXpBackground(
+				"img/life.png", 0, 1, 11), bgXpBackground(
 				"img/xp_background.png"), bgXpUnit("img/xp_unit.png"), bgSpecial(
-				"img/special.png", 0, 1, 10), bgBroom("img/broom_1.png"), bgSword(
-				"img/sword_1.png"), bgEnergy("img/energy_background.png") {
-	this->bgLife.SetLoop(0, 9);
+				"img/special.png", 0, 1, 10), bgBroom("img/broom.png", 0, 1, 2), bgSword(
+				"img/sword.png", 0, 1, 2), bgGun("img/gun.png", 0, 1, 2), bgEnergy(
+				"img/energy_ui.png", 0, 1, 4) {
+	this->bgLife.SetLoop(0, 10);
 	this->bgSpecial.SetLoop(0, 9);
+	this->bgEnergy.SetLoop(0, 3);
+	this->bgBroom.SetLoop(0, 1);
+	this->bgSword.SetLoop(0, 1);
+	this->bgGun.SetLoop(0, 1);
 	this->xp = 0;
 	this->life = 0;
 	this->special = 0;
 	this->collectedEnergy = collectedEnergy;
+	this->bgEnergy.SetFrame(this->collectedEnergy - 1);
+	this->bgEnergy.Update(1);
 	this->newEnergy = false;
 	this->firstExecution = true;
 	this->centerX = lifeX + (bgLife.GetFrameWidth()/2);
@@ -35,12 +42,6 @@ void UI::Update(float dt) {
 	timer.Update(dt);
 
 	if (Player::player != NULL) {
-		//Xp
-		this->xp = Player::player->GetXp();
-		if(xp > 100) {
-			xp = 100;
-		}
-
 		//Life
 		this->life = Player::player->GetHp();
 		if (life > 100) {
@@ -49,7 +50,9 @@ void UI::Update(float dt) {
 			life = 0;
 		}
 
-		if (this->life >= 0 && this->life < 10) {
+		if (this->life <= 0) {
+			bgLife.SetFrame(9);
+		} else if (this->life > 0 && this->life < 10) {
 			bgLife.SetFrame(8);
 		} else if (this->life >= 10 && this->life < 20) {
 			bgLife.SetFrame(7);
@@ -72,11 +75,37 @@ void UI::Update(float dt) {
 		}
 		bgLife.Update(1);
 
+		//Xp
+		this->xp = Player::player->GetXp();
+		if (xp > 100) {
+			xp = 100;
+		}
+
+		//Weapons
+		if (StageState::CheckWeapon() == 0) {
+			bgBroom.SetFrame(-1);
+			bgSword.SetFrame(0);
+			bgGun.SetFrame(0);
+		} else if (StageState::CheckWeapon() == 1) {
+			bgBroom.SetFrame(0);
+			bgSword.SetFrame(-1);
+			bgGun.SetFrame(0);
+		} else if (StageState::CheckWeapon() == 2) {
+			bgBroom.SetFrame(0);
+			bgSword.SetFrame(0);
+			bgGun.SetFrame(-1);
+		}
+		bgBroom.Update(1);
+		bgSword.Update(1);
+		bgGun.Update(1);
+
 		//Energy
 		newEnergy = Player::player->GetEnergyUpdate();
 
-		if(newEnergy) {
+		if (newEnergy) {
 			collectedEnergy++;
+			this->bgEnergy.SetFrame(collectedEnergy - 1);
+			this->bgEnergy.Update(1);
 			timer.Restart();
 		}
 
@@ -138,9 +167,10 @@ void UI::Render() {
 	//Weapons
 	bgBroom.Render(lifeX + bgLife.GetFrameWidth() + 20, lifeY + 65, 0);
 	bgSword.Render(lifeX + bgLife.GetFrameWidth() + 65, lifeY + 65, 0);
+	bgGun.Render(lifeX + bgLife.GetFrameWidth() + 110, lifeY + 65, 0);
 
 	//Energy
-	bgEnergyBackground.Render(lifeX + bgLife.GetFrameWidth() + 300, lifeY + 20, 0);
+	bgEnergy.Render(lifeX + bgLife.GetFrameWidth() + 300, lifeY - 20, 0);
 
 	//Special bar
 	bgSpecial.Render(lifeX + 850, lifeY, 0);

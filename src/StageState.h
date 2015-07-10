@@ -1,29 +1,15 @@
 #ifndef SRC_STAGESTATE_H_
 #define SRC_STAGESTATE_H_
 
-#include "SDL.h"
-#include "Sprite.h"
-#include <vector>
-#include <memory>
-#include <cstdlib>
-#include <ctime>
-#include "GameObject.h"
-#include "TileSet.h"
-#include "TileMap.h"
-#include "Minion.h"
-#include "Player.h"
-#include "WeaponBroom.h"
-#include "WeaponSword.h"
-#include "WeaponGun.h"
-#include "EnemyTank.h"
-#include "Support.h"
-#include "State.h"
+#include <string>
+
 #include "Music.h"
+#include "Sprite.h"
+#include "State.h"
+#include "Timer.h"
 #include "UI.h"
-#include "Plataforma.h"
-#include "Planet.h"
-#include "Planta.h"
-#include "Enemy3.h"
+
+class Weapon;
 
 using std::string;
 
@@ -35,6 +21,7 @@ public:
 	void Render();
 	void Pause();
 	void Resume();
+	static int CheckWeapon();
 private:
 	Sprite bg;
 	Music music;
@@ -42,6 +29,7 @@ private:
 	float xBg;
 	Weapon* activeWeapon;
 	Timer changeWpCD;
+	static int weapon;
 };
 
 #endif /* SRC_STAGESTATE_H_ */
