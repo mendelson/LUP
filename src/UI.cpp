@@ -17,7 +17,7 @@ UI::UI(int requiredEnergy, int collectedEnergy) :
 				"img/life.png", 0, 1, 10), bgXpBackground(
 				"img/xp_background.png"), bgXpUnit("img/xp_unit.png"), bgSpecial(
 				"img/special.png", 0, 1, 10), bgBroom("img/broom_1.png"), bgSword(
-				"img/sword_1.png"), bgEnergyBackground("img/energy_background.png") {
+				"img/sword_1.png"), bgEnergy("img/energy_background.png") {
 	this->bgLife.SetLoop(0, 9);
 	this->bgSpecial.SetLoop(0, 9);
 	this->xp = 0;

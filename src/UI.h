@@ -36,7 +36,7 @@ private:
 	Sprite bgSpecial;
 	Sprite bgBroom;
 	Sprite bgSword;
-	Sprite bgEnergyBackground;
+	Sprite bgEnergy;
 };
 
 #endif /* SRC_UI_H_ */
