@@ -4,17 +4,31 @@
 #include "Camera.h"
 #include "Collision.h"
 
-StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(
+StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"), ui(
 				3) {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
-
+	xBg = -1400;
 
 
 	GameObject* planet = new Planet(0,-100,"img/planetafase1.png");
+
+
+	GameObject* planeta1 = new PlanetaFundo(-2*xBg,-200,planet,0,0,"img/planeta_rosa.png");
+	objectArray.emplace_back(planeta1);
+
+	GameObject* planeta2 = new PlanetaFundo(xBg,-200,planet,0,0,"img/planeta_amarelo.png");
+	objectArray.emplace_back(planeta2);
+
+	GameObject* cometa1 = new Cometa(-2*xBg,-200,planet,0,0,"img/estrela_cadente_azul.png");
+	objectArray.emplace_back(cometa1);
+
+	GameObject* cometa2 = new Cometa(xBg,-200,planet,0,0,"img/estrela_cadente.png");
+	objectArray.emplace_back(cometa2);
+
 	objectArray.emplace_back(planet);
 
-	GameObject* plataforma1 = new Plataforma(500,0,planet,-30,100,"img/plataformas/2200/plataformas2200_44.png");
+	GameObject* plataforma1 = new Plataforma(500,100,planet,-30,100,"img/plataformas/2200/plataformas2200_44.png");
 	objectArray.emplace_back(plataforma1);
 
 	GameObject* plataforma2 = new Plataforma(500,0,planet,-25,150,"img/plataformas/2200/plataformas2200_39.png");
@@ -104,7 +118,8 @@ StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState
 	GameObject* plataforma24 = new Plataforma(500,0,planet,240,150,"img/plataformas/2200/plataformas2200_15.png");
 	objectArray.emplace_back(plataforma24);
 
-
+	GameObject* energia = new Energia(500,0,planet,90,200,"img/energia_fase_3.png");
+	objectArray.emplace_back(energia);
 
 	GameObject* player = new Player(0,0,planet);
 	objectArray.emplace_back(player);
@@ -124,7 +139,7 @@ StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState
 	GameObject* support = new Support();
 	objectArray.emplace_back(support);
 
-	xBg = -1400;
+
 	//rotacaoPlaneta = 0;
 	//raioPlaneta = 1000;
 
@@ -152,7 +167,7 @@ void StageState::Update(float dt) {
 
 	}
 	float somaRotation = Player::player->somaRotation;
-	xBg += somaRotation;
+	//xBg += somaRotation;
 	Camera::Update(dt);
 	quitRequested = InputManager::GetInstance().QuitRequested();
 	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);

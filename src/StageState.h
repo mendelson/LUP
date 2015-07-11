@@ -22,6 +22,9 @@
 #include "Planet.h"
 #include "Planta.h"
 #include "Enemy3.h"
+#include "PlanetaFundo.h"
+#include "Cometa.h"
+#include "Energia.h"
 
 using std::string;
 
