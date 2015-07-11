@@ -10,6 +10,7 @@
 #include "Sound.h"
 
 #define SPEED 70
+#define SPEED_X 600
 
 Support::Support(GameObject* p) : sp("img/support.png",0.1,3,16), timer(), speed(0,0)
 {
@@ -111,7 +112,7 @@ void Support::Update(float dt)
 //						* sin(arc)) - (box.getH() / 2));
 		float theta1 = acos(dx / distance);
 		float theta2 = asin(dy / distance);
-		speed.setX(SPEED * cos(theta1));
+		speed.setX(SPEED_X * cos(theta1));
 		speed.setY(SPEED * sin(theta2));
 
 		float dX = speed.x * dt;
