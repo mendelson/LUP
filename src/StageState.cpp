@@ -126,7 +126,7 @@ StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState
 	objectArray.emplace_back(player);
 	Camera::Follow(player);
 
-	GameObject* support = new Support();
+	GameObject* support = new Support(planet);
 	objectArray.emplace_back(support);
 
 	activeWeapon = new WeaponBroom("img/Sprites_Bracos_LUP.png");
