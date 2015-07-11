@@ -2,7 +2,6 @@
 #define SRC_UI_H_
 
 #include "Sprite.h"
-#include "Text.h"
 #include "Timer.h"
 
 class UI {
@@ -21,7 +20,7 @@ private:
 	int collectedEnergy;
 	bool newEnergy;
 
-	Text textNewEnergy;
+	//Text textNewEnergy;
 	Timer timer;
 	bool firstExecution;
 

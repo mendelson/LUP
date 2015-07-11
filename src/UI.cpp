@@ -12,8 +12,8 @@ const float initAngle = 98;
 const float displacementXpUnit = 6.5;
 
 UI::UI(int requiredEnergy, int collectedEnergy) :
-		requiredEnergy(requiredEnergy), textNewEnergy("font/Call me maybe.ttf",
-				40, Text::BLENDED, "Energia recolhida!", { 0, 0, 0 }, 350, 250), timer(), bgLife(
+		requiredEnergy(requiredEnergy), /*textNewEnergy("font/Call me maybe.ttf",
+				40, Text::BLENDED, "Energia recolhida!", { 0, 0, 0 }, 350, 250),*/ timer(), bgLife(
 				"img/life.png", 0, 1, 11), bgXpBackground(
 				"img/xp_background.png"), bgXpUnit("img/xp_unit.png"), bgSpecial(
 				"img/special.png", 0, 1, 10), bgBroom("img/broom.png", 0, 1, 2), bgSword(
@@ -149,9 +149,9 @@ void UI::Render() {
 		firstExecution = false;
 	}
 
-	if ((newEnergy || timer.Get() <= 3) && !firstExecution) {
+	/*if ((newEnergy || timer.Get() <= 3) && !firstExecution) {
 		textNewEnergy.Render();
-	}
+	}*/
 
 	//Life bar
 	bgLife.Render(lifeX, lifeY, 0);
