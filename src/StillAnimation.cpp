@@ -6,8 +6,13 @@
  */
 
 #include "StillAnimation.h"
+
+#include <cmath>
+#include <string>
+
 #include "Camera.h"
-#include "Planet.h"
+#include "Point.h"
+#include "Sprite.h"
 
 
 StillAnimation::StillAnimation(float x, float y, GameObject* planet,float rotation,Sprite sprite,float timeLimit,bool ends, float alturaInicial):endTimer(){

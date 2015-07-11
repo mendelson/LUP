@@ -1,14 +1,30 @@
 #include "StageState.h"
-#include "InputManager.h"
-#include "Game.h"
-#include "Camera.h"
-#include "Collision.h"
 
-StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"), ui(
-				3) {
+#include <SDL_keycode.h>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+
+#include "Camera.h"
+#include "Enemy3.h"
+#include "InputManager.h"
+#include "Planet.h"
+#include "Planta.h"
+#include "Plataforma.h"
+#include "Player.h"
+#include "Point.h"
+#include "Support.h"
+#include "WeaponBroom.h"
+#include "WeaponGun.h"
+#include "WeaponSword.h"
+
+StageState::WeaponName_lazy StageState::weapon;
+
+StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(3), changeWpCD() {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
 	xBg = -1400;
+	this->weapon = BROOM;
 
 
 	GameObject* planet = new Planet(0,-100,"img/planetafase1.png");
@@ -125,19 +141,17 @@ StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"
 	objectArray.emplace_back(player);
 	Camera::Follow(player);
 
+	GameObject* support = new Support();
+	objectArray.emplace_back(support);
 
-
-
-	GameObject* weapon = new Weapon("img/Sprites_Bracos_LUP.png");
-	objectArray.emplace_back(weapon);
+	activeWeapon = new WeaponBroom("img/Sprites_Bracos_LUP.png");
+	//GameObject* weapon = new WeaponSword("img/Sprites_Espada_LUP.png");
+	objectArray.emplace_back(activeWeapon);
 
 	//GameObject* tank = new EnemyTank(500, 0,planet,18,50);
 	//objectArray.emplace_back(tank);
-	//GameObject* e3 = new Enemy3(500, 0,planet,18,0);
-	//objectArray.emplace_back(e3);
-
-	GameObject* support = new Support();
-	objectArray.emplace_back(support);
+	GameObject* e3 = new Enemy3(500, 0,planet,18,0);
+	objectArray.emplace_back(e3);
 
 
 	//rotacaoPlaneta = 0;
@@ -157,6 +171,8 @@ void StageState::Update(float dt) {
 //		quitRequested = true;
 //	}
 
+	changeWpCD.Update(dt);
+
 	if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
 		std::cout
 				<< InputManager::GetInstance().GetMouseX() - Camera::pos.getX()
@@ -166,6 +182,28 @@ void StageState::Update(float dt) {
 				<< std::endl;
 
 	}
+
+	if(InputManager::GetInstance().KeyPress(SDLK_d) && (changeWpCD.Get() > 0.5))
+	{
+		changeWpCD.Restart();
+		if (activeWeapon->Is("WeaponBroom"))
+		{
+			activeWeapon = new WeaponSword("img/Sprites_Espada_LUP.png");
+			this->weapon = SWORD; //Sword
+		}
+		else if (activeWeapon->Is("WeaponSword"))
+		{
+			activeWeapon = new WeaponGun("img/Sprites_Gun_LUP.png");
+			this->weapon = GUN; //Gun
+		}
+		else if (activeWeapon->Is("WeaponGun"))
+		{
+			activeWeapon = new WeaponBroom("img/Sprites_Bracos_LUP.png");
+			this->weapon = BROOM; //Broom
+		}
+		objectArray.emplace_back(activeWeapon);
+	}
+
 	float somaRotation = Player::player->somaRotation;
 	//xBg += somaRotation;
 	Camera::Update(dt);
@@ -192,4 +230,9 @@ void StageState::Pause() {
 
 void StageState::Resume() {
 	//music.Play(-1);
+}
+
+StageState::WeaponName_lazy StageState::CheckWeapon()
+{
+	return weapon;
 }

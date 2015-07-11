@@ -1,7 +1,14 @@
 #include "Enemy3.h"
-#include "Game.h"
 
-Enemy3::Enemy3(float x, float y, GameObject* planet, float initialRotation, float alturaIncial) : sp("img/enemy3.png", 0.35, 2, 3), speed(), startPos(x, y), dmgCD(), knockback(), shootcd()
+#include <cmath>
+#include <iostream>
+#include <string>
+
+#include "Bullet.h"
+#include "Game.h"
+#include "State.h"
+
+Enemy3::Enemy3(float x, float y, GameObject* planet, float initialRotation, float alturaIncial) : sp("img/enemy3.png", 0.30, 3, 7), speed(), startPos(x, y), dmgCD(), knockback(), shootcd()
 {
 	this->planet = planet;
 	sp.SetScaleX(0.5);
@@ -11,13 +18,13 @@ Enemy3::Enemy3(float x, float y, GameObject* planet, float initialRotation, floa
 	rotation = initialRotation;
 	float arc = rotation*3.1415/180;
 	this->alturaInicial = alturaInicial;
-	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 + planet->box.getCenterY() + alturaInicial)*cos(arc)) - (box.getW()/2));
-	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 + planet->box.getCenterY()  + alturaInicial)*sin(arc)) - (box.getH()/2));
+	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 + planet->box.getCenterY() + alturaInicial+box.getH())*cos(arc)) - (box.getW()/2));
+	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 + planet->box.getCenterY()  + alturaInicial+box.getH())*sin(arc)) - (box.getH()/2));
 	hp = 50;
 	speed.x = 2;
 	speed.y = 0;
 	orientation = LEFT;
-	sp.SetLoop(0, 5);
+	sp.SetLoop(4, 5);
 	knockback.Update(10);
 }
 
@@ -42,8 +49,9 @@ void Enemy3::Update(float dt)
 
 		sp.Update(dt);
 	}
-	else if (currentPos->getDist(*playerPos) <= 600
-			&& currentPos->getDist(*playerPos) >= 300) {
+	else if (currentPos->getDist(*playerPos) <= 700
+			&& currentPos->getDist(*playerPos) >= 500) {
+		sp.SetLoop(4, 5);
 		if (playerPos->x > currentPos->x) {
 			orientation = RIGHT;
 			sp.SetFlipH(true);
@@ -54,8 +62,9 @@ void Enemy3::Update(float dt)
 			rotation -= 5*dt;
 		}
 		sp.Update(dt);
-	} else if(currentPos->getDist(*playerPos) <= 300) {
-		if (sp.GetCurrentFrame() == 4 && shootcd.Get() > 0.35)
+	} else if(currentPos->getDist(*playerPos) <= 500) {
+		sp.SetLoop(0, 13);
+		if ((sp.GetCurrentFrame() == 4 || sp.GetCurrentFrame() == 11) && shootcd.Get() > 0.35)
 		{
 			if (playerPos->x > currentPos->x) {
 				orientation = RIGHT;
@@ -77,8 +86,8 @@ void Enemy3::Update(float dt)
 	rotation += somaRotation;
 
 	float arc = rotation*3.1415/180;
-	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial)*cos(arc)) - (box.getW()/2));
-	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300 + alturaInicial)*sin(arc)) - (box.getH()/2));
+	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial+box.getH())*cos(arc)) - (box.getW()/2));
+	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300 + alturaInicial+box.getH())*sin(arc)) - (box.getH()/2));
 
 	knockback.Update(dt);
 	shootcd.Update(dt);
@@ -115,19 +124,42 @@ void Enemy3::Shoot (Point pos)
 	delete(pspeed);
 
 	float xBullet;
+	float yBullet;
 
 	if(orientation == LEFT)
-		xBullet = box.getX();
+	{
+		if (sp.GetCurrentFrame() == 4)
+		{
+			xBullet = box.getX();
+			yBullet = box.getCenterY();
+		}
+		else
+		{
+			xBullet = box.getX()+ box.getW()/2;
+			yBullet = box.getCenterY() + box.getH()/2 - 20;
+		}
+	}
 	else
-		xBullet = box.getX()+box.getW();
+	{
+		if (sp.GetCurrentFrame() == 4)
+		{
+			xBullet = box.getX()+ box.getW();
+			yBullet = box.getCenterY();
+		}
+		else
+		{
+			xBullet = box.getX() + box.getW()/2;
+			yBullet = box.getCenterY() + box.getH()/2 - 20;
+		}
+	}
 
-	Bullet* bullet = new Bullet(xBullet,box.getCenterY(),angle,speed,2000,"img/enemy3_bullet.png",true,4);
+	Bullet* bullet = new Bullet(planet,rotation, 100, speed, 2000,"img/enemy3_bullet.png", true, 4);
 	Game::GetInstance().GetCurrentState().AddObject(bullet);
 }
 
 void Enemy3::NotifyCollision(GameObject& other)
 {
-	if (other.Is("Weapon") && other.attacking) {
+	if ((other.Is("WeaponBroom") && other.attacking) || (other.Is("WeaponSword") && other.attacking)) {
 
 		if (dmgCD.Get() > 0.5) {
 			dmgCD.Restart();

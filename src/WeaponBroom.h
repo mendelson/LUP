@@ -1,26 +1,29 @@
-#ifndef SRC_SUPPORT_H_
-#define SRC_SUPPORT_H_
+
+#ifndef SRC_WEAPONBROOM_H_
+#define SRC_WEAPONBROOM_H_
 
 #include <string>
 
 #include "GameObject.h"
 #include "Sprite.h"
-#include "Timer.h"
+#include "Weapon.h"
 
-class Support: public GameObject {
+class WeaponBroom : public Weapon{
 public:
-	Support();
-	~Support();
+	WeaponBroom(std::string file);
+	~WeaponBroom();
 	void Update(float dt);
 	void Render();
 	bool IsDead();
 	Sprite getSprite();
 	bool Is(string type);
 	void NotifyCollision(GameObject&);
-private:
-	Sprite sp;
-	Timer timer;
 	Facing orientation;
+
+private:
+	bool atkFrame;
+	Sprite sp;
 };
 
-#endif /* SRC_SUPPORT_H_ */
+
+#endif /* SRC_WEAPONBROOM_H_ */

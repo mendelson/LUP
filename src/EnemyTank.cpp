@@ -94,7 +94,7 @@ bool EnemyTank::Is(string type) {
 }
 
 void EnemyTank::NotifyCollision(GameObject& other) {
-	if (other.Is("Weapon") && other.attacking) {
+	if ((other.Is("WeaponBroom") && other.attacking) || (other.Is("WeaponSword") && other.attacking)) {
 
 		if (dmgCD.Get() > 0.5) {
 			dmgCD.Restart();
