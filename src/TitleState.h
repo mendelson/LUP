@@ -25,7 +25,7 @@ private:
 	Sprite instructions;
 	Sprite menuOptions;
 	Sprite credits;
-	//std::vector<Sprite*> selector;
+	std::vector<Sprite*> selector;
 	Timer timer;
 	Timer timerSupport;
 	//std::vector<Text*> textVector;

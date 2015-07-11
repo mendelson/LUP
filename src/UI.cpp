@@ -13,7 +13,7 @@ const float displacementXpUnit = 6.5;
 
 UI::UI(int requiredEnergy, int collectedEnergy) :
 		requiredEnergy(requiredEnergy), /*textNewEnergy("font/Call me maybe.ttf",
-				40, Text::BLENDED, "Energia recolhida!", { 0, 0, 0 }, 350, 250),*/ timer(), bgLife(
+		 40, Text::BLENDED, "Energia recolhida!", { 0, 0, 0 }, 350, 250),*/timer(), bgLife(
 				"img/life.png", 0, 1, 11), bgXpBackground(
 				"img/xp_background.png"), bgXpUnit("img/xp_unit.png"), bgSpecial(
 				"img/special.png", 0, 1, 10), bgBroom("img/broom.png", 0, 1, 2), bgSword(
@@ -106,6 +106,11 @@ void UI::Update(float dt) {
 
 		if (newEnergy) {
 			collectedEnergy++;
+
+			if (collectedEnergy > 3) {
+				collectedEnergy = 3;
+			}
+
 			this->bgEnergy.SetFrame(collectedEnergy - 1);
 			this->bgEnergy.Update(1);
 			timer.Restart();
@@ -150,8 +155,8 @@ void UI::Render() {
 	}
 
 	/*if ((newEnergy || timer.Get() <= 3) && !firstExecution) {
-		textNewEnergy.Render();
-	}*/
+	 textNewEnergy.Render();
+	 }*/
 
 	//Life bar
 	bgLife.Render(lifeX, lifeY, 0);
@@ -173,6 +178,8 @@ void UI::Render() {
 
 	//Energy
 	bgEnergy.Render(lifeX + bgLife.GetFrameWidth() + 300, lifeY - 20, 0);
+	/*cout << "collectedEnergy: " << collectedEnergy << " | "
+			<< "current energy frame: " << bgEnergy.GetCurrentFrame() << endl;*/
 
 	//Special bar
 	bgSpecial.Render(lifeX + 850, lifeY, 0);

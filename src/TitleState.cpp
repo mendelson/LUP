@@ -13,6 +13,8 @@
 //const int ITEMS_DISTANCE = 50;
 //const int NUMBER_OF_MENU_PLANETS = 3;
 const int NUMBER_OF_MENU_ITEMS = 4;
+const unsigned int NUMBER_FRAMES_INITIAL_ANIMATION = 93;
+const float FRAME_TIME = 1 / 3;
 
 TitleState::TitleState() :
 		bg("img/fundo.png"), opening("img/cut-scene-1.png"), instructions(
@@ -32,19 +34,19 @@ TitleState::TitleState() :
 	//menuYStartPosition = Game::GetInstance().getHeight() / 1.5;
 	//mountMainMenu();
 
-	/*for (unsigned int i = 0; i < NUMBER_OF_MENU_PLANETS; i++) {
-	 std::stringstream sstm;
-	 sstm << "img/planeta_menu" << i << ".png";
-	 std::string planetFile = sstm.str();
+	for (unsigned int i = 0; i < NUMBER_FRAMES_INITIAL_ANIMATION; i++) {
+		std::stringstream sstm;
+		sstm << "img/cut-scene-5/Cut_Scene_5_000" << i << ".png";
+		std::string frameFile = sstm.str();
 
-	 selector.emplace_back(new Sprite(planetFile));
-	 }*/
+		selector.emplace_back(new Sprite(frameFile));
+	}
 	music.Play(-1);
 }
 
 TitleState::~TitleState() {
 	//textVector.clear();
-	//selector.clear();
+	selector.clear();
 }
 
 void TitleState::Update(float dt) {
@@ -55,8 +57,8 @@ void TitleState::Update(float dt) {
 	if (!startMenu) {
 		startMenu = InputManager::GetInstance().KeyPress(SDLK_SPACE);
 
-		if (frame >= 0 && frame <= 2) {
-			if (timerSupport.Get() > 3.5) {
+		if (frame <= 3) {
+			if (timerSupport.Get() > 3) {
 				frame++;
 
 				switch (frame) {
@@ -65,16 +67,26 @@ void TitleState::Update(float dt) {
 					timerSupport.Restart();
 					break;
 				case 2:
+					opening.Open("img/cut-scene-3.png");
+					timerSupport.Restart();
+					break;
+				case 3:
 					opening.Open("img/cut-scene-4.png");
 					timerSupport.Restart();
 					break;
 				default:
+					timerSupport.Restart();
 					break;
 				}
 			}
 		} else {
-			cout << "ae" << endl;
-			startMenu = true;
+			if (timerSupport.Get() >= FRAME_TIME){
+				frame++;
+			}
+
+			if(frame - 4 >= NUMBER_FRAMES_INITIAL_ANIMATION){
+				startMenu = true;
+			}
 		}
 	} else {
 		/*if (initialize) {
@@ -165,14 +177,16 @@ void TitleState::Update(float dt) {
 
 		menuOptions.SetFrame(focus);
 		menuOptions.Update(1);
-
-		cout << menuOptions.GetCurrentFrame() << endl;
 	}
 }
 
 void TitleState::Render() {
 	if (!startMenu) {
-		opening.Render(0, 0);
+		if (frame <= 3) {
+			opening.Render(0, 0);
+		} else {
+			selector[frame - 4]->Render(0, 0);
+		}
 	} else if (showInstructions) {
 		instructions.Render(0, 0);
 	} else if (showCredits) {
