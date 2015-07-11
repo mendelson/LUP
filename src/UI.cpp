@@ -12,8 +12,8 @@ const float initAngle = 98;
 const float displacementXpUnit = 6.5;
 
 UI::UI(int requiredEnergy, int collectedEnergy) :
-		requiredEnergy(requiredEnergy), textNewEnergy("font/Call me maybe.ttf",
-				40, Text::BLENDED, "Energia recolhida!", { 0, 0, 0 }, 350, 250), timer(), bgLife(
+		requiredEnergy(requiredEnergy), /*textNewEnergy("font/Call me maybe.ttf",
+		 40, Text::BLENDED, "Energia recolhida!", { 0, 0, 0 }, 350, 250),*/timer(), bgLife(
 				"img/life.png", 0, 1, 11), bgXpBackground(
 				"img/xp_background.png"), bgXpUnit("img/xp_unit.png"), bgSpecial(
 				"img/special.png", 0, 1, 10), bgBroom("img/broom.png", 0, 1, 2), bgSword(
@@ -33,8 +33,8 @@ UI::UI(int requiredEnergy, int collectedEnergy) :
 	this->bgEnergy.Update(1);
 	this->newEnergy = false;
 	this->firstExecution = true;
-	this->centerX = lifeX + (bgLife.GetFrameWidth()/2);
-	this->centerY = lifeY + (bgLife.GetHeight()/2);
+	this->centerX = lifeX + (bgLife.GetFrameWidth() / 2);
+	this->centerY = lifeY + (bgLife.GetHeight() / 2);
 	this->xpUnitConstant = lifeX + bgLife.GetFrameWidth() + 28;
 }
 
@@ -86,11 +86,13 @@ void UI::Update(float dt) {
 			bgBroom.SetFrame(-1);
 			bgSword.SetFrame(0);
 			bgGun.SetFrame(0);
-		} else if (StageState::CheckWeapon() == StageState::WeaponName_lazy::SWORD) {
+		} else if (StageState::CheckWeapon()
+				== StageState::WeaponName_lazy::SWORD) {
 			bgBroom.SetFrame(0);
 			bgSword.SetFrame(-1);
 			bgGun.SetFrame(0);
-		} else if (StageState::CheckWeapon() == StageState::WeaponName_lazy::GUN) {
+		} else if (StageState::CheckWeapon()
+				== StageState::WeaponName_lazy::GUN) {
 			bgBroom.SetFrame(0);
 			bgSword.SetFrame(0);
 			bgGun.SetFrame(-1);
@@ -105,6 +107,11 @@ void UI::Update(float dt) {
 		if (newEnergy) {
 			Player::player->energyUpdate = false;
 			collectedEnergy++;
+
+			if (collectedEnergy > 3) {
+				collectedEnergy = 3;
+			}
+
 			this->bgEnergy.SetFrame(collectedEnergy - 1);
 			this->bgEnergy.Update(1);
 			timer.Restart();
@@ -148,18 +155,18 @@ void UI::Render() {
 		firstExecution = false;
 	}
 
-	if ((newEnergy || timer.Get() <= 3) && !firstExecution) {
-		textNewEnergy.Render();
-	}
+	/*if ((newEnergy || timer.Get() <= 3) && !firstExecution) {
+	 textNewEnergy.Render();
+	 }*/
 
 	//Life bar
 	bgLife.Render(lifeX, lifeY, 0);
 
 	//Xp bar
-	int numberOfUnits = ((int) xp/5) - 1;
+	int numberOfUnits = ((int) xp / 5) - 1;
 	float y = lifeY + 57;
-	for(int i = 0; i <= numberOfUnits; i++) {
-		float x = xpUnitConstant + i*displacementXpUnit;
+	for (int i = 0; i <= numberOfUnits; i++) {
+		float x = xpUnitConstant + i * displacementXpUnit;
 
 		bgXpUnit.Render(x, y, 0);
 	}
@@ -172,6 +179,8 @@ void UI::Render() {
 
 	//Energy
 	bgEnergy.Render(lifeX + bgLife.GetFrameWidth() + 300, lifeY - 20, 0);
+	/*cout << "collectedEnergy: " << collectedEnergy << " | "
+			<< "current energy frame: " << bgEnergy.GetCurrentFrame() << endl;*/
 
 	//Special bar
 	bgSpecial.Render(lifeX + 850, lifeY, 0);
