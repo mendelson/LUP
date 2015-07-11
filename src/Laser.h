@@ -13,7 +13,7 @@
 
 class Laser : public GameObject{
 public:
-	Laser(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file,int frameC);
+	Laser(float x,float y,GameObject* planet, float rotation,float alturaInicial,int frameI,int frameC);
 	~Laser();
 	void Update(float dt);
 	void Render();
@@ -27,6 +27,7 @@ private:
 	float alturaInicial;
 	Timer timer;
 	int frameCarregado;
+	int frameInit;
 
 };
 

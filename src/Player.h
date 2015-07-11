@@ -26,17 +26,18 @@ public:
 	int GetSpecial();
 	void IncXp(int xp);
 	bool GetEnergyUpdate();
-
+	bool energyUpdate;
 	int loopStart;
 	int loopEnd;
 	GameObject* planet;
+	bool deveMudarDeFase;
 
 private:
 	Sprite body;
 	Point speed;
 	int hp;
 	int xp;
-	bool energyUpdate;
+
 	Timer dmgCD;
 	Timer knockback;
 	Jumping jumpState;
@@ -45,6 +46,9 @@ private:
 	int jumped;
 	Facing kbDirection;
 	int c;
+	int qntEnergia;
+	Timer energiaCD;
+
 };
 
 

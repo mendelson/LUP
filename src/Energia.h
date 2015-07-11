@@ -12,7 +12,7 @@
 
 class Energia : public GameObject {
 public:
-	Energia(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file);
+	Energia(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file,int qntdFrames);
 	~Energia();
 	void Update(float dt);
 	void Render();
@@ -25,6 +25,7 @@ private:
 	GameObject* planet;
 	float alturaInicial;
 	bool dead;
+	bool willDie;
 };
 
 #endif /* SRC_ENERGIA_H_ */

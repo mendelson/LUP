@@ -11,7 +11,7 @@
 #include "Game.h"
 #include "InputManager.h"
 
-Laser::Laser(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file,int frameC):sp(file,0.15,1,10),timer() {
+Laser::Laser(float x,float y,GameObject* planet, float rotation,float alturaInicial,int frameI,int frameC):sp("img/laser.png",0,2,8),timer() {
 	this->planet = planet;
 
 	box.x = x;//int novox = x - (sp.GetFrameWidth() / 2);
@@ -24,8 +24,11 @@ Laser::Laser(float x,float y,GameObject* planet, float rotation,float alturaInic
 	box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 + planet->box.getCenterY() + alturaInicial)*cos(arc)) - (box.getW()/2));
 	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 + planet->box.getCenterY() + alturaInicial)*sin(arc)) - (box.getH()/2));
 	frameCarregado = frameC;
-	sp.SetLoop(0,0);
-
+	frameInit = frameI;
+	sp.SetFlipH(false);
+	sp.SetFrame(frameInit-1);
+	sp.SetLoop(frameInit-1,frameInit-1);
+	sp.Update(0);
 
 }
 
@@ -41,14 +44,17 @@ void Laser::Update(float dt){
 		box.setX(planet->box.getCenterX() + ((planet->box.getW()/2 - 300 + alturaInicial)*cos(arc)) - (box.getW()/2));
 		box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 - 300 + alturaInicial)*sin(arc)) - (box.getH()/2));
 		timer.Update(dt);
-		if(timer.Get() > 5){
+		if(timer.Get() > 1){
 			timer.Restart();
-			if(sp.GetCurrentFrame() == 0){
-				sp.SetLoop(frameCarregado,frameCarregado);
+			if(sp.GetCurrentFrame() == frameInit-1){
+				sp.SetFrame(frameCarregado-1);
+				sp.SetLoop(frameCarregado-1,frameCarregado-1);
 			}else{
-				sp.SetLoop(0,0);
+				sp.SetFrame(frameInit-1);
+				sp.SetLoop(frameInit-1,frameInit-1);
 			}
 		}
+		sp.Update(0);
 }
 
 void Laser::Render(){

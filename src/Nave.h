@@ -1,19 +1,20 @@
 /*
- * Plataforma1.h
+ * Nave.h
  *
- *  Created on: 03/06/2015
+ *  Created on: 11/07/2015
  *      Author: Vitor
  */
 
-#ifndef SRC_PLATAFORMA_H_
-#define SRC_PLATAFORMA_H_
+#ifndef SRC_NAVE_H_
+#define SRC_NAVE_H_
 
 #include "GameObject.h"
+#include "Timer.h"
 
-class Plataforma : public GameObject{
+class Nave : public GameObject{
 public:
-	Plataforma(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file);
-	~Plataforma();
+	Nave(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file);
+	~Nave();
 	void Update(float dt);
 	void Render();
 	bool IsDead();
@@ -27,4 +28,4 @@ private:
 
 };
 
-#endif /* SRC_PLATAFORMA_H_ */
+#endif /* SRC_NAVE_H_ */

@@ -20,7 +20,7 @@
 
 StageState::WeaponName_lazy StageState::weapon;
 
-StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState.ogg"), ui(3), changeWpCD() {
+StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"), ui(3), changeWpCD() {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
 	xBg = -1400;
@@ -134,8 +134,23 @@ StageState::StageState() :bg("img/composicaofundo.png"), music("audio/stageState
 	GameObject* plataforma24 = new Plataforma(500,0,planet,240,150,"img/plataformas/2200/plataformas2200_15.png");
 	objectArray.emplace_back(plataforma24);
 
-	GameObject* energia = new Energia(500,0,planet,90,200,"img/energia_fase_3.png");
-	objectArray.emplace_back(energia);
+	GameObject* energia1 = new Energia(500,0,planet,90,400,"img/ENERGIA_V1_2.png",4);
+	objectArray.emplace_back(energia1);
+
+	GameObject* energia2 = new Energia(500,0,planet,47,400,"img/ENERGIA_V1_2.png",4);
+	objectArray.emplace_back(energia2);
+
+	GameObject* energia3 = new Energia(500,0,planet,230,400,"img/ENERGIA_V1_2.png",4);
+	objectArray.emplace_back(energia3);
+
+	GameObject* nave = new Nave(500,0,planet,-89,150,"img/nave-desligada.png");
+	objectArray.emplace_back(nave);
+
+//	GameObject* laserEterno = new Laser(500,0,planet,-90,200,8,8);
+//	objectArray.emplace_back(laserEterno);
+//
+//	GameObject* laser = new Laser(500,0,planet,240,200,1,8);
+//	objectArray.emplace_back(laser);
 
 	GameObject* player = new Player(0,0,planet);
 	objectArray.emplace_back(player);
@@ -211,6 +226,12 @@ void StageState::Update(float dt) {
 	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
 	UpdateArray(dt);
 	ui.Update(dt);
+
+
+	//verifica fim da fase
+	if(Player::player->deveMudarDeFase){
+		popRequested = true;
+	}
 }
 
 void StageState::Render() {

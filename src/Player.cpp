@@ -5,7 +5,7 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP.png",0.15,4,8), speed(),dmgCD(), knockback()
+Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP.png",0.15,4,8), speed(),dmgCD(), knockback(),energiaCD()
 {
 	body.SetScaleX(0.5);
 	body.SetScaleY(0.5);
@@ -31,6 +31,8 @@ Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP
 	Sound* sound = new Sound("audio/Start.wav");
 	sound->Play(0);
 	delete(sound);
+	qntEnergia = 0;
+	deveMudarDeFase = false;
 
 }
 
@@ -45,9 +47,6 @@ void Player::Update(float dt)
 	dmgCD.Update(dt);
 	jumpY = planet->getAltura(planet->rotation);
 	somaRotation = 0;
-
-	if (energyUpdate == true)
-			energyUpdate = false;
 
 
 	if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
@@ -185,6 +184,7 @@ void Player::Update(float dt)
 
 	body.SetLoop(loopStart,loopEnd);
 	body.Update(dt);
+	energiaCD.Update(dt);
 
 }
 
@@ -220,8 +220,21 @@ Sprite Player::getSprite()
 
 void Player::NotifyCollision(GameObject& other)
 {
+	if(other.Is("Nave")){
+		if(qntEnergia > 2){
+			qntEnergia = 0;
+			deveMudarDeFase = true;
+		}
+	}
+	if(other.Is("Energia")){
+			if(energiaCD.Get() > 0.5){
+				energiaCD.Restart();
+				energyUpdate = true;
+				qntEnergia++;
+			}
+	}
+
 	if(other.Is("Plataforma")){
-		//cout<<"Colidiu com plataforma!" << endl;
 		if(box.getY() + box.getH()/2 < other.box.getY()  && jumped >= 150 && box.getX() + box.getW()/2 + c + 10> other.box.getX()
 				&& box.getX() + box.getW()/2 + c - 10 < other.box.getX() + other.box.getW() )
 		while(box.getY() + box.getH()*0.75 > other.box.getY()){
@@ -245,7 +258,7 @@ void Player::NotifyCollision(GameObject& other)
 		}
 	}
 
-	if (other.Is("Bullet") || other.Is("Planta"))
+	if (other.Is("Bullet") || (other.Is("Planta") && abs(box.getCenterX() - other.box.getCenterX()) < 50))
 	{
 		Sound* sound = new Sound("audio/dano.wav");
 		sound->Play(0);
@@ -264,9 +277,12 @@ void Player::NotifyCollision(GameObject& other)
 		}
 	}
 
-	if(other.Is("Laser") && other.getSprite().GetCurrentFrame() !=0){
+	if(other.Is("Laser") && abs(box.getCenterX() - other.box.getCenterX()) < 50 && other.getSprite().GetCurrentFrame() !=0){
+
+		cout << "Colidiu com laaaaser!!!" << endl;
 		hp -= 10;
 	}
+
 
 	if (IsDead()) {
 		Camera::Unfollow();

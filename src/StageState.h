@@ -2,7 +2,10 @@
 #define SRC_STAGESTATE_H_
 
 #include <string>
-
+#include <iostream>
+#include <vector>
+#include <memory>
+#include <cstdlib>
 #include "Music.h"
 #include "Sprite.h"
 #include "State.h"
@@ -15,6 +18,8 @@
 #include "PlanetaFundo.h"
 #include "Cometa.h"
 #include "Energia.h"
+#include "Laser.h"
+#include "Nave.h"
 
 class Weapon;
 

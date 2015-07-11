@@ -103,6 +103,7 @@ void UI::Update(float dt) {
 		newEnergy = Player::player->GetEnergyUpdate();
 
 		if (newEnergy) {
+			Player::player->energyUpdate = false;
 			collectedEnergy++;
 			this->bgEnergy.SetFrame(collectedEnergy - 1);
 			this->bgEnergy.Update(1);
