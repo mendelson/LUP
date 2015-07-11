@@ -50,10 +50,6 @@ Sprite Planta::getSprite(){
 }
 
 void Planta::NotifyCollision(GameObject& other){
-	if (other.Is("Player"))
-		{
-			dead = true;
-		}
 }
 
 bool Planta::Is(string type){

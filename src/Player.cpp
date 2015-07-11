@@ -264,6 +264,10 @@ void Player::NotifyCollision(GameObject& other)
 		}
 	}
 
+	if(other.Is("Laser") && other.getSprite().GetCurrentFrame() !=0){
+		hp -= 10;
+	}
+
 	if (IsDead()) {
 		Camera::Unfollow();
 		Sprite* aux = new Sprite("img/Sprites_Morte_LUP", 0.2, 1, 9);

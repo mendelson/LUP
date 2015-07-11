@@ -8,6 +8,13 @@
 #include "State.h"
 #include "Timer.h"
 #include "UI.h"
+#include "Plataforma.h"
+#include "Planet.h"
+#include "Planta.h"
+#include "Enemy3.h"
+#include "PlanetaFundo.h"
+#include "Cometa.h"
+#include "Energia.h"
 
 class Weapon;
 
