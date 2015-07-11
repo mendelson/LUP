@@ -3,11 +3,11 @@
 
 #include <vector>
 
+#include "Music.h"
 #include "Sprite.h"
 #include "State.h"
 #include "Text.h"
 #include "Timer.h"
-#include "Music.h"
 
 class TitleState: public State {
 public:
@@ -18,17 +18,25 @@ public:
 	void Pause();
 	void Resume();
 private:
-	void mountMainMenu();
+	//void mountMainMenu();
 
 	Sprite bg;
-	std::vector<Sprite*> selector;
+	Sprite opening;
+	Sprite instructions;
+	Sprite menuOptions;
+	Sprite credits;
+	//std::vector<Sprite*> selector;
 	Timer timer;
-	std::vector<Text*> textVector;
+	Timer timerSupport;
+	//std::vector<Text*> textVector;
 	int focus;
-	bool initialize;
-	int menuYStartPosition;
+	//bool initialize;
+	//int menuYStartPosition;
 	Music music;
-
+	bool startMenu;
+	unsigned int frame;
+	bool showInstructions;
+	bool showCredits;
 };
 
 #endif /* SRC_TITLESTATE_H_ */
