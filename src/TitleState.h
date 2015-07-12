@@ -35,10 +35,13 @@ private:
 	//int menuYStartPosition;
 	Music menuSong;
 	Music itemSelection;
+	Music itemChosen;
 	bool startMenu;
 	unsigned int frame;
 	bool showInstructions;
 	bool showCredits;
+	bool initializeMenuIntroSong;
+	bool updateTimer;
 };
 
 #endif /* SRC_TITLESTATE_H_ */

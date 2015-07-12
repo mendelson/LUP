@@ -20,7 +20,8 @@ TitleState::TitleState() :
 		bg("img/fundo.png"), opening("img/cut-scene-1.png"), instructions(
 				"img/instructions.png"), menuOptions("img/menu-options.png", 0,
 				1, 5), credits("img/credits.png"), blank("img/blank.png"), timer(), timerSupport(), menuSong(
-				"audio/titlescreenlup.ogg"), itemSelection("audio/itemSelection.wav") {
+				"audio/menuIntro.ogg"), itemSelection(
+				"audio/itemSelection.wav"), itemChosen("audio/select.wav") {
 
 	popRequested = false;
 	quitRequested = false;
@@ -32,6 +33,8 @@ TitleState::TitleState() :
 	startMenu = false;
 	focus = 0;
 	initializeMenuSong = true;
+	initializeMenuIntroSong = true;
+	updateTimer = false;
 
 	//menuYStartPosition = Game::GetInstance().getHeight() / 1.5;
 	//mountMainMenu();
@@ -66,6 +69,9 @@ void TitleState::Update(float dt) {
 	//popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
 	quitRequested = InputManager::GetInstance().QuitRequested();
 	timerSupport.Update(dt);
+	if (updateTimer) {
+		timer.Update(dt);
+	}
 
 	if (!startMenu) {
 		startMenu = InputManager::GetInstance().KeyPress(SDLK_SPACE);
@@ -98,9 +104,16 @@ void TitleState::Update(float dt) {
 				}
 			}
 		} else {
-			if (initializeMenuSong) {
-				menuSong.Play(-1);
-				initializeMenuSong = false;
+			if (initializeMenuSong || initializeMenuIntroSong) {
+				if (!initializeMenuIntroSong && timer.Get() >= 16) {
+					menuSong.Open("audio/menuLoop.ogg");
+					menuSong.Play(5);
+					initializeMenuSong = false;
+				} else if (initializeMenuIntroSong) {
+					updateTimer = true;
+					menuSong.Play(1);
+					initializeMenuIntroSong = false;
+				}
 			}
 
 			if (timerSupport.Get() >= FRAME_TIME_INITIAL_ANIMATION) {
@@ -113,9 +126,16 @@ void TitleState::Update(float dt) {
 			}
 		}
 	} else {
-		if (initializeMenuSong) {
-			menuSong.Play(-1);
-			initializeMenuSong = false;
+		if (initializeMenuSong || initializeMenuIntroSong) {
+			if (!initializeMenuIntroSong && timer.Get() >= 16) {
+				menuSong.Open("audio/menuLoop.ogg");
+				menuSong.Play(5);
+				initializeMenuSong = false;
+			} else if (initializeMenuIntroSong) {
+				updateTimer = true;
+				menuSong.Play(1);
+				initializeMenuIntroSong = false;
+			}
 		}
 		/*if (initialize) {
 		 initialize = false;
@@ -160,8 +180,9 @@ void TitleState::Update(float dt) {
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 0
 				&& !showInstructions && !showCredits
 				&& timerSupport.Get() > 0.5) {
+			itemChosen.Play(1);
 			State* stageState = new StageState();
-			 Game::GetInstance().Push(stageState);
+			Game::GetInstance().Push(stageState);
 			/*State* cutScene = new CutScene1();
 			 Game::GetInstance().Push(cutScene);*/
 		}
@@ -169,6 +190,7 @@ void TitleState::Update(float dt) {
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 1
 				&& !showInstructions && !showCredits
 				&& timerSupport.Get() > 0.5) {
+			itemChosen.Play(1);
 			showInstructions = true;
 			timerSupport.Restart();
 		}
@@ -176,6 +198,7 @@ void TitleState::Update(float dt) {
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 2
 				&& !showInstructions && !showCredits
 				&& timerSupport.Get() > 0.5) {
+			itemChosen.Play(1);
 			showCredits = true;
 			timerSupport.Restart();
 		}
@@ -183,17 +206,14 @@ void TitleState::Update(float dt) {
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY)
 				&& focus == NUMBER_OF_MENU_ITEMS - 1 && !showInstructions
 				&& !showCredits && timerSupport.Get() > 0.5) {
+			itemChosen.Play(1);
 			quitRequested = true;
-		}
-
-		timer.Update(dt);
-		if (timer.Get() > 1) {
-			timer.Restart();
 		}
 
 		if (showInstructions
 				&& InputManager::GetInstance().IsKeyDown(RETURN_KEY)
 				&& timerSupport.Get() > 0.5) {
+			itemChosen.Play(1);
 			timerSupport.Restart();
 			//initialize = true;
 			showInstructions = false;
@@ -202,6 +222,7 @@ void TitleState::Update(float dt) {
 
 		if (showCredits && InputManager::GetInstance().IsKeyDown(RETURN_KEY)
 				&& timerSupport.Get() > 0.5) {
+			itemChosen.Play(1);
 			timerSupport.Restart();
 			//initialize = true;
 			showCredits = false;
@@ -259,7 +280,7 @@ void TitleState::Render() {
 void TitleState::Pause() {
 	//textVector.clear();
 
-		menuSong.Stop();
+	menuSong.Stop();
 
 	selector.clear();
 	logo.clear();
@@ -278,7 +299,11 @@ void TitleState::Resume() {
 	 }*/
 
 	//mountMainMenu();
-		menuSong.Play(-1);
+	menuSong.Open("audio/menuIntro.ogg");
+	menuSong.Play(1);
+	updateTimer = true;
+	initializeMenuIntroSong = false;
+	initializeMenuSong = true;
 }
 
 /*void TitleState::mountMainMenu() {

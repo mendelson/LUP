@@ -1,4 +1,9 @@
 #include "Music.h"
+
+#include <SDL_error.h>
+#include <cstdlib>
+#include <string>
+
 #include "Resources.h"
 
 Music::Music() {
@@ -10,9 +15,8 @@ Music::Music(std::string file) {
 }
 
 void Music::Play(int times) {
-	//Mix_Chunk *sound = Mix_LoadWAV("some-sound-effect.wav");
-	//Mix_PlayChannel(-1, music, 0);
-	Mix_PlayMusic(music,times);
+	Mix_PlayChannel(-1, music, 0);
+	//Mix_PlayMusic(music,times);
 }
 
 void Music::Stop() {
@@ -20,7 +24,8 @@ void Music::Stop() {
 }
 
 void Music::Open(std::string file) {
-	music = Resources::GetMusic(file);
+	//music = Resources::GetMusic(file);
+	music = Resources::GetChunk(file);
 	if (music == NULL) {
 		std::cout << "ERRO ao inicializar musica!! :(" << std::endl;
 		std::cout << SDL_GetError() << std::endl;
