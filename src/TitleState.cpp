@@ -1,7 +1,6 @@
 #include "TitleState.h"
 
 #include <SDL_keycode.h>
-#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -19,7 +18,7 @@ const float FRAME_TIME = 1 / 3;
 TitleState::TitleState() :
 		bg("img/fundo.png"), opening("img/cut-scene-1.png"), instructions(
 				"img/instructions.png"), menuOptions("img/menu-options.png", 0,
-				1, 5), credits("img/credits.png"), timer(), timerSupport(), music(
+				1, 5), credits("img/credits.png"), timer(), timerSupport(), menuSong(
 				"audio/titlescreenlup.ogg") {
 
 	menuOptions.SetLoop(0, 4);
@@ -29,7 +28,7 @@ TitleState::TitleState() :
 	opening.SetFrame(frame);
 	startMenu = false;
 	focus = 0;
-	//initialize = true;
+	initializeMenuSong = true;
 
 	//menuYStartPosition = Game::GetInstance().getHeight() / 1.5;
 	//mountMainMenu();
@@ -41,7 +40,7 @@ TitleState::TitleState() :
 
 		selector.emplace_back(new Sprite(frameFile));
 	}
-	music.Play(-1);
+	//music.Play(-1);
 }
 
 TitleState::~TitleState() {
@@ -80,15 +79,20 @@ void TitleState::Update(float dt) {
 				}
 			}
 		} else {
-			if (timerSupport.Get() >= FRAME_TIME){
+			if (timerSupport.Get() >= FRAME_TIME) {
 				frame++;
 			}
 
-			if(frame - 4 >= NUMBER_FRAMES_INITIAL_ANIMATION){
+			if (frame - 4 >= NUMBER_FRAMES_INITIAL_ANIMATION) {
 				startMenu = true;
+				selector.clear();
 			}
 		}
 	} else {
+		if (initializeMenuSong) {
+			menuSong.Play(-1);
+			initializeMenuSong = false;
+		}
 		/*if (initialize) {
 		 initialize = false;
 		 focus = 0;
@@ -222,7 +226,7 @@ void TitleState::Render() {
 
 void TitleState::Pause() {
 	//textVector.clear();
-	music.Stop();
+	menuSong.Stop();
 }
 
 void TitleState::Resume() {
@@ -230,7 +234,7 @@ void TitleState::Resume() {
 	//initialize = true;
 
 	//mountMainMenu();
-	music.Play(-1);
+	menuSong.Play(-1);
 }
 
 /*void TitleState::mountMainMenu() {

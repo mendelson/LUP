@@ -6,7 +6,6 @@
 #include "Music.h"
 #include "Sprite.h"
 #include "State.h"
-#include "Text.h"
 #include "Timer.h"
 
 class TitleState: public State {
@@ -30,9 +29,9 @@ private:
 	Timer timerSupport;
 	//std::vector<Text*> textVector;
 	int focus;
-	//bool initialize;
+	bool initializeMenuSong;
 	//int menuYStartPosition;
-	Music music;
+	Music menuSong;
 	bool startMenu;
 	unsigned int frame;
 	bool showInstructions;

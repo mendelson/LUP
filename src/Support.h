@@ -4,6 +4,7 @@
 #include <string>
 
 #include "GameObject.h"
+#include "Point.h"
 #include "Sprite.h"
 #include "Timer.h"
 
@@ -25,12 +26,10 @@ private:
 	Sprite sp;
 	Timer timer;
 	Facing orientation;
+	Facing previousOrientation;
 	State state;
 	Point speed;
 	GameObject* planet;
-	//////
-	int alturaInicial;
-//	int xi;
 };
 
 #endif /* SRC_SUPPORT_H_ */
