@@ -134,13 +134,13 @@ StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"
 	GameObject* plataforma24 = new Plataforma(500,0,planet,240,150,"img/plataformas/2200/plataformas2200_15.png");
 	objectArray.emplace_back(plataforma24);
 
-	GameObject* energia1 = new Energia(500,0,planet,90,400,"img/ENERGIA_V1_2.png",4);
+	GameObject* energia1 = new Energia(500,0,planet,90,400,"img/ENERGIA_V1.png",4);
 	objectArray.emplace_back(energia1);
 
-	GameObject* energia2 = new Energia(500,0,planet,47,400,"img/ENERGIA_V1_2.png",4);
+	GameObject* energia2 = new Energia(500,0,planet,47,400,"img/ENERGIA_V1.png",4);
 	objectArray.emplace_back(energia2);
 
-	GameObject* energia3 = new Energia(500,0,planet,230,400,"img/ENERGIA_V1_2.png",4);
+	GameObject* energia3 = new Energia(500,0,planet,230,400,"img/ENERGIA_V1.png",4);
 	objectArray.emplace_back(energia3);
 
 	GameObject* nave = new Nave(500,0,planet,-89,150,"img/nave-desligada.png");
@@ -231,6 +231,7 @@ void StageState::Update(float dt) {
 	//verifica fim da fase
 	if(Player::player->deveMudarDeFase){
 		popRequested = true;
+		Player::player->deveMudarDeFase = false;
 	}
 }
 

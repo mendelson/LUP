@@ -2,6 +2,7 @@
 #include "InputManager.h"
 #include "Camera.h"
 #include "Game.h"
+#include "FinalState.h"
 
 Player* Player::player = NULL;
 
@@ -224,10 +225,14 @@ Sprite Player::getSprite()
 
 void Player::NotifyCollision(GameObject& other)
 {
-	if(other.Is("Nave")){
+	if(other.Is("Nave")  && abs(box.getCenterX() - other.box.getCenterX()) < 50 ){
 		if(qntEnergia > 2){
 			qntEnergia = 0;
 			deveMudarDeFase = true;
+			if(planet->nPlaneta == 1){
+				State* stageState = new FinalState();
+				Game::GetInstance().Push(stageState);
+			}
 		}
 	}
 	if(other.Is("Energia")){
@@ -281,10 +286,12 @@ void Player::NotifyCollision(GameObject& other)
 		}
 	}
 
-	if(other.Is("Laser") && abs(box.getCenterX() - other.box.getCenterX()) < 50 && other.getSprite().GetCurrentFrame() !=0){
-
-		cout << "Colidiu com laaaaser!!!" << endl;
+	if(other.Is("Laser") && abs(box.getCenterX() - other.box.getCenterX()) < 20 && other.getSprite().GetCurrentFrame() !=0){
 		hp -= 10;
+	}
+
+	if(other.Is("LaserDeitado") && abs(box.getCenterY() - other.box.getCenterY()) < 20 && other.getSprite().GetCurrentFrame() !=0){
+			hp -= 10;
 	}
 
 

@@ -106,7 +106,7 @@ void Game::Run(){
 			GetCurrentState().Update(Game::GetInstance().GetDeltaTime());
 			GetCurrentState().Render();
 			SDL_RenderPresent(renderer);
-			SDL_Delay(33);
+			SDL_Delay(20);
 		}
 		Resources::ClearImages();
 		Resources::ClearMusic();

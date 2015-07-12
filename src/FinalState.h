@@ -26,6 +26,8 @@
 #include "Cometa.h"
 #include "Energia.h"
 #include "Laser.h"
+#include "LaserDeitado.h"
+#include "PontaLaser.h"
 #include "Nave.h"
 
 class Weapon;

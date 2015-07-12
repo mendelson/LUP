@@ -129,8 +129,7 @@ void TitleState::Update(float dt) {
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 0
 				&& !showInstructions && !showCredits
 				&& timerSupport.Get() > 0.5) {
-			//State* stageState = new StageState();
-			State* stageState = new FinalState();
+			State* stageState = new StageState();
 			Game::GetInstance().Push(stageState);
 		}
 

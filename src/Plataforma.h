@@ -12,7 +12,7 @@
 
 class Plataforma : public GameObject{
 public:
-	Plataforma(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file);
+	Plataforma(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file,int fase = 1);
 	~Plataforma();
 	void Update(float dt);
 	void Render();

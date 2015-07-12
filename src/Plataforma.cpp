@@ -10,11 +10,15 @@
 #include "Game.h"
 #include "InputManager.h"
 
-Plataforma::Plataforma(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file):sp(file) {
+Plataforma::Plataforma(float x,float y,GameObject* planet, float rotation,float alturaInicial, string file,int fase):sp(file) {
 	this->planet = planet;
 
 	box.x = x;//int novox = x - (sp.GetFrameWidth() / 2);
 	//int novoy = y - (sp.GetHeight() / 2);
+	if(fase > 1){
+		sp.SetScaleX(0.3);
+		sp.SetScaleY(0.3);
+	}
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
 	this->rotation = rotation;
