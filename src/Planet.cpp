@@ -9,7 +9,7 @@
 #include "InputManager.h"
 #include "Camera.h"
 
-Planet::Planet(float x, float y,string file):sp(file) {
+Planet::Planet(float x, float y,string file,string mapaPlaneta,string mapaSubida,int nPlaneta):sp(file) {
 	int novox = x - (sp.GetWidth()/2);
 	int novoy = y;
 	box.setX(novox);
@@ -18,15 +18,16 @@ Planet::Planet(float x, float y,string file):sp(file) {
 	box.setW(sp.GetWidth());
 	rotation = 0;
 	FILE* fp;
-	fp = fopen("map/mapPlaneta.txt","r");
+	fp = fopen(mapaPlaneta.c_str(),"r");
 	for(int i=0;i<361;i++){
 		fscanf(fp,"%d,",&offsetALtura[i]);
 	}
 	FILE* f;
-	f = fopen("map/mapSubida.txt","r");
+	f = fopen(mapaSubida.c_str(),"r");
 	for(int i=0;i<361;i++){
 		fscanf(f,"%d,",&mapaSubida[i]);
 	}
+	this->nPlaneta = nPlaneta;
 }
 
 Planet::~Planet() {

@@ -182,6 +182,10 @@ void Player::Update(float dt)
 	//	box.setY(box.getY() + 14);
 	//}
 
+	//ajusta somarotation ao planeta
+	somaRotation = somaRotation/planet->nPlaneta;
+
+
 	body.SetLoop(loopStart,loopEnd);
 	body.Update(dt);
 	energiaCD.Update(dt);

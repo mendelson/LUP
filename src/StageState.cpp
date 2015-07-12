@@ -27,7 +27,7 @@ StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"
 	this->weapon = BROOM;
 
 
-	GameObject* planet = new Planet(0,-100,"img/planetafase1.png");
+	GameObject* planet = new Planet(0,-100,"img/planetafase1.png","map/mapPlaneta.txt","map/mapSubida.txt",1);
 
 
 	GameObject* planeta1 = new PlanetaFundo(-2*xBg,-200,planet,0,0,"img/planeta_rosa.png");

@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "InputManager.h"
 #include "StageState.h"
+#include "FinalState.h"
 
 //const std::string FONT_FILE = "font/OpenSans-Bold.ttf";
 //const int ITEMS_DISTANCE = 50;
@@ -128,7 +129,8 @@ void TitleState::Update(float dt) {
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 0
 				&& !showInstructions && !showCredits
 				&& timerSupport.Get() > 0.5) {
-			State* stageState = new StageState();
+			//State* stageState = new StageState();
+			State* stageState = new FinalState();
 			Game::GetInstance().Push(stageState);
 		}
 

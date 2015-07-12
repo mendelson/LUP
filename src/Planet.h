@@ -15,7 +15,7 @@
 
 class Planet : public GameObject{
 public:
-	Planet(float x, float y,string file);
+	Planet(float x, float y,string file,string mapaPlaneta,string mapaSubida,int nPlaneta);
 	~Planet();
 	void Update(float dt);
 	void Render();
