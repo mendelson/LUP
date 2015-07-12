@@ -18,7 +18,7 @@
 
 class Enemy3: public GameObject {
 public:
-	Enemy3(float x, float y, GameObject* planet, float initialRotation, float alturaIncial);
+	Enemy3(float x, float y, GameObject* planet, float initialRotation, float alturaInicial);
 	~Enemy3();
 	void Update(float dt);
 	void Render();

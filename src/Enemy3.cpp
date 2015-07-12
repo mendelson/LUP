@@ -8,7 +8,7 @@
 #include "Game.h"
 #include "State.h"
 
-Enemy3::Enemy3(float x, float y, GameObject* planet, float initialRotation, float alturaIncial) : sp("img/enemy3.png", 0.30, 3, 7), speed(), startPos(x, y), dmgCD(), knockback(), shootcd()
+Enemy3::Enemy3(float x, float y, GameObject* planet, float initialRotation, float alturaInicial) : sp("img/enemy3.png", 0.30, 3, 7), speed(), startPos(x, y), dmgCD(), knockback(), shootcd()
 {
 	this->planet = planet;
 	sp.SetScaleX(0.5);
@@ -159,11 +159,13 @@ void Enemy3::Shoot (Point pos)
 
 void Enemy3::NotifyCollision(GameObject& other)
 {
-	if ((other.Is("WeaponBroom") && other.attacking) || (other.Is("WeaponSword") && other.attacking)) {
+	if ((other.Is("WeaponBroom") && other.attacking) || (other.Is("WeaponSword") && other.attacking) || (other.Is("Support") && other.attacking)) {
 
 		if (dmgCD.Get() > 0.5) {
 			dmgCD.Restart();
 			hp -= 10;
+			if (other.Is("Support"))
+					hp = 0;
 
 			knockback.Restart();
 
@@ -171,19 +173,17 @@ void Enemy3::NotifyCollision(GameObject& other)
 				kbDirection = LEFT;
 			else
 				kbDirection = RIGHT;
-
-			std::cout << "Collision: Weapon>Tank\n";
 		}
 
 		if (IsDead()) {
 			Player::player->IncXp(100);
-			//Sprite* aux = new Sprite("img/enemy_tank_dying.png", 0.2, 1, 9);
-			//aux->SetScaleX(0.5);
-			//aux->SetScaleY(0.5);
-			//aux->SetLoop(0, 6);
-			//StillAnimation* animacao = new StillAnimation(box.getCenterX(),
-			//		box.getCenterY(), planet, rotation, *aux, 0.2 * 7, true, box.getY()-50);
-			//Game::GetInstance().GetCurrentState().AddObject(animacao);
+			Sprite* aux = new Sprite("img/enemy3.png", 0.2, 3, 7);
+			aux->SetScaleX(0.5);
+			aux->SetScaleY(0.5);
+			aux->SetLoop(14, 19);
+			StillAnimation* animacao = new StillAnimation(box.getCenterX(),
+					box.getCenterY(), planet, rotation, *aux, 0.2 * 6, true, box.getY()+30);
+			Game::GetInstance().GetCurrentState().AddObject(animacao);
 		}
 	}
 }

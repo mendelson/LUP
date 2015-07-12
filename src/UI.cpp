@@ -102,6 +102,11 @@ void UI::Update(float dt) {
 		bgGun.Update(1);
 
 		//Energy
+
+		this->bgEnergy.SetFrame(Player::player->GetEnergy() - 1);
+		this->bgEnergy.Update(1);
+
+		/*
 		newEnergy = Player::player->GetEnergyUpdate();
 
 		if (newEnergy) {
@@ -115,6 +120,7 @@ void UI::Update(float dt) {
 			this->bgEnergy.Update(1);
 			timer.Restart();
 		}
+		*/
 
 		//Special
 		this->special = Player::player->GetSpecial();

@@ -25,7 +25,8 @@ public:
 	int GetXp();
 	int GetSpecial();
 	void IncXp(int xp);
-	bool GetEnergyUpdate();
+	int GetEnergy();
+	void Die();
 
 	int loopStart;
 	int loopEnd;
@@ -36,9 +37,11 @@ private:
 	Point speed;
 	int hp;
 	int xp;
+	int energy;
 	bool energyUpdate;
 	Timer dmgCD;
 	Timer knockback;
+	Timer deathAnimation;
 	Jumping jumpState;
 	int jumpY;
 	int yPlaneta;

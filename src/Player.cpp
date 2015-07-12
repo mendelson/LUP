@@ -5,7 +5,7 @@
 
 Player* Player::player = NULL;
 
-Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP.png",0.15,4,8), speed(),dmgCD(), knockback()
+Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP.png",0.15,4,8), speed(),dmgCD(),knockback(),deathAnimation()
 {
 	body.SetScaleX(0.5);
 	body.SetScaleY(0.5);
@@ -18,6 +18,7 @@ Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP
 	box.setW(body.GetWidth());
 	hp = 100;
 	xp = 0;
+	energy = 0;
 	speed.x = 15;
 	speed.y = 15;
 	jumpState = DJUMP;
@@ -41,6 +42,21 @@ Player::~Player(){
 
 void Player::Update(float dt)
 {
+	if (hp <= 0)
+	{
+		if (deathAnimation.Get() > 1.4)
+		{
+			deathAnimation.Restart();
+			knockback.Update(1);
+			hp = 100;
+		}
+		somaRotation = 0;
+		body.SetLoop(14,14);
+		body.Update(1);
+		deathAnimation.Update(dt);
+		return;
+	}
+
 	knockback.Update(dt);
 	dmgCD.Update(dt);
 	jumpY = planet->getAltura(planet->rotation);
@@ -198,6 +214,7 @@ void Player::Render()
 		c = 25;
 
 	body.Render(box.getX() +  Camera::pos.getX() + c,box.getY() +  Camera::pos.getY());
+
 }
 
 
@@ -206,9 +223,6 @@ bool Player::Is(string type)
 	return (type == "Player");
 }
 bool Player::IsDead(){
-	if (hp<=0){
-		return true;
-	}
 	return false;
 }
 
@@ -220,6 +234,11 @@ Sprite Player::getSprite()
 
 void Player::NotifyCollision(GameObject& other)
 {
+	if (other.Is("Energia"))
+	{
+		energy++;
+	}
+
 	if(other.Is("Plataforma")){
 		//cout<<"Colidiu com plataforma!" << endl;
 		if(box.getY() + box.getH()/2 < other.box.getY()  && jumped >= 150 && box.getX() + box.getW()/2 + c + 10> other.box.getX()
@@ -232,7 +251,7 @@ void Player::NotifyCollision(GameObject& other)
 
 	if (other.Is("EnemyTank") && other.attacking)
 	{
-		if (dmgCD.Get() > 0.5) {
+		if (dmgCD.Get() > 1) {
 			dmgCD.Restart();
 			hp -= 10;
 
@@ -242,15 +261,37 @@ void Player::NotifyCollision(GameObject& other)
 				kbDirection = LEFT;
 			else
 				kbDirection = RIGHT;
+
+			if (hp<=0) {
+				Die();
+			}
 		}
 	}
 
 	if (other.Is("Bullet") || other.Is("Planta"))
 	{
-		Sound* sound = new Sound("audio/dano.wav");
-		sound->Play(0);
-		delete(sound);
-		if (dmgCD.Get() > 0.5) {
+		if (dmgCD.Get() > 1) {
+			Sound* sound = new Sound("audio/dano.wav");
+			sound->Play(0);
+			delete(sound);
+			dmgCD.Restart();
+			hp -= 100;
+
+			knockback.Restart();
+
+			if (box.getCenterX() < other.box.getCenterX())
+				kbDirection = LEFT;
+			else
+				kbDirection = RIGHT;
+
+			if (hp<=0) {
+				Die();
+			}
+		}
+	}
+
+	if(other.Is("Laser") && other.getSprite().GetCurrentFrame() !=0){
+		if (dmgCD.Get() > 1) {
 			dmgCD.Restart();
 			hp -= 10;
 
@@ -261,22 +302,10 @@ void Player::NotifyCollision(GameObject& other)
 			else
 				kbDirection = RIGHT;
 
+			if (hp<=0) {
+				Die();
+			}
 		}
-	}
-
-	if(other.Is("Laser") && other.getSprite().GetCurrentFrame() !=0){
-		hp -= 10;
-	}
-
-	if (IsDead()) {
-		Camera::Unfollow();
-		Sprite* aux = new Sprite("img/Sprites_Morte_LUP", 0.2, 1, 9);
-		aux->SetScaleX(0.5);
-		aux->SetScaleY(0.5);
-		aux->SetLoop(0, 6);
-		StillAnimation* animacao = new StillAnimation(box.getCenterX(),
-				box.getCenterY(), planet, rotation, *aux, 0.2 * 7, true, box.getY()-50);
-		Game::GetInstance().GetCurrentState().AddObject(animacao);
 	}
 }
 
@@ -301,7 +330,18 @@ void Player::IncXp(int xp)
 	this->xp += xp;
 }
 
-bool Player::GetEnergyUpdate()
+int Player::GetEnergy()
 {
-	return energyUpdate;
+	return energy;
+}
+
+void Player::Die()
+{
+	Sprite* aux = new Sprite("img/Sprites_Morte_LUP.png", 0.2, 1, 8);
+	aux->SetScaleX(0.5);
+	aux->SetScaleY(0.5);
+	aux->SetLoop(0, 6);
+	StillAnimation* animacao = new StillAnimation(box.getCenterX(),
+			box.getCenterY(), planet, rotation, *aux, 0.2 * 7, true, box.getY()+30);
+	Game::GetInstance().GetCurrentState().AddObject(animacao);
 }
