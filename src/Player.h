@@ -27,6 +27,8 @@ public:
 	void IncXp(int xp);
 	bool GetEnergyUpdate();
 	bool energyUpdate;
+	int GetEnergy();
+	void Die();
 	int loopStart;
 	int loopEnd;
 	GameObject* planet;
@@ -37,9 +39,10 @@ private:
 	Point speed;
 	int hp;
 	int xp;
-
+	int energy;
 	Timer dmgCD;
 	Timer knockback;
+	Timer deathAnimation;
 	Jumping jumpState;
 	int jumpY;
 	int yPlaneta;

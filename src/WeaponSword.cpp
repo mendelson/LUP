@@ -31,6 +31,14 @@ WeaponSword::~WeaponSword()
 
 void WeaponSword::Update(float dt)
 {
+	if (Player::player->GetHp() <= 0)
+	{
+		somaRotation = 0;
+		sp.SetLoop(4,4);
+		sp.Update(1);
+		return;
+	}
+
 	deathCD.Update(dt);
 
 	if (Player::player == NULL)

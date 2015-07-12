@@ -106,8 +106,6 @@ void EnemyTank::NotifyCollision(GameObject& other) {
 				kbDirection = LEFT;
 			else
 				kbDirection = RIGHT;
-
-			std::cout << "Collision: Weapon>Tank\n";
 		}
 
 		if (IsDead()) {
@@ -117,7 +115,7 @@ void EnemyTank::NotifyCollision(GameObject& other) {
 			aux->SetScaleY(0.5);
 			aux->SetLoop(0, 6);
 			StillAnimation* animacao = new StillAnimation(box.getCenterX(),
-					box.getCenterY(), planet, rotation, *aux, 0.2 * 7, true, box.getY()-50);
+					box.getCenterY(), planet, rotation, *aux, 0.2 * 9, true, box.getY()-50);
 			Game::GetInstance().GetCurrentState().AddObject(animacao);
 		}
 	}

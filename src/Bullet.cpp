@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-Bullet::Bullet(GameObject* planet, float initialRotation, float alturaIncial, float speed, float maxDistance, string Sprite, bool targetsPlay, int frameCount) : sp(Sprite,0.1,1,frameCount){
+Bullet::Bullet(GameObject* planet, float initialRotation, float alturaInicial, float speed, float maxDistance, string Sprite, bool targetsPlay, int frameCount) : sp(Sprite,0.1,1,frameCount){
 
 	this->planet = planet;
 	box.setH(sp.GetHeight());

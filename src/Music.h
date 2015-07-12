@@ -1,10 +1,3 @@
-/*
- * Music.h
- *
- *  Created on: 11/05/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_MUSIC_H_
 #define SRC_MUSIC_H_
 
@@ -20,7 +13,8 @@ public:
 	void Open(std::string file);
 	bool IsOpen();
 private:
-	Mix_Music* music;
+	//Mix_Music* music;
+	Mix_Chunk* music;
 };
 
 

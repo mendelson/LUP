@@ -32,6 +32,14 @@ WeaponBroom::~WeaponBroom()
 
 void WeaponBroom::Update(float dt)
 {
+	if (Player::player->GetHp() <= 0)
+	{
+		somaRotation = 0;
+		sp.SetLoop(14,14);
+		sp.Update(1);
+		return;
+	}
+
 	deathCD.Update(dt);
 
 	if (Player::player == NULL)
