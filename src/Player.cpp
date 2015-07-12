@@ -20,7 +20,6 @@ Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP
 	box.setW(body.GetWidth());
 	hp = 100;
 	xp = 0;
-	energy = 0;
 	speed.x = 15;
 	speed.y = 15;
 	jumpState = DJUMP;
@@ -352,9 +351,9 @@ void Player::IncXp(int xp)
 	this->xp += xp;
 }
 
-int Player::GetEnergy()
+bool Player::GetEnergyUpdate()
 {
-	return energy;
+	return energyUpdate;
 }
 
 void Player::Die()
