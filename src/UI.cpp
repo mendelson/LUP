@@ -102,7 +102,6 @@ void UI::Update(float dt) {
 		bgGun.Update(1);
 
 		//Energy
-
 		this->bgEnergy.SetFrame(Player::player->GetEnergy() - 1);
 		this->bgEnergy.Update(1);
 

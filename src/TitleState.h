@@ -24,7 +24,9 @@ private:
 	Sprite instructions;
 	Sprite menuOptions;
 	Sprite credits;
+	Sprite blank;
 	std::vector<Sprite*> selector;
+	std::vector<Sprite*> logo;
 	Timer timer;
 	Timer timerSupport;
 	//std::vector<Text*> textVector;
@@ -32,6 +34,7 @@ private:
 	bool initializeMenuSong;
 	//int menuYStartPosition;
 	Music menuSong;
+	Music itemSelection;
 	bool startMenu;
 	unsigned int frame;
 	bool showInstructions;

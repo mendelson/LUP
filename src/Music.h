@@ -1,10 +1,3 @@
-/*
- * Music.h
- *
- *  Created on: 11/05/2015
- *      Author: Vitor
- */
-
 #ifndef SRC_MUSIC_H_
 #define SRC_MUSIC_H_
 

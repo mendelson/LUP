@@ -13,14 +13,17 @@
 //const int NUMBER_OF_MENU_PLANETS = 3;
 const int NUMBER_OF_MENU_ITEMS = 4;
 const unsigned int NUMBER_FRAMES_INITIAL_ANIMATION = 93;
-const float FRAME_TIME = 1 / 3;
+const unsigned int NUMBER_FRAMES_LOGO = 200;
+const float FRAME_TIME_INITIAL_ANIMATION = 1 / 3;
 
 TitleState::TitleState() :
 		bg("img/fundo.png"), opening("img/cut-scene-1.png"), instructions(
 				"img/instructions.png"), menuOptions("img/menu-options.png", 0,
-				1, 5), credits("img/credits.png"), timer(), timerSupport(), menuSong(
-				"audio/titlescreenlup.ogg") {
+				1, 5), credits("img/credits.png"), blank("img/blank.png"), timer(), timerSupport(), menuSong(
+				"audio/titlescreenlup.ogg"), itemSelection("audio/itemSelection.wav") {
 
+	popRequested = false;
+	quitRequested = false;
 	menuOptions.SetLoop(0, 4);
 	showInstructions = false;
 	showCredits = false;
@@ -40,12 +43,23 @@ TitleState::TitleState() :
 
 		selector.emplace_back(new Sprite(frameFile));
 	}
+
+	/*for (unsigned int i = 0; i < NUMBER_FRAMES_LOGO; i++) {
+	 std::stringstream sstm;
+	 sstm << "img/logo/Cut_Scene_5_000" << i << ".png";
+	 std::string frameFile = sstm.str();
+
+	 logo.emplace_back(new Sprite(frameFile));
+	 }*/
+
 	//music.Play(-1);
 }
 
 TitleState::~TitleState() {
 	//textVector.clear();
+	menuSong.Stop();
 	selector.clear();
+	logo.clear();
 }
 
 void TitleState::Update(float dt) {
@@ -56,20 +70,25 @@ void TitleState::Update(float dt) {
 	if (!startMenu) {
 		startMenu = InputManager::GetInstance().KeyPress(SDLK_SPACE);
 
-		if (frame <= 3) {
+		if (frame == 0) {
+			if (timerSupport.Get() > 3) {
+				frame++;
+				timerSupport.Restart();
+			}
+		} else if (frame <= 4) {
 			if (timerSupport.Get() > 3) {
 				frame++;
 
 				switch (frame) {
-				case 1:
+				case 2:
 					opening.Open("img/cut-scene-2.png");
 					timerSupport.Restart();
 					break;
-				case 2:
+				case 3:
 					opening.Open("img/cut-scene-3.png");
 					timerSupport.Restart();
 					break;
-				case 3:
+				case 4:
 					opening.Open("img/cut-scene-4.png");
 					timerSupport.Restart();
 					break;
@@ -79,11 +98,16 @@ void TitleState::Update(float dt) {
 				}
 			}
 		} else {
-			if (timerSupport.Get() >= FRAME_TIME) {
+			if (initializeMenuSong) {
+				menuSong.Play(-1);
+				initializeMenuSong = false;
+			}
+
+			if (timerSupport.Get() >= FRAME_TIME_INITIAL_ANIMATION) {
 				frame++;
 			}
 
-			if (frame - 4 >= NUMBER_FRAMES_INITIAL_ANIMATION) {
+			if (frame - 5 >= NUMBER_FRAMES_INITIAL_ANIMATION) {
 				startMenu = true;
 				selector.clear();
 			}
@@ -115,6 +139,8 @@ void TitleState::Update(float dt) {
 		//if (!initialize) {
 		if (InputManager::GetInstance().KeyPress(UP_ARROW_KEY)
 				&& !showInstructions) {
+			itemSelection.Play(1);
+
 			focus--;
 
 			if (focus < 0) {
@@ -122,6 +148,8 @@ void TitleState::Update(float dt) {
 			}
 		} else if (InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)
 				&& !showInstructions) {
+			itemSelection.Play(1);
+
 			focus++;
 
 			if (focus > NUMBER_OF_MENU_ITEMS - 1) {
@@ -133,7 +161,9 @@ void TitleState::Update(float dt) {
 				&& !showInstructions && !showCredits
 				&& timerSupport.Get() > 0.5) {
 			State* stageState = new StageState();
-			Game::GetInstance().Push(stageState);
+			 Game::GetInstance().Push(stageState);
+			/*State* cutScene = new CutScene1();
+			 Game::GetInstance().Push(cutScene);*/
 		}
 
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 1
@@ -186,10 +216,12 @@ void TitleState::Update(float dt) {
 
 void TitleState::Render() {
 	if (!startMenu) {
-		if (frame <= 3) {
+		if (frame == 0) {
+			blank.Render(0, 0);
+		} else if (frame <= 4) {
 			opening.Render(0, 0);
 		} else {
-			selector[frame - 4]->Render(0, 0);
+			selector[frame - 5]->Render(0, 0);
 		}
 	} else if (showInstructions) {
 		instructions.Render(0, 0);
@@ -226,15 +258,27 @@ void TitleState::Render() {
 
 void TitleState::Pause() {
 	//textVector.clear();
-	menuSong.Stop();
+
+		menuSong.Stop();
+
+	selector.clear();
+	logo.clear();
 }
 
 void TitleState::Resume() {
 	focus = 0;
 	//initialize = true;
 
+	/*for (unsigned int i = 0; i < NUMBER_FRAMES_LOGO; i++) {
+	 std::stringstream sstm;
+	 sstm << "img/logo/Cut_Scene_5_000" << i << ".png";
+	 std::string frameFile = sstm.str();
+
+	 logo.emplace_back(new Sprite(frameFile));
+	 }*/
+
 	//mountMainMenu();
-	menuSong.Play(-1);
+		menuSong.Play(-1);
 }
 
 /*void TitleState::mountMainMenu() {
