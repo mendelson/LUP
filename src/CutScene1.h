@@ -1,8 +1,6 @@
 #ifndef SRC_CUTSCENE_H_
 #define SRC_CUTSCENE_H_
 
-#include <vector>
-
 #include "Music.h"
 #include "Sprite.h"
 #include "State.h"
@@ -18,7 +16,8 @@ public:
 	void Resume();
 private:
 	Sprite blank;
-	std::vector<Sprite*> selector;
+	Sprite sprite;
+	//std::vector<Sprite*> selector;
 	Timer timer;
 	Music song;
 	unsigned int frame;

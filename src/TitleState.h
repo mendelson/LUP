@@ -36,6 +36,7 @@ private:
 	//int menuYStartPosition;
 	Music menuSong;
 	Music menuIntroSong;
+	Music introIntroSong;
 	Music itemSelection;
 	Music itemChosen;
 	bool startMenu;
