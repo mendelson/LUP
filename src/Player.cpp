@@ -283,6 +283,9 @@ void Player::NotifyCollision(GameObject& other)
 	if (other.Is("EnemyTank") && other.attacking)
 	{
 		if (dmgCD.Get() > 1) {
+			Sound* sound = new Sound("audio/dano.wav");
+			sound->Play(0);
+			delete(sound);
 			dmgCD.Restart();
 			hp -= 10;
 
@@ -306,7 +309,7 @@ void Player::NotifyCollision(GameObject& other)
 			sound->Play(0);
 			delete(sound);
 			dmgCD.Restart();
-			hp -= 100;
+			hp -= 10;
 
 			knockback.Restart();
 

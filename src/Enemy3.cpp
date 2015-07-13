@@ -160,8 +160,8 @@ void Enemy3::Shoot (Point pos)
 		}
 	}
 
-	Bullet* bullet = new Bullet(xBullet, yBullet, angle, 100, 2000,"img/enemy3_bullet.png", 4, true);
-	Game::GetInstance().GetCurrentState().AddObject(bullet);
+	//Bullet* bullet = new Bullet(planet,rotation, 0, 100, 2000,"img/enemy3_bullet.png", 4, true);
+	//Game::GetInstance().GetCurrentState().AddObject(bullet);
 }
 
 void Enemy3::NotifyCollision(GameObject& other)
@@ -189,7 +189,7 @@ void Enemy3::NotifyCollision(GameObject& other)
 			aux->SetScaleY(0.5);
 			aux->SetLoop(14, 19);
 			StillAnimation* animacao = new StillAnimation(box.getCenterX(),
-					box.getCenterY(), planet, rotation, *aux, 0.2 * 6, true, box.getY()+30);
+					box.getCenterY(), planet, rotation, *aux, 0.2 * 6, true, box.getY()+90);
 			Game::GetInstance().GetCurrentState().AddObject(animacao);
 		}
 	}
