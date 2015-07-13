@@ -281,11 +281,13 @@ StageState::~StageState() {
 
 void StageState::Pause() {
 	music.Stop();
+	objectArray.clear();
 
 }
 
 void StageState::Resume() {
 	//music.Play(-1);
+
 }
 
 StageState::WeaponName_lazy StageState::CheckWeapon()

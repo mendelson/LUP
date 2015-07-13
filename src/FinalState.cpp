@@ -27,7 +27,7 @@ FinalState::FinalState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"
 	this->weapon = BROOM;
 
 
-	GameObject* planet = new Planet(0,-150,"img/planetafase3.png","map/mapLastPlaneta.txt","map/mapSubida.txt",3);
+	GameObject* planet = new Planet(0,-150,"img/planetafase3.png","map/mapLastPlaneta.txt","map/mapLastSubida.txt",3);
 
 
 	GameObject* planeta1 = new PlanetaFundo(-2*xBg,-200,planet,0,0,"img/planeta_rosa.png");
@@ -329,6 +329,7 @@ FinalState::~FinalState() {
 
 void FinalState::Pause() {
 	music.Stop();
+	objectArray.clear();
 
 }
 
