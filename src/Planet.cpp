@@ -28,6 +28,10 @@ Planet::Planet(float x, float y,string file,string mapaPlaneta,string mapaSubida
 		fscanf(f,"%d,",&mapaSubida[i]);
 	}
 	this->nPlaneta = nPlaneta;
+	fclose(fp);
+	fclose(f);
+	free(fp);
+	free(f);
 }
 
 Planet::~Planet() {

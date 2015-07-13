@@ -29,6 +29,8 @@ private:
 	Sprite sp;
 	int offsetALtura[361];
 	int mapaSubida[361];
+//	FILE* fp;
+//	FILE* f;
 };
 
 #endif /* SRC_PLANET_H_ */
