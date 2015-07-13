@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 
+#include "CutScene1.h"
 #include "FinalState.h"
 #include "Game.h"
 #include "InputManager.h"
@@ -237,6 +238,12 @@ void TitleState::Update(float dt) {
 			itemChosen.Play(1);
 			State* finalState = new FinalState();
 			Game::GetInstance().Push(finalState);
+		}
+
+		if (InputManager::GetInstance().IsKeyDown(SDLK_c)) {
+			itemChosen.Play(1);
+			State* cutScene = new CutScene1();
+			Game::GetInstance().Push(cutScene);
 		}
 
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 0
