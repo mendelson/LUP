@@ -30,7 +30,7 @@ Enemy3::Enemy3(float x, float y, GameObject* planet, float initialRotation, floa
 
 Enemy3::~Enemy3()
 {
-
+	sp.freeMe();
 }
 
 void Enemy3::Update(float dt)
@@ -160,8 +160,8 @@ void Enemy3::Shoot (Point pos)
 		}
 	}
 
-	//Bullet* bullet = new Bullet(planet,rotation, 0, 100, 2000,"img/enemy3_bullet.png", 4, true);
-	//Game::GetInstance().GetCurrentState().AddObject(bullet);
+	Bullet* bullet = new Bullet(xBullet, yBullet, planet, angle, 0, 500, 2000,"img/enemy3_bullet.png", true, 4);
+	Game::GetInstance().GetCurrentState().AddObject(bullet);
 }
 
 void Enemy3::NotifyCollision(GameObject& other)

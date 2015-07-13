@@ -220,7 +220,7 @@ FinalState::FinalState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"
 	//GameObject* weapon = new WeaponSword("img/Sprites_Espada_LUP.png");
 	objectArray.emplace_back(activeWeapon);
 
-	GameObject* e1 = new Enemy3(500, 0,planet,-30,0);
+	GameObject* e1 = new Enemy3(500, 0,planet,-15,0);
 	objectArray.emplace_back(e1);
 	GameObject* e2 = new Enemy3(500, 0,planet,40,0);
 	objectArray.emplace_back(e2);

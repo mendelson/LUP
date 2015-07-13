@@ -23,7 +23,7 @@ EnemyTank::EnemyTank(float x, float y,GameObject* planet, float initialRotation,
 }
 
 EnemyTank::~EnemyTank() {
-
+	sp.freeMe();
 }
 
 void EnemyTank::Update(float dt) {
