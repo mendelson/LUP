@@ -163,10 +163,36 @@ StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"
 	//GameObject* weapon = new WeaponSword("img/Sprites_Espada_LUP.png");
 	objectArray.emplace_back(activeWeapon);
 
-	GameObject* tank = new EnemyTank(500, 0,planet,18,50);
-	objectArray.emplace_back(tank);
-	GameObject* e3 = new Enemy3(500, 0,planet,18,0);
-	objectArray.emplace_back(e3);
+	GameObject* tank1 = new EnemyTank(500, 0,planet,-50,50);
+	objectArray.emplace_back(tank1);
+
+	GameObject* tank2 = new EnemyTank(500, 0,planet,-40,50);
+	objectArray.emplace_back(tank2);
+
+	GameObject* tank3 = new EnemyTank(500, 0,planet,-30,50);
+	objectArray.emplace_back(tank3);
+
+	GameObject* tank4 = new EnemyTank(500, 0,planet,45,50);
+	objectArray.emplace_back(tank4);
+
+	GameObject* tank5 = new EnemyTank(500, 0,planet,140,50);
+	objectArray.emplace_back(tank5);
+
+	GameObject* tank6 = new EnemyTank(500, 0,planet,150,50);
+	objectArray.emplace_back(tank6);
+
+	GameObject* tank7 = new EnemyTank(500, 0,planet,160,50);
+	objectArray.emplace_back(tank7);
+
+	GameObject* tank8 = new EnemyTank(500, 0,planet,170,50);
+	objectArray.emplace_back(tank8);
+
+	GameObject* tank9 = new EnemyTank(500, 0,planet,180,50);
+	objectArray.emplace_back(tank9);
+
+	GameObject* tank10 = new EnemyTank(500, 0,planet,190,50);
+	objectArray.emplace_back(tank10);
+
 
 
 	//rotacaoPlaneta = 0;
