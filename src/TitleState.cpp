@@ -178,6 +178,14 @@ void TitleState::Update(float dt) {
 			}
 		}
 
+		// CHEAT
+		if (InputManager::GetInstance().IsKeyDown(SDLK_F2))
+		{
+			itemChosen.Play(1);
+			State* finalState = new FinalState();
+			Game::GetInstance().Push(finalState);
+		}
+
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 0
 				&& !showInstructions && !showCredits
 				&& timerSupport.Get() > 0.5) {
