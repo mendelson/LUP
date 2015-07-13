@@ -32,6 +32,7 @@ public:
 	int loopEnd;
 	GameObject* planet;
 	bool deveMudarDeFase;
+	Timer deathAnimation;
 
 private:
 	Sprite body;
@@ -40,7 +41,6 @@ private:
 	int xp;
 	Timer dmgCD;
 	Timer knockback;
-	Timer deathAnimation;
 	Jumping jumpState;
 	int jumpY;
 	int yPlaneta;

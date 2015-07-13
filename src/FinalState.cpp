@@ -220,10 +220,27 @@ FinalState::FinalState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"
 	//GameObject* weapon = new WeaponSword("img/Sprites_Espada_LUP.png");
 	objectArray.emplace_back(activeWeapon);
 
-	//GameObject* tank = new EnemyTank(500, 0,planet,18,50);
-	//objectArray.emplace_back(tank);
-	GameObject* e3 = new Enemy3(500, 0,planet,18,0);
+	GameObject* e1 = new Enemy3(500, 0,planet,-30,0);
+	objectArray.emplace_back(e1);
+	GameObject* e2 = new Enemy3(500, 0,planet,40,0);
+	objectArray.emplace_back(e2);
+	GameObject* e3 = new Enemy3(500, 0,planet,50,0);
 	objectArray.emplace_back(e3);
+	GameObject* e4 = new Enemy3(500, 0,planet,60,0);
+	objectArray.emplace_back(e4);
+	GameObject* e5 = new Enemy3(500, 0,planet,120,0);
+	objectArray.emplace_back(e5);
+	GameObject* e6 = new Enemy3(500, 0,planet,140,0);
+	objectArray.emplace_back(e6);
+	GameObject* e7 = new Enemy3(500, 0,planet,200,0);
+	objectArray.emplace_back(e7);
+	GameObject* e8 = new Enemy3(500, 0,planet,210,0);
+	objectArray.emplace_back(e8);
+	GameObject* e9 = new Enemy3(500, 0,planet,240,0);
+	objectArray.emplace_back(e9);
+	GameObject* e10 = new Enemy3(500, 0,planet,300,0);
+	objectArray.emplace_back(e10);
+
 
 
 	//rotacaoPlaneta = 0;
@@ -293,6 +310,14 @@ void FinalState::Update(float dt) {
 }
 
 void FinalState::Render() {
+	if(Player::player->GetHp() <= 0 && Player::player->deathAnimation.Get() > 1.4)
+	{
+		Sprite* black = new Sprite("img/blank.png");
+		black->Render(0,0);
+		delete black;
+		return;
+	}
+
 	bg.Render(xBg, 0);
 	RenderArray();
 	ui.Render();

@@ -47,11 +47,24 @@ void Player::Update(float dt)
 {
 	if (hp <= 0)
 	{
-		if (deathAnimation.Get() > 1.4)
+		if (deathAnimation.Get() > 2.4)
 		{
 			deathAnimation.Restart();
 			knockback.Update(1);
 			hp = 100;
+			qntEnergia = 0;
+			deveMudarDeFase = true;
+
+			if(planet->nPlaneta == 1)
+			{
+				State* stageState = new StageState();
+				Game::GetInstance().Push(stageState);
+			}
+			else if (planet->nPlaneta == 3)
+			{
+				State* stageState = new FinalState();
+				Game::GetInstance().Push(stageState);
+			}
 		}
 		somaRotation = 0;
 		body.SetLoop(14,14);
@@ -270,6 +283,9 @@ void Player::NotifyCollision(GameObject& other)
 	if (other.Is("EnemyTank") && other.attacking)
 	{
 		if (dmgCD.Get() > 1) {
+			Sound* sound = new Sound("audio/dano.wav");
+			sound->Play(0);
+			delete(sound);
 			dmgCD.Restart();
 			hp -= 10;
 
@@ -293,7 +309,7 @@ void Player::NotifyCollision(GameObject& other)
 			sound->Play(0);
 			delete(sound);
 			dmgCD.Restart();
-			hp -= 100;
+			hp -= 10;
 
 			knockback.Restart();
 

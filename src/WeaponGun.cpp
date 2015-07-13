@@ -58,7 +58,7 @@ void WeaponGun::Update(float dt)
 
 	if(InputManager::GetInstance().KeyPress(SDLK_a) || atkFrame)
 	{
-		Sound* sound = new Sound("audio/vassoura.wav");
+		Sound* sound = new Sound("audio/projetil.wav");
 		sound->Play(0);
 		delete(sound);
 		atkFrame = true;

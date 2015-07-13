@@ -27,7 +27,6 @@ StillAnimation::StillAnimation(float x, float y, GameObject* planet,float rotati
 	box.setY(planet->box.getCenterY()  + ((planet->box.getH()/2 + planet->box.getCenterY()  + alturaInicial)*sin(arc)) - (box.getH()/2));
 	box.setH(sp.GetHeight());
 	box.setW(sp.GetWidth());
-	std::cout << "TESTE STILL\n";
 }
 
 void StillAnimation::Update(float dt){

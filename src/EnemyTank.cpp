@@ -94,11 +94,13 @@ bool EnemyTank::Is(string type) {
 }
 
 void EnemyTank::NotifyCollision(GameObject& other) {
-	if ((other.Is("WeaponBroom") && other.attacking) || (other.Is("WeaponSword") && other.attacking)) {
+	if ((other.Is("WeaponBroom") && other.attacking) || (other.Is("WeaponSword") && other.attacking) || (other.Is("Support") && other.attacking)) {
 
 		if (dmgCD.Get() > 0.5) {
 			dmgCD.Restart();
 			hp -= 10;
+			if (other.Is("Support"))
+					hp = 0;
 
 			knockback.Restart();
 
@@ -115,7 +117,7 @@ void EnemyTank::NotifyCollision(GameObject& other) {
 			aux->SetScaleY(0.5);
 			aux->SetLoop(0, 6);
 			StillAnimation* animacao = new StillAnimation(box.getCenterX(),
-					box.getCenterY(), planet, rotation, *aux, 0.2 * 7, true, box.getY()-50);
+					box.getCenterY(), planet, rotation, *aux, 0.2 * 7, true, box.getY()-60);
 			Game::GetInstance().GetCurrentState().AddObject(animacao);
 		}
 	}

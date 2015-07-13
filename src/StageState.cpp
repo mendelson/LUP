@@ -262,6 +262,14 @@ void StageState::Update(float dt) {
 }
 
 void StageState::Render() {
+	if(Player::player->GetHp() <= 0 && Player::player->deathAnimation.Get() > 1.4)
+	{
+		Sprite* black = new Sprite("img/blank.png");
+		black->Render(0,0);
+		delete black;
+		return;
+	}
+
 	bg.Render(xBg, 0);
 	RenderArray();
 	ui.Render();
