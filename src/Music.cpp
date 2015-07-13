@@ -24,7 +24,16 @@ void Music::Play(int times) {
 }
 
 void Music::Stop() {
-	Mix_FadeOutMusic(0);
+	//Mix_CloseAudio();
+	//Mix_HaltMusic();
+
+	if (chunk) {
+		Mix_HaltMusic();
+		Mix_FadeOutMusic(0);
+		Mix_FreeChunk(music);
+	} else {
+		Mix_FadeOutMusic(0);
+	}
 }
 
 void Music::Open(std::string file, bool chunk) {

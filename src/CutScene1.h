@@ -1,5 +1,5 @@
-#ifndef SRC_CUTSCENE1_H_
-#define SRC_CUTSCENE1_H_
+#ifndef SRC_CUTSCENE_H_
+#define SRC_CUTSCENE_H_
 
 #include <vector>
 
@@ -25,4 +25,4 @@ private:
 	bool showBlank;
 };
 
-#endif /* SRC_CUTSCENE1_H_ */
+#endif /* SRC_CUTSCENE_H_ */

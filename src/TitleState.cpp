@@ -1,26 +1,29 @@
 #include "TitleState.h"
 
 #include <SDL_keycode.h>
+#include <iostream>
 #include <sstream>
 #include <string>
 
+#include "CutScene1.h"
+#include "FinalState.h"
 #include "Game.h"
 #include "InputManager.h"
-#include "StageState.h"
-#include "FinalState.h"
 
 //const std::string FONT_FILE = "font/OpenSans-Bold.ttf";
 //const int ITEMS_DISTANCE = 50;
 //const int NUMBER_OF_MENU_PLANETS = 3;
 const int NUMBER_OF_MENU_ITEMS = 4;
 const unsigned int NUMBER_FRAMES_INITIAL_ANIMATION = 93;
-const unsigned int NUMBER_FRAMES_LOGO = 200;
-const float FRAME_TIME_INITIAL_ANIMATION = 1 / 3;
+const unsigned int NUMBER_FRAMES_LOGO = 214;
+const float FRAME_TIME_INITIAL_ANIMATION = 0.02; // 1 / 30;
+const float FRAME_TIME_LOGO = 0.04;
 
 TitleState::TitleState() :
 		bg("img/fundo.png"), opening("img/cut-scene-1.png"), instructions(
 				"img/instructions.png"), menuOptions("img/menu-options.png", 0,
-				1, 5), credits("img/credits.png"), blank("img/blank.png"), timer(), timerSupport(), menuSong(
+				1, 5), credits("img/credits.png"), blank("img/blank.png"), timer(), timerSupport(), timerLogo(), menuSong(
+				"audio/menuLoop.ogg", false), menuIntroSong(
 				"audio/menuIntro.ogg"), itemSelection(
 				"audio/itemSelection.wav"), itemChosen("audio/select.wav") {
 
@@ -30,6 +33,7 @@ TitleState::TitleState() :
 	showInstructions = false;
 	showCredits = false;
 	frame = 0;
+	frameLogo = 0;
 	opening.SetFrame(frame);
 	startMenu = false;
 	focus = 0;
@@ -40,6 +44,7 @@ TitleState::TitleState() :
 	//menuYStartPosition = Game::GetInstance().getHeight() / 1.5;
 	//mountMainMenu();
 
+	// Initial animation
 	for (unsigned int i = 0; i < NUMBER_FRAMES_INITIAL_ANIMATION; i++) {
 		std::stringstream sstm;
 		sstm << "img/cut-scene-5/Cut_Scene_5_000" << i << ".png";
@@ -48,13 +53,22 @@ TitleState::TitleState() :
 		selector.emplace_back(new Sprite(frameFile));
 	}
 
-	/*for (unsigned int i = 0; i < NUMBER_FRAMES_LOGO; i++) {
-	 std::stringstream sstm;
-	 sstm << "img/logo/Cut_Scene_5_000" << i << ".png";
-	 std::string frameFile = sstm.str();
+	// Logo animation
+	for (unsigned int i = 0; i < NUMBER_FRAMES_LOGO; i++) {
+		std::stringstream sstm;
 
-	 logo.emplace_back(new Sprite(frameFile));
-	 }*/
+		if (i >= 100) {
+			sstm << "img/logo_animation/Logo_Animation_2_00" << i << ".png";
+		} else if (i >= 10 && i <= 99) {
+			sstm << "img/logo_animation/Logo_Animation_2_000" << i << ".png";
+		} else if (i >= 0 && i <= 9) {
+			sstm << "img/logo_animation/Logo_Animation_2_0000" << i << ".png";
+		}
+
+		std::string frameFile = sstm.str();
+
+		logo.emplace_back(new Sprite(frameFile));
+	}
 
 	//music.Play(-1);
 }
@@ -62,13 +76,31 @@ TitleState::TitleState() :
 TitleState::~TitleState() {
 	//textVector.clear();
 	menuSong.Stop();
+	menuIntroSong.Stop();
+
+	opening.freeMe();
+
+	for (unsigned int i = 0; i < selector.size() - 1; i++) {
+		selector[i]->freeMe();
+	}
 	selector.clear();
+
+	for (unsigned int i = 0; i < 100; i++) {
+		logo[i]->freeMe();
+	}
+	for (unsigned int i = 100; i < 200; i++) {
+		logo[i]->freeMe();
+	}
+	for (unsigned int i = 200; i < logo.size() - 1; i++) {
+		logo[i]->freeMe();
+	}
 	logo.clear();
 }
 
 void TitleState::Update(float dt) {
 	//popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
 	quitRequested = InputManager::GetInstance().QuitRequested();
+
 	timerSupport.Update(dt);
 	if (updateTimer) {
 		timer.Update(dt);
@@ -107,37 +139,39 @@ void TitleState::Update(float dt) {
 		} else {
 			if (initializeMenuSong || initializeMenuIntroSong) {
 				if (!initializeMenuIntroSong && timer.Get() >= 16) {
-					menuSong.Open("audio/menuLoop.ogg", false);
+					//menuSong.Open("audio/menuLoop.ogg", false);
 					menuSong.Play(-1);
 					initializeMenuSong = false;
 				} else if (initializeMenuIntroSong) {
 					updateTimer = true;
-					menuSong.Play(1);
+					menuIntroSong.Play(1);
 					initializeMenuIntroSong = false;
 				}
 			}
 
 			if (timerSupport.Get() >= FRAME_TIME_INITIAL_ANIMATION) {
 				frame++;
+				timerSupport.Restart();
 			}
 
 			if (frame - 5 >= NUMBER_FRAMES_INITIAL_ANIMATION) {
 				startMenu = true;
-				selector.clear();
+				//selector.clear();
 			}
 		}
 	} else {
 		if (initializeMenuSong || initializeMenuIntroSong) {
 			if (!initializeMenuIntroSong && timer.Get() >= 16) {
-				menuSong.Open("audio/menuLoop.ogg", false);
+				//menuSong.Open("audio/menuLoop.ogg", false);
 				menuSong.Play(-1);
 				initializeMenuSong = false;
 			} else if (initializeMenuIntroSong) {
 				updateTimer = true;
-				menuSong.Play(1);
+				menuIntroSong.Play(1);
 				initializeMenuIntroSong = false;
 			}
 		}
+
 		/*if (initialize) {
 		 initialize = false;
 		 focus = 0;
@@ -156,6 +190,21 @@ void TitleState::Update(float dt) {
 		 }
 		 }
 		 }*/
+
+		//Logo animation
+		timerLogo.Update(dt);
+		if (timerLogo.Get() >= FRAME_TIME_LOGO) {
+			frameLogo++;
+			timerLogo.Restart();
+		}
+
+		if (frameLogo < 0) {
+			frameLogo = 0;
+		}
+
+		if (frameLogo >= NUMBER_FRAMES_INITIAL_ANIMATION) {
+			frameLogo = NUMBER_FRAMES_INITIAL_ANIMATION - 1;
+		}
 
 		//if (!initialize) {
 		if (InputManager::GetInstance().KeyPress(UP_ARROW_KEY)
@@ -179,8 +228,7 @@ void TitleState::Update(float dt) {
 		}
 
 		// CHEAT
-		if (InputManager::GetInstance().IsKeyDown(SDLK_F2))
-		{
+		if (InputManager::GetInstance().IsKeyDown(SDLK_F2)) {
 			itemChosen.Play(1);
 			State* finalState = new FinalState();
 			Game::GetInstance().Push(finalState);
@@ -190,10 +238,10 @@ void TitleState::Update(float dt) {
 				&& !showInstructions && !showCredits
 				&& timerSupport.Get() > 0.5) {
 			itemChosen.Play(1);
-			State* stageState = new StageState();
-			Game::GetInstance().Push(stageState);
-			/*State* cutScene = new CutScene1();
-			 Game::GetInstance().Push(cutScene);*/
+			/*State* stageState = new StageState();
+			 Game::GetInstance().Push(stageState);*/
+			State* cutScene = new CutScene1();
+			Game::GetInstance().Push(cutScene);
 		}
 
 		if (InputManager::GetInstance().IsKeyDown(RETURN_KEY) && focus == 1
@@ -227,6 +275,7 @@ void TitleState::Update(float dt) {
 			//initialize = true;
 			showInstructions = false;
 			focus = 1;
+			frameLogo = 0;
 		}
 
 		if (showCredits && InputManager::GetInstance().IsKeyDown(RETURN_KEY)
@@ -236,6 +285,7 @@ void TitleState::Update(float dt) {
 			//initialize = true;
 			showCredits = false;
 			focus = 2;
+			frameLogo = 0;
 		}
 		//}
 
@@ -260,7 +310,9 @@ void TitleState::Render() {
 	} else {
 		bg.Render(0, -100);
 
-		menuOptions.Render(310, 300);
+		logo[frameLogo]->Render(0, -70);
+
+		menuOptions.Render(330, 340);
 
 		/*for (int i = 0; i < (int) textVector.size(); i++) {
 		 if (initialize) {
@@ -290,8 +342,24 @@ void TitleState::Pause() {
 	//textVector.clear();
 
 	menuSong.Stop();
+	menuIntroSong.Stop();
 
+	opening.freeMe();
+
+	for (unsigned int i = 0; i < selector.size() - 1; i++) {
+		selector[i]->freeMe();
+	}
 	selector.clear();
+
+	for (unsigned int i = 0; i < 100; i++) {
+		logo[i]->freeMe();
+	}
+	for (unsigned int i = 100; i < 200; i++) {
+		logo[i]->freeMe();
+	}
+	for (unsigned int i = 200; i < logo.size() - 1; i++) {
+		logo[i]->freeMe();
+	}
 	logo.clear();
 }
 
@@ -299,20 +367,32 @@ void TitleState::Resume() {
 	focus = 0;
 	//initialize = true;
 
-	/*for (unsigned int i = 0; i < NUMBER_FRAMES_LOGO; i++) {
-	 std::stringstream sstm;
-	 sstm << "img/logo/Cut_Scene_5_000" << i << ".png";
-	 std::string frameFile = sstm.str();
+	for (unsigned int i = 0; i < NUMBER_FRAMES_LOGO; i++) {
+		std::stringstream sstm;
 
-	 logo.emplace_back(new Sprite(frameFile));
-	 }*/
+		if (i >= 100) {
+			sstm << "img/logo_animation/Logo_Animation_2_00" << i << ".png";
+		} else if (i >= 10 && i <= 99) {
+			sstm << "img/logo_animation/Logo_Animation_2_000" << i << ".png";
+		} else if (i >= 0 && i <= 9) {
+			sstm << "img/logo_animation/Logo_Animation_2_0000" << i << ".png";
+		}
+
+		std::string frameFile = sstm.str();
+
+		logo.emplace_back(new Sprite(frameFile));
+	}
 
 	//mountMainMenu();
-	menuSong.Open("audio/menuIntro.ogg");
-	menuSong.Play(1);
+	menuSong.Open("audio/menuLoop.ogg", false);
+	menuIntroSong.Open("audio/menuIntro.ogg");
+	menuIntroSong.Play(1);
 	updateTimer = true;
 	initializeMenuIntroSong = false;
 	initializeMenuSong = true;
+
+	frameLogo = 0;
+	timerLogo.Restart();
 }
 
 /*void TitleState::mountMainMenu() {

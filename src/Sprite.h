@@ -29,6 +29,7 @@ public:
 	void SetFlipH(bool flipH);
 	void SetLoop(int start, int end);
 	int GetCurrentFrame();
+	void freeMe();
 private:
 	SDL_Texture* texture;
 	int width;
@@ -45,6 +46,7 @@ private:
 	int rows;
 	int columns;
 	bool flipH;
+	string myFile;
 };
 
 #endif /* SRC_SPRITE_H_ */

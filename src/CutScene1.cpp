@@ -6,11 +6,11 @@
 
 #include "InputManager.h"
 
-const unsigned int NUMBER_FRAMES_ANIMATION = 93;
-const float FRAME_TIME_ANIMATION = 1 / 3;
+const unsigned int NUMBER_FRAMES_ANIMATION = 4;
+const float FRAME_TIME_ANIMATION = 5;
 
 CutScene1::CutScene1() :
-		blank("img/blank.png"), timer() {
+		blank("img/blank.png"), timer()/*, song("audio/")*/ {
 
 	popRequested = false;
 	quitRequested = false;
@@ -18,7 +18,7 @@ CutScene1::CutScene1() :
 
 	for (unsigned int i = 0; i < NUMBER_FRAMES_ANIMATION; i++) {
 		std::stringstream sstm;
-		sstm << "img/cut-scene-5/Cut_Scene_5_000" << i << ".png";
+		sstm << "img/cut-scene-final/Cutscene_Final_" << i << ".png";
 		std::string frameFile = sstm.str();
 
 		selector.emplace_back(new Sprite(frameFile));
@@ -30,8 +30,12 @@ CutScene1::CutScene1() :
 }
 
 CutScene1::~CutScene1() {
-	song.Stop();
+	//song.Stop();
+	for (unsigned int i = 300; i < selector.size() - 1; i++) {
+		selector[i]->freeMe();
+	}
 	selector.clear();
+	blank.freeMe();
 }
 
 void CutScene1::Update(float dt) {
@@ -63,13 +67,17 @@ void CutScene1::Render() {
 
 void CutScene1::Pause() {
 	//song.Stop();
+	for (unsigned int i = 300; i < selector.size() - 1; i++) {
+		selector[i]->freeMe();
+	}
 	selector.clear();
+	blank.freeMe();
 }
 
 void CutScene1::Resume() {
 	for (unsigned int i = 0; i < NUMBER_FRAMES_ANIMATION; i++) {
 		std::stringstream sstm;
-		sstm << "img/cut-scene-5/Cut_Scene_5_000" << i << ".png";
+		sstm << "img/cut-scene-final/Cutscene_Final_" << i << ".png";
 		std::string frameFile = sstm.str();
 
 		selector.emplace_back(new Sprite(frameFile));

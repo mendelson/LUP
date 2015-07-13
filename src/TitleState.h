@@ -29,15 +29,18 @@ private:
 	std::vector<Sprite*> logo;
 	Timer timer;
 	Timer timerSupport;
+	Timer timerLogo;
 	//std::vector<Text*> textVector;
 	int focus;
 	bool initializeMenuSong;
 	//int menuYStartPosition;
 	Music menuSong;
+	Music menuIntroSong;
 	Music itemSelection;
 	Music itemChosen;
 	bool startMenu;
 	unsigned int frame;
+	unsigned int frameLogo;
 	bool showInstructions;
 	bool showCredits;
 	bool initializeMenuIntroSong;

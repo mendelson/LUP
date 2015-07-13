@@ -20,6 +20,7 @@ public:
 	static void ClearChunk();
 	static TTF_Font* GetFont(string file, int fontsize);
 	static void ClearFont();
+	static void removeImage(string file);
 
 private:
 	static std::unordered_map<std::string, SDL_Texture*> imageTable;

@@ -76,3 +76,9 @@ void Resources::ClearFont() {
 	}
 	fontTable.clear();
 }
+
+void Resources::removeImage(string file) {
+	if (imageTable.find(file) != imageTable.end()) {
+		SDL_DestroyTexture(imageTable.find(file)->second);
+	}
+}

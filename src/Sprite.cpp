@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Resources.h"
 
-Sprite::Sprite(){
+Sprite::Sprite() {
 	texture = NULL;
 	scaleX = 1;
 	scaleY = 1;
@@ -17,7 +17,8 @@ Sprite::Sprite(){
 	flipH = false;
 }
 
-Sprite::Sprite(string file, float frameTime, float rows, float columns){
+Sprite::Sprite(string file, float frameTime, float rows, float columns) :
+		myFile(file) {
 	texture = NULL;
 	this->frameTime = frameTime;
 	this->rows = rows;
@@ -32,33 +33,36 @@ Sprite::Sprite(string file, float frameTime, float rows, float columns){
 	flipH = false;
 }
 
-Sprite::~Sprite(){
+Sprite::~Sprite() {
 //	if(texture != NULL){
 //		SDL_DestroyTexture(texture);
 //	}
 }
 
-void Sprite::Open(string file){
+void Sprite::freeMe() {
+	Resources::removeImage(myFile);
+}
+
+void Sprite::Open(string file) {
 
 	texture = Resources::GetImage(file);
-	if(texture == NULL){
+	if (texture == NULL) {
 		cout << "ERRO ao inicializar texture!! :(" << endl;
 		cout << SDL_GetError() << endl;
 		exit(1);
 	}
 
-	if ((SDL_QueryTexture(texture, NULL, NULL, &width, &height)) != 0)
-	{
+	if ((SDL_QueryTexture(texture, NULL, NULL, &width, &height)) != 0) {
 		std::cout << "Erro: " << SDL_GetError() << std::endl;
 	}
 
-	width = width/columns;
-	height = height/rows;
+	width = width / columns;
+	height = height / rows;
 
-	SetClip(0,0,width,height);
+	SetClip(0, 0, width, height);
 }
 
-void Sprite::SetClip(int x, int y,int w,int h){
+void Sprite::SetClip(int x, int y, int w, int h) {
 	clipRect.x = x;
 	clipRect.y = y;
 	clipRect.w = w;
@@ -66,90 +70,88 @@ void Sprite::SetClip(int x, int y,int w,int h){
 
 }
 
-
-void Sprite::Render(int x,int y,float angle){
+void Sprite::Render(int x, int y, float angle) {
 	SDL_Rect auxrect;
 	auxrect.x = x;
 	auxrect.y = y;
-	auxrect.w = clipRect.w*scaleX;
-	auxrect.h = clipRect.h*scaleY;
+	auxrect.w = clipRect.w * scaleX;
+	auxrect.h = clipRect.h * scaleY;
 	if (flipH)
-		SDL_RenderCopyEx((Game::GetInstance().GetRenderer()),texture,&clipRect,&auxrect,angle,NULL,SDL_FLIP_HORIZONTAL );
+		SDL_RenderCopyEx((Game::GetInstance().GetRenderer()), texture,
+				&clipRect, &auxrect, angle, NULL, SDL_FLIP_HORIZONTAL);
 	else
-		SDL_RenderCopyEx((Game::GetInstance().GetRenderer()),texture,&clipRect,&auxrect,angle,NULL,SDL_FLIP_NONE );
+		SDL_RenderCopyEx((Game::GetInstance().GetRenderer()), texture,
+				&clipRect, &auxrect, angle, NULL, SDL_FLIP_NONE);
 }
 
-int Sprite::GetHeight(){
-	return height*scaleY;
+int Sprite::GetHeight() {
+	return height * scaleY;
 }
 
-int Sprite::GetWidth(){
-	return width*scaleX;
+int Sprite::GetWidth() {
+	return width * scaleX;
 }
 
-bool Sprite::IsOpen(){
-	if(texture == NULL){
+bool Sprite::IsOpen() {
+	if (texture == NULL) {
 		return false;
 	}
 	return true;
 }
 
-void Sprite::SetScaleX(float scale){
+void Sprite::SetScaleX(float scale) {
 	scaleX = scale;
 
 }
 
-void Sprite::SetScaleY(float scale){
+void Sprite::SetScaleY(float scale) {
 	scaleY = scale;
 
 }
 
-void Sprite::Update(float dt){
-	timeElapsed+=dt;
+void Sprite::Update(float dt) {
+	timeElapsed += dt;
 
-	if(timeElapsed >= frameTime){
+	if (timeElapsed >= frameTime) {
 		currentFrame++;
 
 		if (currentFrame < loopStart)
 			currentFrame = loopStart;
 
 		timeElapsed = 0;
-		if(currentFrame > loopEnd){
+		if (currentFrame > loopEnd) {
 			currentFrame = loopStart;
 			timeElapsed = 0;
 		}
 		int x = currentFrame;
-		while (x > (columns-1))
+		while (x > (columns - 1))
 			x -= columns;
-		int y = floor (currentFrame/columns);
-		SetClip(x*width,y*height,width,height);
+		int y = floor(currentFrame / columns);
+		SetClip(x * width, y * height, width, height);
 	}
 }
 
-void Sprite::SetFrame(int frame){
+void Sprite::SetFrame(int frame) {
 	currentFrame = frame;
 }
 
-void Sprite::SetFrameTime(float frameTime){
+void Sprite::SetFrameTime(float frameTime) {
 	this->frameTime = frameTime;
 }
 
-int Sprite::GetFrameWidth(){
-	return width*scaleX;
+int Sprite::GetFrameWidth() {
+	return width * scaleX;
 }
 
-void Sprite::SetFlipH(bool flipH)
-{
+void Sprite::SetFlipH(bool flipH) {
 	this->flipH = flipH;
 }
 
-void Sprite::SetLoop(int start, int end)
-{
+void Sprite::SetLoop(int start, int end) {
 	loopStart = start;
 	loopEnd = end;
 }
 
-int Sprite::GetCurrentFrame()
-{
+int Sprite::GetCurrentFrame() {
 	return currentFrame;
 }
