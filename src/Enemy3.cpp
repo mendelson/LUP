@@ -169,6 +169,9 @@ void Enemy3::NotifyCollision(GameObject& other)
 	if ((other.Is("WeaponBroom") && other.attacking) || (other.Is("WeaponSword") && other.attacking) || (other.Is("Support") && other.attacking)) {
 
 		if (dmgCD.Get() > 0.5) {
+			Sound* sound = new Sound("audio/dano.wav");
+			sound->Play(0);
+			delete(sound);
 			dmgCD.Restart();
 			hp -= 10;
 			if (other.Is("Support"))

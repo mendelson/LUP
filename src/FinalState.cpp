@@ -16,7 +16,7 @@
 FinalState::WeaponName_lazy FinalState::weapon;
 
 FinalState::FinalState() :
-		bg("img/BACKGROUND.png"), music("audio/stageState.ogg"), ui(3), changeWpCD() {
+		bg("img/BACKGROUND.png"), music("audio/fase2.ogg"), ui(3), changeWpCD() {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
 	xBg = -1400;
@@ -288,6 +288,7 @@ FinalState::FinalState() :
 	//GameObject* alien3 = new Alien(1000,1000,5,(rand()%5) + dd3);
 	//objectArray.emplace_back(alien3);
 
+	music.Play(-1);
 }
 
 void FinalState::Update(float dt) {
@@ -365,7 +366,7 @@ void FinalState::Pause() {
 }
 
 void FinalState::Resume() {
-	//music.Play(-1);
+	music.Play(-1);
 }
 
 FinalState::WeaponName_lazy FinalState::CheckWeapon() {

@@ -20,7 +20,7 @@
 
 StageState::WeaponName_lazy StageState::weapon;
 
-StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"), ui(3), changeWpCD() {
+StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/fase1.ogg"), ui(3), changeWpCD() {
 	quitRequested = false;
 	srand((unsigned int) time(NULL));
 	xBg = -1400;
@@ -204,6 +204,7 @@ StageState::StageState() :bg("img/BACKGROUND.png"), music("audio/stageState.ogg"
 	//objectArray.emplace_back(alien2);
 	//GameObject* alien3 = new Alien(1000,1000,5,(rand()%5) + dd3);
 	//objectArray.emplace_back(alien3);
+	music.Play(-1);
 
 }
 
@@ -286,7 +287,7 @@ void StageState::Pause() {
 }
 
 void StageState::Resume() {
-	//music.Play(-1);
+	music.Play(-1);
 
 }
 
