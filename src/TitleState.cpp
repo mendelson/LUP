@@ -107,8 +107,8 @@ void TitleState::Update(float dt) {
 		} else {
 			if (initializeMenuSong || initializeMenuIntroSong) {
 				if (!initializeMenuIntroSong && timer.Get() >= 16) {
-					menuSong.Open("audio/menuLoop.ogg");
-					menuSong.Play(5);
+					menuSong.Open("audio/menuLoop.ogg", false);
+					menuSong.Play(-1);
 					initializeMenuSong = false;
 				} else if (initializeMenuIntroSong) {
 					updateTimer = true;
@@ -129,8 +129,8 @@ void TitleState::Update(float dt) {
 	} else {
 		if (initializeMenuSong || initializeMenuIntroSong) {
 			if (!initializeMenuIntroSong && timer.Get() >= 16) {
-				menuSong.Open("audio/menuLoop.ogg");
-				menuSong.Play(5);
+				menuSong.Open("audio/menuLoop.ogg", false);
+				menuSong.Play(-1);
 				initializeMenuSong = false;
 			} else if (initializeMenuIntroSong) {
 				updateTimer = true;
