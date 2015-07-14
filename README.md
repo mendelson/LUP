@@ -11,6 +11,6 @@ Membros da equipe
 ![credits](https://dl.dropboxusercontent.com/u/2655937/L%C3%9CP/credits.png)
 
 Matrículas dos Desenvolvedores:
-- Lucas Facundo:
+- Lucas Facundo: 09/0122461
 - Mateus Mendelson: 11/0017579
 - Vitor Quaresma: 11/0143566
