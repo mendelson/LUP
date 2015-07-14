@@ -30,7 +30,7 @@ Enemy3::Enemy3(float x, float y, GameObject* planet, float initialRotation, floa
 
 Enemy3::~Enemy3()
 {
-	sp.freeMe();
+
 }
 
 void Enemy3::Update(float dt)
