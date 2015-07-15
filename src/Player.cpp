@@ -7,7 +7,7 @@
 Player* Player::player = NULL;
 
 
-Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP.png",0.15,4,8), speed(),dmgCD(),knockback(),deathAnimation(),energiaCD()
+Player::Player(float x, float y,GameObject* planet): deathAnimation(),body("img/Sprites_Corpo_LUP.png",0.15,4,8),speed(),dmgCD(),knockback(),energiaCD()
 {
 	body.SetScaleX(0.5);
 	body.SetScaleY(0.5);
@@ -35,6 +35,10 @@ Player::Player(float x, float y,GameObject* planet): body("img/Sprites_Corpo_LUP
 	delete(sound);
 	qntEnergia = 0;
 	deveMudarDeFase = false;
+	jumpY = 0;
+	energyUpdate = false;
+	kbDirection = RIGHT;
+	c = 0;
 
 }
 

@@ -43,7 +43,7 @@ private:
 	Timer knockback;
 	Jumping jumpState;
 	int jumpY;
-	int yPlaneta;
+	//int yPlaneta;
 	int jumped;
 	Facing kbDirection;
 	int c;

@@ -324,7 +324,7 @@ void FinalState::Update(float dt) {
 		objectArray.emplace_back(activeWeapon);
 	}
 
-	float somaRotation = Player::player->somaRotation;
+	//float somaRotation = Player::player->somaRotation;
 	//xBg += somaRotation;
 	Camera::Update(dt);
 	quitRequested = InputManager::GetInstance().QuitRequested();
