@@ -1,4 +1,4 @@
-# LU+00DCP
+# L&#220;P
 
 ![logo](https://dl.dropboxusercontent.com/u/2655937/L%C3%9CP/logo.png)
 
