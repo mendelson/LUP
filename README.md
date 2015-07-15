@@ -15,6 +15,7 @@ Matr&#237;culas dos Desenvolvedores:
 - Mateus Mendelson: 11/0017579
 - Vitor Quaresma: 11/0143566
 
-## Cheats
-- Para avan&#231;ar direto para a segunda (e &#250;ltima) fase, pressione F2 no menu inicial.
-- Para pular para a cut-scene final do jogo, pressione "c" no menu inicial.
+## Cheats e Pulos
+- Para avan&#231;ar direto para a segunda (e &#250;ltima) fase, pressione F2 no menu inicial;
+- Para pular para a cut-scene final do jogo, pressione "c" no menu inicial;
+- Para pular qualquer cut-scene, pressione a barra de espa&#231o no teclado.
