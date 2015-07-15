@@ -18,4 +18,4 @@ Matr&#237;culas dos Desenvolvedores:
 ## Cheats e Pulos
 - Para avan&#231;ar direto para a segunda (e &#250;ltima) fase, pressione F2 no menu inicial;
 - Para pular para a cut-scene final do jogo, pressione "c" no menu inicial;
-- Para pular qualquer cut-scene, pressione a barra de espa&#231o no teclado.
+- Para pular qualquer cut-scene, pressione a barra de espa&#231;o no teclado.
